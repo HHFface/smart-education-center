@@ -1,0 +1,3 @@
+# Faqat 2 ta kutubxona kerak. Versiya qat'iy belgilanmagan — yangi va eski Python/Flask bilan ishlaydi.
+Flask>=2.0
+requests>=2.25
