@@ -1,0 +1,49 @@
+{% macro csrf() %}<input type="hidden" name="_csrf" value="{{ csrf_token() }}">{% endmacro %}
+
+{% macro prefs() %}
+<form method="post" action="{{ url_for('main.set_lang') }}" class="inline-form">{{ csrf() }}
+  <label class="sr-only" for="lang-sel">{{ t('lbl.language') }}</label>
+  <select id="lang-sel" name="lang" data-autosubmit>{% for code, label in LANGS %}<option value="{{ code }}" {{ 'selected' if code == lang }}>{{ label }}</option>{% endfor %}</select>
+</form>
+<form method="post" action="{{ url_for('main.set_theme') }}" class="inline-form">{{ csrf() }}
+  <label class="sr-only" for="theme-sel">{{ t('lbl.theme') }}</label>
+  <select id="theme-sel" name="theme" data-autosubmit>{% for mode in ['system', 'light', 'dark'] %}<option value="{{ mode }}" {{ 'selected' if mode == theme }}>{{ t('theme.' ~ mode) }}</option>{% endfor %}</select>
+</form>
+{% endmacro %}
+
+{% set BADGE = {'present': 'ok', 'late': 'warn', 'excused': 'info', 'absent': 'bad', 'approved': 'ok', 'rejected': 'bad',
+  'pending': 'warn', 'info_needed': 'info', 'checked': 'ok', 'submitted': 'info', 'finished': 'ok', 'declined': 'bad',
+  'expired': '', 'cancelled': 'bad', 'scheduled': 'info', 'ready': 'info', 'active': 'warn', 'counter': 'info',
+  'no_show': 'bad', 'void': '', 'paid': 'ok', 'fulfilled': 'ok', 'open': 'warn', 'accepted': 'ok', 'warning': 'warn',
+  'penalty': 'bad', 'win': 'ok', 'loss': 'bad', 'draw': 'info', 'planned': 'info'} %}
+{% macro badge(status) %}<span class="badge {{ ('b-' ~ BADGE.get(status, '')) if BADGE.get(status) else '' }}">{{ t('status.' ~ status) }}</span>{% endmacro %}
+
+{% macro delta(value) %}{% if value > 0 %}<span class="pos">+{{ value }}</span>{% elif value < 0 %}<span class="neg">{{ value }}</span>{% else %}<span class="muted">0</span>{% endif %}{% endmacro %}
+
+{% macro pct(value) %}{% if value is none %}<span class="muted">—</span>{% else %}{{ value }}%{% endif %}{% endmacro %}
+
+{% macro empty() %}<p class="muted">{{ t('msg.empty') }}</p>{% endmacro %}
+
+{% macro subject_name(row) %}{{ row.subject_name|subject(row.subject_code) }}{% endmacro %}
+
+{% macro week_view(days, week, today, endpoint, attend_endpoint=None) %}
+<div class="row spread no-print">
+  <a class="btn btn-sm" href="{{ url_for(endpoint, week=week - 1) }}">← {{ t('btn.prev') }}</a>
+  {% if week != 0 %}<a class="btn btn-sm" href="{{ url_for(endpoint) }}">{{ t('lbl.today') }}</a>{% endif %}
+  <a class="btn btn-sm" href="{{ url_for(endpoint, week=week + 1) }}">{{ t('btn.next') }} →</a>
+</div>
+<div class="week" id="week">
+  {% for day in days %}
+  <div class="day {{ 'today' if day.date == today }}">
+    <h3>{{ t('weekday.' ~ day.date.weekday()) }} · {{ day.date.strftime('%d.%m') }}</h3>
+    {% for l in day.lessons %}
+      <div class="lesson {{ 'cancelled' if l.status == 'cancelled' }}">
+        <strong>{{ l.starts_at|dt('%H:%M') }}–{{ l.ends_at|dt('%H:%M') }}</strong><br>{{ l.group_name }}
+        {% if l.room %}<br><span class="muted">{{ t('lbl.room') }}: {{ l.room }}</span>{% endif %}
+        {% if attend_endpoint and l.status != 'cancelled' %}<br><a href="{{ url_for(attend_endpoint, lesson_id=l.id) }}">{{ t('nav.attendance') }}</a>{% endif %}
+      </div>
+    {% else %}<span class="muted small">—</span>{% endfor %}
+  </div>
+  {% endfor %}
+</div>
+{% endmacro %}

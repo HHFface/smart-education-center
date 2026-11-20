@@ -1,0 +1,28 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.attendance') }} · {{ lesson.group_name }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="row spread"><h1>✅ {{ t('nav.attendance') }}</h1><a class="btn btn-sm" href="{{ url_for('teacher.schedule') }}">← {{ t('nav.schedule') }}</a></div>
+<p><strong>{{ lesson.group_name }}</strong> · {{ lesson.starts_at|dt }} – {{ lesson.ends_at|dt('%H:%M') }}
+  {% if lesson.room %}· {{ t('lbl.room') }}: {{ lesson.room }}{% endif %}
+  {% if lesson.topic %}<br><span class="muted">{{ lesson.topic }}</span>{% endif %}
+  {% if lesson.status == 'cancelled' %} {{ m.badge('cancelled') }}{% endif %}</p>
+<div class="card">
+  <form method="post" action="{{ url_for('teacher.attendance_mark', lesson_id=lesson.id) }}">{{ m.csrf() }}
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>{{ t('lbl.student') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('tc.saved_status') }}</th></tr></thead>
+      <tbody>{% for st in students %}
+        {% set cur = marked.get(st.id) %}
+        <tr><td>{{ loop.index }}</td>
+          <td>{{ names(st) }}{% if st.id in approved %}<br><span class="badge b-info">{{ t('tc.approved_absence') }}</span>{% endif %}</td>
+          <td><label class="sr-only" for="st_{{ st.id }}">{{ names(st) }}</label>
+            <select id="st_{{ st.id }}" name="st_{{ st.id }}">{% for s in statuses %}
+              <option value="{{ s }}" {{ 'selected' if (cur == s) or (not cur and s == ('excused' if st.id in approved else 'present')) }}>{{ t('status.' ~ s) }}</option>{% endfor %}</select></td>
+          <td>{% if cur %}{{ m.badge(cur) }}{% else %}<span class="muted">—</span>{% endif %}</td></tr>
+      {% else %}<tr><td colspan="4">{{ m.empty() }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% if students %}<p class="muted small">{{ t('tc.attendance_hint') }}</p>
+    <button class="btn btn-primary" type="submit">{{ t('btn.save') }}</button>{% endif %}
+  </form>
+</div>
+{% endblock %}

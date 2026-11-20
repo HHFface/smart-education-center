@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('ae.expenses') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ t('ae.expenses') }}</h1>
+<div class="card">
+  <h2>{{ t('ae.new_expense') }}</h2>
+  <form method="post" action="{{ url_for('admin.expenses') }}" class="form-grid">{{ m.csrf() }}
+    <div><label for="e-title">{{ t('ae.title') }}</label><input class="input" id="e-title" name="title" required maxlength="150"></div>
+    <div><label for="e-cat">{{ t('ae.category') }}</label><input class="input" id="e-cat" name="category" maxlength="60"></div>
+    <div><label for="e-amount">{{ t('lbl.amount') }}</label><input class="input" id="e-amount" name="amount" type="number" min="0" step="1" required></div>
+    <div><label for="e-date">{{ t('lbl.date') }}</label><input class="input" id="e-date" name="spent_on" type="date" value="{{ today }}" required></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+</div>
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.date') }}</th><th>{{ t('ae.title') }}</th><th>{{ t('ae.category') }}</th><th>{{ t('lbl.amount') }}</th></tr></thead>
+    <tbody>{% for r in rows %}
+      <tr><td class="nowrap">{{ r.spent_on }}</td><td>{{ r.title }}</td><td>{{ r.category or '—' }}</td><td class="nowrap">{{ r.amount|money }}</td></tr>
+    {% endfor %}</tbody>
+    <tfoot><tr><th colspan="3">{{ t('lbl.total') }}</th><th class="nowrap">{{ rows|sum(attribute='amount')|money }}</th></tr></tfoot>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

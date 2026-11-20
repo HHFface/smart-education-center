@@ -1,0 +1,61 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.home') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🏠 {{ t('ad.dash.title') }}</h1>
+
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ d.students }}</div><div class="lbl">{{ t('ad.dash.students') }}</div></div>
+  <div class="card stat"><div class="num">{{ d.active_students }}</div><div class="lbl">{{ t('ad.dash.active_students') }}</div></div>
+  <div class="card stat"><div class="num">{{ d.teachers }}</div><div class="lbl">{{ t('ad.dash.teachers') }}</div></div>
+  <div class="card stat"><div class="num">{{ d.groups }}</div><div class="lbl">{{ t('ad.dash.groups') }}</div></div>
+  <div class="card stat"><div class="num">{{ d.new_users }}</div><div class="lbl">{{ t('ad.dash.new_users') }}</div></div>
+  <div class="card stat"><div class="num">{{ d.battles_week }}</div><div class="lbl">{{ t('ad.dash.battles_week') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(d.attendance_pct) }}</div><div class="lbl">{{ t('ad.dash.attendance') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(d.homework_pct) }}</div><div class="lbl">{{ t('ad.dash.homework') }}</div></div>
+</div>
+
+<h2 class="mt">{{ t('ad.dash.attention') }}</h2>
+<div class="grid g4">
+  <a class="card stat link-block" href="{{ url_for('admin.disputes') }}"><div class="num">{{ d.pending_disputes }}</div><div class="lbl">{{ t('ad.dash.disputes') }}</div></a>
+  <a class="card stat link-block" href="{{ url_for('admin.shop') }}"><div class="num">{{ d.pending_orders }}</div><div class="lbl">{{ t('ad.dash.orders') }}</div></a>
+  <a class="card stat link-block" href="{{ url_for('admin.battles') }}"><div class="num">{{ d.suspicious }}</div><div class="lbl">{{ t('ad.dash.suspicious') }}</div></a>
+  <div class="card stat"><div class="num">{{ d.pending_absences }}</div><div class="lbl">{{ t('ad.dash.absences') }}</div></div>
+</div>
+
+<div class="grid g2">
+  <div class="card"><h2>{{ t('ad.dash.finance') }}</h2>
+    <ul class="list">
+      <li class="row spread"><span>{{ t('ad.dash.income') }}</span><strong class="pos">{{ d.finance.income|money }}</strong></li>
+      <li class="row spread"><span>{{ t('ad.dash.expenses') }}</span><strong class="neg">{{ d.finance.expenses|money }}</strong></li>
+      <li class="row spread"><span>{{ t('ad.dash.profit') }}</span><strong>{{ d.finance.profit|money }}</strong></li>
+      <li class="row spread"><span>{{ t('ad.dash.debt') }}</span><strong class="{{ 'neg' if d.finance.debt }}">{{ d.finance.debt|money }}</strong></li>
+    </ul>
+    <p><a class="btn btn-sm" href="{{ url_for('admin.payments') }}">{{ t('btn.open') }}</a></p>
+  </div>
+
+  <div class="card"><h2>{{ t('ad.dash.by_subject') }}</h2>
+    {% if d.by_subject %}
+    <div class="table-wrap"><table><thead><tr><th>{{ t('lbl.subject') }}</th><th>{{ t('ad.dash.students') }}</th></tr></thead><tbody>
+      {% for s in d.by_subject %}<tr><td>{{ s.name|subject(s.code) }}</td><td>{{ s.students }}</td></tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}{{ m.empty() }}{% endif %}
+  </div>
+</div>
+
+<div class="card"><h2>🏆 {{ t('ad.dash.top') }}</h2>
+  {% if d.top %}
+  <div class="table-wrap"><table><thead><tr><th>#</th><th>{{ t('lbl.student') }}</th><th>{{ t('lbl.score') }}</th><th>XP</th><th>Coin</th></tr></thead><tbody>
+    {% for r in d.top %}<tr><td>{{ r.rank }}</td><td>{{ r.name }}</td><td>{{ r.value }}</td><td>{{ r.xp }}</td><td>{{ r.coins }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+
+{% if d.finance.by_group %}
+<div class="card"><h2>{{ t('ad.dash.income_by_group') }}</h2>
+  <div class="table-wrap"><table><thead><tr><th>{{ t('lbl.group') }}</th><th>{{ t('lbl.amount') }}</th></tr></thead><tbody>
+    {% for g in d.finance.by_group %}<tr><td>{{ g.group_name }}</td><td>{{ g.total|money }}</td></tr>{% endfor %}
+  </tbody></table></div>
+</div>
+{% endif %}
+{% endblock %}

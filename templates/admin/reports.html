@@ -1,0 +1,99 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.reports') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="row spread"><h1>{{ t('nav.reports') }}</h1>
+  <button class="btn btn-sm no-print" type="button" id="print-btn">{{ t('btn.print') }}</button></div>
+
+<form method="get" action="{{ url_for('admin.reports') }}" class="card form-grid no-print">
+  <div><label for="r-from">{{ t('ae.from') }}</label><input class="input" id="r-from" type="date" name="from" value="{{ start }}"></div>
+  <div><label for="r-to">{{ t('ae.to') }}</label><input class="input" id="r-to" type="date" name="to" value="{{ end }}"></div>
+  <div><label for="r-subj">{{ t('lbl.subject') }}</label>
+    <select id="r-subj" name="subject"><option value="">{{ t('lbl.all') }}</option>
+      {% for s in subjects %}<option value="{{ s.id }}" {{ 'selected' if subject_id == s.id }}>{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+  <div><button class="btn btn-primary" type="submit">{{ t('btn.filter') }}</button></div>
+</form>
+
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ d.students }}</div><div class="lbl">{{ t('ae.students') }}</div></div>
+  <div class="card stat"><div class="num">{{ d.new_users }}</div><div class="lbl">{{ t('ae.new_registrations') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(d.attendance_pct) }}</div><div class="lbl">{{ t('ae.attendance_30') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(d.homework_pct) }}</div><div class="lbl">{{ t('ae.homework_30') }}</div></div>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <h2>{{ t('ae.attendance') }}</h2>
+    {% for r in att %}
+      {% set total = (r.present or 0) + (r.late or 0) + (r.excused or 0) + (r.absent or 0) %}
+      {% set good = (r.present or 0) + (r.late or 0) %}
+      <div class="stack">
+        <strong>{{ r.name|subject(r.code) }}</strong>
+        <meter min="0" max="{{ total if total else 1 }}" value="{{ good }}" aria-label="{{ t('ae.attendance') }}">{{ good }}/{{ total }}</meter>
+        <div class="muted small">{{ t('status.present') }} {{ r.present or 0 }} · {{ t('status.late') }} {{ r.late or 0 }} · {{ t('status.excused') }} {{ r.excused or 0 }} · {{ t('status.absent') }} {{ r.absent or 0 }}
+          · {{ (100 * good / total)|round|int if total else 0 }}%</div>
+      </div>
+    {% else %}{{ m.empty() }}{% endfor %}
+  </div>
+
+  <div class="card">
+    <h2>{{ t('ae.homework') }}</h2>
+    {% for r in hw %}
+      <div class="stack">
+        <strong>{{ r.name|subject(r.code) }}</strong>
+        <progress max="{{ r.submitted if r.submitted else 1 }}" value="{{ (r.submitted or 0) - (r.late or 0) }}" aria-label="{{ t('ae.on_time') }}"></progress>
+        <div class="muted small">{{ t('ae.submitted') }} {{ r.submitted or 0 }} · {{ t('ae.late_n') }} {{ r.late or 0 }} · {{ t('ae.avg_score') }} {{ r.avg_score if r.avg_score is not none else '—' }}</div>
+      </div>
+    {% else %}{{ m.empty() }}{% endfor %}
+  </div>
+
+  <div class="card">
+    <h2>{{ t('ae.battles') }}</h2>
+    {% for r in bt %}
+      <div class="stack">
+        <strong>{{ r.name|subject(r.code) }}</strong>
+        <meter min="0" max="{{ r.games if r.games else 1 }}" value="{{ r.flagged or 0 }}" low="{{ 1 }}" aria-label="{{ t('ae.flags') }}">{{ r.flagged or 0 }}</meter>
+        <div class="muted small">{{ t('ae.games') }} {{ r.games }} · {{ t('ae.flags') }} {{ r.flagged or 0 }}</div>
+      </div>
+    {% else %}{{ m.empty() }}{% endfor %}
+  </div>
+
+  <div class="card">
+    <h2>{{ t('ae.top_students') }}</h2>
+    {% if top %}
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>{{ t('lbl.student') }}</th><th>{{ t('lbl.score') }}</th><th>XP</th></tr></thead>
+      <tbody>{% for r in top %}<tr><td>{{ r.rank }}</td><td>{{ r.name }}</td><td>{{ r.value }}</td><td>{{ r.xp }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% else %}{{ m.empty() }}{% endif %}
+  </div>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <h2>{{ t('ae.finance_month') }}</h2>
+    {% set f = d.finance %}
+    {% set top_amount = [f.income, f.expenses, f.debt, 1]|max %}
+    {% for key, val in [('income', f.income), ('expenses', f.expenses), ('debt', f.debt)] %}
+      <div class="stack"><div class="row spread"><span>{{ t('ae.' ~ key) }}</span><strong>{{ val|money }}</strong></div>
+        <meter min="0" max="{{ top_amount }}" value="{{ val }}" aria-label="{{ t('ae.' ~ key) }}">{{ val }}</meter></div>
+    {% endfor %}
+    <p><strong>{{ t('ae.profit') }}:</strong> <span class="{{ 'pos' if f.profit >= 0 else 'neg' }}">{{ f.profit|money }}</span></p>
+    {% if f.by_group %}
+    <div class="table-wrap"><table>
+      <thead><tr><th>{{ t('lbl.group') }}</th><th>{{ t('ae.income') }}</th></tr></thead>
+      <tbody>{% for r in f.by_group %}<tr><td>{{ r.group_name }}</td><td class="nowrap">{{ r.total|money }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>{{ t('ae.students_by_subject') }}</h2>
+    {% for r in d.by_subject %}
+      <div class="stack"><div class="row spread"><span>{{ r.name|subject(r.code) }}</span><strong>{{ r.students }}</strong></div>
+        <meter min="0" max="{{ d.students if d.students else 1 }}" value="{{ r.students }}" aria-label="{{ r.name|subject(r.code) }}">{{ r.students }}</meter></div>
+    {% else %}{{ m.empty() }}{% endfor %}
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/print.js') }}" defer></script>{% endblock %}

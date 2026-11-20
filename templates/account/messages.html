@@ -1,0 +1,22 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.messages') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>💬 {{ t('nav.messages') }}</h1>
+<div class="grid g2">
+  <div class="card"><h2>{{ t('msg.conversations') }}</h2>
+    <ul class="list">
+    {% for c in convs %}
+      <li class="row spread"><a href="{{ url_for('account.thread', other_id=c.user.id) }}"><strong>{{ c.name }}</strong></a>
+        <span>{% if c.unread %}<span class="count">{{ c.unread }}</span>{% endif %}</span>
+        <span class="muted small break">{{ c.last.body[:60] }}</span></li>
+    {% else %}<li>{{ m.empty() }}</li>{% endfor %}
+    </ul></div>
+  <div class="card"><h2>{{ t('msg.new_message') }}</h2>
+    <ul class="list">
+    {% for u in contacts[:60] %}
+      <li><a href="{{ url_for('account.thread', other_id=u.id) }}">{{ user_name(u) }}</a> <span class="badge">{{ t('role.' ~ u.role) }}</span></li>
+    {% else %}<li>{{ m.empty() }}</li>{% endfor %}
+    </ul></div>
+</div>
+{% endblock %}

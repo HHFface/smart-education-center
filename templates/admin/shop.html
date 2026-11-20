@@ -1,0 +1,68 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.shop') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ t('nav.shop') }}</h1>
+
+<div class="card">
+  <h2>{{ t('ae.orders') }}</h2>
+  {% if orders %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>{{ t('lbl.student') }}</th><th>{{ t('ae.item') }}</th><th>{{ t('lbl.price') }}</th><th>{{ t('lbl.date') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('lbl.actions') }}</th></tr></thead>
+    <tbody>
+    {% for o in orders %}
+      <tr><td>{{ o.id }}</td><td>{{ names(o) }}</td><td>{{ o.item_name }}</td><td class="nowrap">{{ o.price }} 🪙</td><td class="nowrap">{{ o.created_at|dt }}</td>
+        <td>{{ m.badge(o.status) }}</td>
+        <td>{% if o.status == 'pending' %}<div class="row">
+          <form method="post" action="{{ url_for('admin.shop') }}" class="inline-form">{{ m.csrf() }}
+            <input type="hidden" name="action" value="fulfilled"><input type="hidden" name="order_id" value="{{ o.id }}">
+            <button class="btn btn-sm btn-ok" type="submit">{{ t('ae.fulfil') }}</button></form>
+          <form method="post" action="{{ url_for('admin.shop') }}" class="inline-form" data-confirm="{{ t('ae.confirm_cancel_order') }}">{{ m.csrf() }}
+            <input type="hidden" name="action" value="cancelled"><input type="hidden" name="order_id" value="{{ o.id }}">
+            <button class="btn btn-sm btn-danger" type="submit">{{ t('btn.cancel') }}</button></form>
+        </div>{% else %}—{% endif %}</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+
+<div class="card">
+  <h2>{{ t('ae.new_item') }}</h2>
+  <form method="post" action="{{ url_for('admin.shop') }}" class="form-grid">{{ m.csrf() }}
+    <input type="hidden" name="action" value="item">
+    <div><label for="i-name">{{ t('lbl.name') }}</label><input class="input" id="i-name" name="name" required maxlength="100"></div>
+    <div><label for="i-price">{{ t('ae.price_coins') }}</label><input class="input" id="i-price" name="price" type="number" min="0" step="1" required></div>
+    <div><label for="i-stock">{{ t('ae.stock') }}</label><input class="input" id="i-stock" name="stock" type="number" min="0" step="1" placeholder="{{ t('ae.unlimited') }}"></div>
+    <div class="wide"><label for="i-desc">{{ t('ae.description') }}</label><input class="input" id="i-desc" name="description" maxlength="300"></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+</div>
+
+<div class="card">
+  <h2>{{ t('ae.items') }}</h2>
+  {% if items %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.name') }}</th><th>{{ t('ae.price_coins') }}</th><th>{{ t('ae.stock') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('lbl.actions') }}</th></tr></thead>
+    <tbody>
+    {% for i in items %}
+      <tr>
+        <td><strong>{{ i.name }}</strong>{% if i.description %}<div class="muted small">{{ i.description }}</div>{% endif %}</td>
+        <td colspan="2">
+          <form method="post" action="{{ url_for('admin.shop') }}" class="row">{{ m.csrf() }}
+            <input type="hidden" name="action" value="update"><input type="hidden" name="item_id" value="{{ i.id }}">
+            <label class="sr-only" for="up-{{ i.id }}">{{ t('ae.price_coins') }}</label>
+            <input class="input" id="up-{{ i.id }}" name="price" type="number" min="0" value="{{ i.price_coins }}" required>
+            <label class="sr-only" for="us-{{ i.id }}">{{ t('ae.stock') }}</label>
+            <input class="input" id="us-{{ i.id }}" name="stock" type="number" min="0" value="{{ i.stock if i.stock is not none else '' }}" placeholder="{{ t('ae.unlimited') }}">
+            <button class="btn btn-sm" type="submit">{{ t('btn.save') }}</button>
+          </form></td>
+        <td>{% if i.is_active %}<span class="badge b-ok">{{ t('ae.active') }}</span>{% else %}<span class="badge">{{ t('ae.inactive') }}</span>{% endif %}</td>
+        <td><form method="post" action="{{ url_for('admin.shop') }}" class="inline-form">{{ m.csrf() }}
+          <input type="hidden" name="action" value="toggle"><input type="hidden" name="item_id" value="{{ i.id }}">
+          <button class="btn btn-sm" type="submit">{{ t('ae.deactivate') if i.is_active else t('ae.activate') }}</button></form></td>
+      </tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ grp.name }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="row spread"><h1>👥 {{ grp.name }}</h1><a class="btn btn-sm" href="{{ url_for('teacher.dashboard') }}">← {{ t('btn.back') }}</a></div>
+<p class="muted">{{ grp.course_name }}{% if grp.room %} · {{ t('lbl.room') }}: {{ grp.room }}{% endif %}</p>
+<div class="card"><h2>{{ t('tc.students') }}</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>{{ t('lbl.student') }}</th><th>XP</th><th>Coin</th><th>{{ t('nav.attendance') }}</th><th>{{ t('nav.homework') }}</th><th>{{ t('tc.rank') }}</th></tr></thead>
+    <tbody>{% for r in rows %}
+      <tr><td>{{ loop.index }}</td>
+        <td><a href="{{ url_for('teacher.student', student_id=r.user.id) }}">{{ r.name }}</a></td>
+        <td>{{ r.stats.xp }}</td><td>{{ r.stats.coins }}</td>
+        <td>{{ m.pct(r.att.pct) }}</td><td>{{ m.pct(r.hw.pct) }}</td>
+        <td>{% if r.rank %}#{{ r.rank }}{% else %}<span class="muted">—</span>{% endif %}</td></tr>
+    {% else %}<tr><td colspan="7">{{ m.empty() }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</div>
+<div class="card"><h2>📣 {{ t('tc.announce') }}</h2>
+  <form method="post" action="{{ url_for('teacher.announce') }}" class="stack">{{ m.csrf() }}
+    <input type="hidden" name="group_id" value="{{ grp.id }}">
+    <div><label for="ann">{{ t('tc.announce_text') }}</label><textarea id="ann" name="text" maxlength="500" required></textarea>
+      <span class="muted small">{{ t('tc.announce_hint') }}</span></div>
+    <button class="btn btn-primary" type="submit" data-confirm="{{ t('msg.confirm') }}">{{ t('btn.send') }}</button>
+  </form>
+</div>
+{% endblock %}

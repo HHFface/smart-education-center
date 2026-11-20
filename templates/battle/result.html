@@ -1,0 +1,56 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('bt.result') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="arena">
+<h1>⚔️ {{ t('bt.result') }} — {{ subject.name|subject(subject.code) }}</h1>
+{% if battle.status == 'finished' %}
+  {% set me = players|selectattr('id', 'equalto', me_id)|first %}
+  {% set other = players|rejectattr('id', 'equalto', me_id)|first %}
+  {% if winner_id is none %}<div class="flash flash-info">🤝 {{ t('bt.draw') }}</div>
+  {% elif winner_id == me_id %}<div class="flash flash-success">🏆 {{ t('bt.you_won') }}</div>
+  {% else %}<div class="flash flash-error">{{ t('bt.you_lost', name=other.name) }}</div>{% endif %}
+  <div class="card">
+    <div class="vs">
+      <div class="side"><strong>{{ me.name }}</strong><div class="score">{{ me.correct }}/{{ me.total }}</div></div>
+      <div class="mid">VS</div>
+      <div class="side"><strong>{{ other.name }}</strong><div class="score">{{ other.correct }}/{{ other.total }}</div></div>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>{{ me.name }}</th><th>{{ other.name }}</th></tr></thead>
+      <tbody>
+        <tr><td>{{ t('bt.correct_count') }}</td><td>{{ me.correct }}</td><td>{{ other.correct }}</td></tr>
+        <tr><td>{{ t('bt.wrong_count') }}</td><td>{{ me.wrong }}</td><td>{{ other.wrong }}</td></tr>
+        <tr><td>{{ t('bt.answer_time') }}</td><td>{{ (me.time_ms / 1000)|round(1) }} s</td><td>{{ (other.time_ms / 1000)|round(1) }} s</td></tr>
+        <tr><td>{{ t('bt.rating_change') }}</td>
+          <td>{% if me.after is not none %}{{ me.before }} → {{ me.after }} {{ m.delta(me.after - me.before) }}{% else %}—{% endif %}</td>
+          <td>{% if other.after is not none %}{{ other.before }} → {{ other.after }} {{ m.delta(other.after - other.before) }}{% else %}—{% endif %}</td></tr>
+      </tbody>
+    </table></div>
+    {% if duration is not none %}<p class="muted small">{{ t('bt.duration') }}: {{ duration // 60 }}:{{ '%02d'|format(duration % 60) }}</p>{% endif %}
+  </div>
+  {% if review %}
+  <div class="card"><h2>{{ t('bt.review') }}</h2>
+    {% for r in review %}
+    <div class="review">
+      <p><strong>{{ r.index }}. {{ r.text }}</strong></p>
+      <ul class="list">{% for o in r.options %}<li>{% if loop.index0 == r.correct %}<span class="pos">✔ {{ o }}</span>{% elif r.choice is not none and loop.index0 == r.choice %}<span class="neg">✖ {{ o }}</span>{% else %}{{ o }}{% endif %}</li>{% endfor %}</ul>
+      {% if r.choice is none %}<p class="muted small">{{ t('bt.no_answer') }}</p>{% endif %}
+      {% if r.explanation %}<p class="explain">{{ r.explanation }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class="card"><details><summary>{{ t('bt.dispute') }}</summary>
+    <form method="post" action="{{ url_for('battle.dispute', battle_id=battle.id) }}" class="stack">{{ m.csrf() }}
+      <label for="dmsg">{{ t('bt.dispute_text') }}</label><textarea id="dmsg" name="message" maxlength="1000" required></textarea>
+      <button class="btn btn-primary" type="submit">{{ t('btn.send') }}</button></form></details></div>
+{% else %}
+  <div class="card stack">
+    <p>{{ m.badge(battle.status) }}</p>
+    <p>{{ t('bt.end.' ~ battle.status) }}</p>
+  </div>
+{% endif %}
+<div class="row"><a class="btn btn-primary" href="{{ url_for('battle.hub') }}">{{ t('bt.back_to_hub') }}</a><a class="btn" href="{{ url_for('battle.center') }}">{{ t('bt.center') }}</a></div>
+</div>
+{% endblock %}

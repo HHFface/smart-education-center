@@ -1,0 +1,30 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.vocabulary') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>📚 {{ t('nav.vocabulary') }}</h1>
+<div class="card">
+  <h2>{{ t('tc.add_word') }}</h2>
+  {% if subjects %}
+  <form method="post" class="form-grid">{{ m.csrf() }}
+    <div><label for="v-sub">{{ t('lbl.subject') }}</label>
+      <select id="v-sub" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+    <div><label for="v-lvl">{{ t('lbl.level') }}</label><select id="v-lvl" name="level">{% for l in levels %}<option>{{ l }}</option>{% endfor %}</select></div>
+    <div><label for="v-word">{{ t('tc.word') }}</label><input class="input" id="v-word" name="word" maxlength="100" required></div>
+    <div><label for="v-tr">{{ t('tc.translation') }}</label><input class="input" id="v-tr" name="translation" maxlength="200" required></div>
+    <div><label for="v-pr">{{ t('tc.pronunciation') }}</label><input class="input" id="v-pr" name="pronunciation" maxlength="100"></div>
+    <div><label for="v-au">{{ t('tc.audio_url') }}</label><input class="input" id="v-au" name="audio_url" type="url" maxlength="300"></div>
+    <div class="wide"><label for="v-ex">{{ t('tc.example') }}</label><input class="input" id="v-ex" name="example" maxlength="300"></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+<div class="card">
+  {% if words %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('tc.word') }}</th><th>{{ t('tc.translation') }}</th><th>{{ t('lbl.level') }}</th><th>{{ t('tc.example') }}</th></tr></thead>
+    <tbody>{% for w in words %}<tr><td>{{ w.word }}{% if w.pronunciation %} <span class="muted small">/{{ w.pronunciation }}/</span>{% endif %}</td><td>{{ w.translation }}</td><td>{{ w.level }}</td><td class="break">{{ w.example or '—' }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

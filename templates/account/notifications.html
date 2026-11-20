@@ -1,0 +1,21 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.notifications') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="row spread"><h1>🔔 {{ t('nav.notifications') }}</h1>
+  <form method="post" action="{{ url_for('account.notifications_read') }}">{{ m.csrf() }}<button class="btn btn-sm" type="submit">{{ t('btn.mark_all_read') }}</button></form></div>
+<div class="card">
+  {% for n in items %}
+    <div class="notif {{ 'unread' if not n.is_read }}">
+      {% if not n.is_read %}<span class="dot" aria-label="{{ t('lbl.unread') }}"></span>{% else %}<span class="dot"></span>{% endif %}
+      <div>
+        {% if n.link %}
+          <form method="post" action="{{ url_for('account.notifications_read') }}" class="inline-form">{{ m.csrf() }}<input type="hidden" name="id" value="{{ n.id }}">
+            <button class="btn btn-sm" type="submit">{{ n.text }}</button></form>
+        {% else %}{{ n.text }}{% endif %}
+        <div class="muted small">{{ n.created_at|dt }}</div>
+      </div>
+    </div>
+  {% else %}{{ m.empty() }}{% endfor %}
+</div>
+{% endblock %}

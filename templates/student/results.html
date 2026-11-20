@@ -1,0 +1,56 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.results') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>📊 {{ t('nav.results') }}</h1>
+{% for s in subjects %}
+{% set ov = overview[s.id] %}
+<div class="card">
+  <h2>{{ s.name|subject(s.code) }} — {{ t('st.skills') }}</h2>
+  {% if ov.rows|selectattr('score')|list %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('st.skill') }}</th><th>{{ t('st.now') }}</th><th>{{ t('st.before') }}</th><th>{{ t('st.progress') }}</th></tr></thead>
+    <tbody>{% for r in ov.rows %}
+      <tr>
+        <td>{{ t('st.skill.' ~ r.skill) }}{% if r.skill == ov.strongest %} <span class="badge b-ok">{{ t('st.strong') }}</span>{% elif r.skill == ov.weakest %} <span class="badge b-warn">{{ t('st.weak') }}</span>{% endif %}</td>
+        <td>{% if r.score is not none %}<meter min="0" max="100" value="{{ r.score }}" aria-label="{{ t('st.skill.' ~ r.skill) }}"></meter> {{ r.score }}%{% else %}—{% endif %}</td>
+        <td>{% if r.previous is not none %}{{ r.previous }}%{% else %}—{% endif %}</td>
+        <td>{% if r.score is not none and r.previous is not none %}{{ m.delta(r.score - r.previous) }}{% else %}—{% endif %}</td>
+      </tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% else %}<div class="card">{{ m.empty() }}</div>{% endfor %}
+
+<div class="grid g2">
+  <div class="card">
+    <h2>{{ t('st.official_exams') }}</h2>
+    {% if official %}
+    <ul class="list">{% for e in official %}
+      <li><strong>{{ e.exam_type }}</strong> · {{ e.subject_name|subject(e.subject_code) }}<br>
+        {{ e.score|round(1) }} / {{ e.max_score|round(0)|int }} · <span class="muted">{{ e.taken_on|dated }}</span>{% if e.title %} · {{ e.title }}{% endif %}
+        {% if e.comment %}<br><span class="muted small">{{ e.comment }}</span>{% endif %}</li>
+    {% endfor %}</ul>
+    {% else %}{{ m.empty() }}{% endif %}
+  </div>
+  <div class="card">
+    <h2>{{ t('st.internal_exams') }}</h2>
+    {% if internal %}
+    <ul class="list">{% for e in internal %}
+      <li><strong>{{ e.title or e.exam_type }}</strong> · {{ e.subject_name|subject(e.subject_code) }}<br>
+        {{ e.score|round(1) }} / {{ e.max_score|round(0)|int }} · <span class="muted">{{ e.taken_on|dated }}</span>
+        {% if e.comment %}<br><span class="muted small">{{ e.comment }}</span>{% endif %}</li>
+    {% endfor %}</ul>
+    {% else %}{{ m.empty() }}{% endif %}
+  </div>
+</div>
+<div class="card">
+  <h2>{{ t('st.checked_homework') }}</h2>
+  {% if submissions %}
+  <ul class="list">{% for s in submissions %}
+    <li><strong>{{ s.title }}</strong> — {{ s.score }}/100 <span class="muted small">· {{ s.checked_at|dt }}</span>{% if s.feedback %}<br><span class="muted">{{ s.feedback }}</span>{% endif %}</li>
+  {% endfor %}</ul>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

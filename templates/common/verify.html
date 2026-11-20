@@ -1,0 +1,25 @@
+{% extends "common/base.html" %}
+{% block title %}{{ t('cert.verify_title') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="auth">
+  <div class="card">
+    <h1>{{ t('cert.verify_title') }}</h1>
+    {% if cert and cert.revoked %}
+      <p class="flash flash-error">✖ {{ t('cert.revoked_notice') }}</p>
+      <ul class="list"><li><span class="muted">{{ t('cert.number') }}:</span> {{ cert.number }}</li></ul>
+    {% elif cert %}
+      <p class="flash flash-success">✔ {{ t('cert.valid') }}</p>
+      <ul class="list">
+        <li><span class="muted">{{ t('cert.holder') }}:</span> <strong>{{ holder }}</strong></li>
+        <li><span class="muted">{{ t('lbl.course') }}:</span> {{ cert.course }}</li>
+        <li><span class="muted">{{ t('lbl.subject') }}:</span> {{ cert.subject_name|subject(cert.subject_code) }}</li>
+        <li><span class="muted">{{ t('lbl.level') }}:</span> {{ cert.level }}</li>
+        <li><span class="muted">{{ t('cert.number') }}:</span> {{ cert.number }}</li>
+        <li><span class="muted">{{ t('lbl.date') }}:</span> {{ cert.issued_at|dt('%d.%m.%Y') }}</li>
+      </ul>
+    {% else %}
+      <p class="flash flash-error">✖ {{ t('cert.invalid') }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.vocabulary') }} · {{ app_name }}{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">{% endblock %}
+{% block content %}
+<h1>📚 {{ t('nav.vocabulary') }}</h1>
+{% if subjects|length > 1 %}
+<form method="get" class="row">
+  <label class="sr-only" for="subj">{{ t('lbl.subject') }}</label>
+  <select id="subj" name="subject" data-autosubmit>{% for s in subjects %}<option value="{{ s.id }}" {{ 'selected' if s.id == subject_id }}>{{ s.name|subject(s.code) }}</option>{% endfor %}</select>
+</form>
+{% endif %}
+{% if stats %}
+<div class="grid g3">
+  <div class="card stat"><div class="num">{{ stats.total }}</div><div class="lbl">{{ t('st.words_total') }}</div></div>
+  <div class="card stat"><div class="num">{{ stats.started }}</div><div class="lbl">{{ t('st.words_started') }}</div></div>
+  <div class="card stat"><div class="num">{{ stats.learned }}</div><div class="lbl">{{ t('st.words_learned') }}</div></div>
+</div>
+{% endif %}
+{% if words %}
+<div class="card flash-card" id="vocab" data-url="{{ url_for('student.vocabulary_answer') }}" data-total="{{ words|length }}"
+     data-t-show="{{ t('st.show_answer') }}" data-t-done="{{ t('st.vocab_done') }}" data-t-error="{{ t('st.vocab_error') }}">
+  <p class="muted small" id="vocab-progress" aria-live="polite"></p>
+  {% for w in words %}
+  <section class="vocab-item hidden" data-id="{{ w.id }}">
+    <div class="vocab-word">{{ w.word }}</div>
+    {% if w.pronunciation %}<p class="muted">/{{ w.pronunciation }}/</p>{% endif %}
+    {% if w.audio_url %}<audio controls preload="none" src="{{ w.audio_url }}"></audio>{% endif %}
+    <div class="vocab-back hidden">
+      <p class="qtext">{{ w.translation }}</p>
+      {% if w.example %}<p class="muted">{{ w.example }}</p>{% endif %}
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" type="button" data-act="show">{{ t('st.show_answer') }}</button>
+      <button class="btn btn-ok hidden" type="button" data-act="known">✔ {{ t('st.i_knew') }}</button>
+      <button class="btn btn-danger hidden" type="button" data-act="unknown">✖ {{ t('st.i_didnt') }}</button>
+    </div>
+  </section>
+  {% endfor %}
+  <p class="hidden" id="vocab-finish"></p>
+</div>
+{% else %}<div class="card">{{ t('st.vocab_none') }}</div>{% endif %}
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/vocab.js') }}" defer></script>{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.goals') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🎯 {{ t('nav.goals') }}</h1>
+{% for item in goals %}
+<div class="card stack">
+  <div class="row spread"><h2>{{ item.goal.title }}</h2>
+    <span class="badge {{ 'b-ok' if item.goal.status == 'done' else 'b-info' }}">{{ t('st.goal.' ~ item.goal.status) }}</span></div>
+  <p class="muted small">{% if item.goal.subject_name %}{{ item.goal.subject_name }} · {% endif %}{% if item.goal.target_date %}{{ t('st.target_date') }}: {{ item.goal.target_date|dated }}{% endif %}</p>
+  <progress max="100" value="{{ item.pct }}" aria-label="{{ item.goal.title }}"></progress>
+  <p class="small muted">{{ item.done }}/{{ item.total }} ({{ item.pct }}%)</p>
+  {% if item.tasks %}
+  <ul class="list">{% for task in item.tasks %}
+    <li>
+      <form method="post" class="row">{{ m.csrf() }}<input type="hidden" name="task_id" value="{{ task.id }}">
+        <button class="btn btn-sm {{ 'btn-ok' if task.done }}" type="submit" aria-pressed="{{ 'true' if task.done else 'false' }}">{{ '✔' if task.done else '○' }}</button>
+        <span class="{{ 'muted' if task.done }}">{{ task.title }}</span>
+        {% if task.due_on %}<span class="muted small">· {{ task.due_on|dated }}</span>{% endif %}
+      </form>
+    </li>
+  {% endfor %}</ul>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% else %}<div class="card">{{ t('st.goals_none') }}</div>{% endfor %}
+{% endblock %}

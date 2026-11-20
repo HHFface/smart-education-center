@@ -1,0 +1,54 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.users') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>👥 {{ t('nav.users') }}</h1>
+
+<div class="card">
+  <form method="get" action="{{ url_for('admin.users') }}" class="form-grid">
+    <div><label for="f-q">{{ t('btn.search') }}</label><input class="input" id="f-q" name="q" value="{{ q }}" placeholder="{{ t('ad.users.search_hint') }}"></div>
+    <div><label for="f-role">{{ t('ad.users.role') }}</label>
+      <select id="f-role" name="role"><option value="">{{ t('lbl.all') }}</option>
+        {% for r in roles %}<option value="{{ r }}" {{ 'selected' if r == role }}>{{ t('role.' ~ r) }}</option>{% endfor %}</select></div>
+    <div><button class="btn btn-primary" type="submit">{{ t('btn.filter') }}</button>
+      {% if q or role %}<a class="btn" href="{{ url_for('admin.users') }}">{{ t('ad.users.reset') }}</a>{% endif %}</div>
+  </form>
+</div>
+
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.name') }}</th><th>{{ t('ad.users.username') }}</th><th>{{ t('ad.users.role') }}</th><th>{{ t('ad.users.phone') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('ad.users.created') }}</th><th><span class="sr-only">{{ t('lbl.actions') }}</span></th></tr></thead>
+    <tbody>
+    {% for u in rows %}
+      <tr>
+        <td>{{ names(u) }}</td><td>{{ u.username }}</td><td>{{ t('role.' ~ u.role) }}</td><td>{{ u.phone or '' }}</td>
+        <td>{% if u.is_active %}<span class="badge b-ok">{{ t('ad.users.active') }}</span>{% else %}<span class="badge b-bad">{{ t('ad.users.blocked') }}</span>{% endif %}</td>
+        <td class="nowrap">{{ u.created_at|dt }}</td>
+        <td><a class="btn btn-sm" href="{{ url_for('admin.user_detail', user_id=u.id) }}">{{ t('btn.open') }}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+
+<div class="card"><h2>➕ {{ t('ad.users.create') }}</h2>
+  <form method="post" action="{{ url_for('admin.users') }}" class="stack">{{ m.csrf() }}
+    <div class="form-grid">
+      <div><label for="n-un">{{ t('ad.users.username') }}</label><input class="input" id="n-un" name="username" required autocomplete="off"></div>
+      <div><label for="n-pw">{{ t('ad.users.password') }}</label><input class="input" id="n-pw" name="password" type="password" minlength="8" required autocomplete="new-password"></div>
+      <div><label for="n-role">{{ t('ad.users.role') }}</label>
+        <select id="n-role" name="role">{% for r in roles %}<option value="{{ r }}" {{ 'selected' if r == 'student' }}>{{ t('role.' ~ r) }}</option>{% endfor %}</select></div>
+      <div><label for="n-fn">{{ t('ad.users.first_name') }}</label><input class="input" id="n-fn" name="first_name" required></div>
+      <div><label for="n-ln">{{ t('ad.users.last_name') }}</label><input class="input" id="n-ln" name="last_name"></div>
+      <div><label for="n-ph">{{ t('ad.users.phone') }}</label><input class="input" id="n-ph" name="phone" type="tel"></div>
+      <div><label for="n-em">{{ t('ad.users.email') }}</label><input class="input" id="n-em" name="email" type="email"></div>
+      <div><label for="n-bd">{{ t('ad.users.birth_date') }}</label><input class="input" id="n-bd" name="birth_date" type="date"></div>
+      <div><label for="n-lang">{{ t('ad.users.lang') }}</label>
+        <select id="n-lang" name="lang">{% for code, label in LANGS %}<option value="{{ code }}" {{ 'selected' if code == 'uz' }}>{{ label }}</option>{% endfor %}</select></div>
+    </div>
+    <p class="muted small">{{ t('ad.users.password_hint') }}</p>
+    <button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button>
+  </form>
+</div>
+{% endblock %}

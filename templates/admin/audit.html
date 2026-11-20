@@ -1,0 +1,25 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.audit') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🗂 {{ t('nav.audit') }}</h1>
+<p class="muted">{{ t('ad.audit.hint') }}</p>
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.date') }}</th><th>{{ t('ad.audit.actor') }}</th><th>{{ t('ad.audit.action') }}</th><th>{{ t('ad.audit.entity') }}</th><th>{{ t('ad.audit.detail') }}</th><th>IP</th></tr></thead>
+    <tbody>
+    {% for a in rows %}
+      <tr>
+        <td class="nowrap">{{ a.created_at|dt }}</td>
+        <td>{{ a.username or '—' }}</td>
+        <td><code>{{ a.action }}</code></td>
+        <td>{% if a.entity %}{{ a.entity }}{% if a.entity_id %} #{{ a.entity_id }}{% endif %}{% else %}—{% endif %}</td>
+        <td class="small break">{{ a.detail or '' }}</td>
+        <td class="small">{{ a.ip or '' }}</td>
+      </tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

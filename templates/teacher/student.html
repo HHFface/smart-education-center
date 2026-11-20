@@ -1,0 +1,29 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ name }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ name }}</h1>
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ summary.xp }}</div><div class="lbl">XP</div></div>
+  <div class="card stat"><div class="num">🪙 {{ summary.coins }}</div><div class="lbl">Coin</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(summary.attendance.pct) }}</div><div class="lbl">{{ t('st.attendance_rate') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(summary.homework.pct) }}</div><div class="lbl">{{ t('st.hw_rate') }}</div></div>
+</div>
+{% for s in subjects %}{% set ov = skills[s.id] %}
+<div class="card"><h2>{{ s.name|subject(s.code) }}</h2>
+  <ul class="list">{% for r in ov.rows %}<li>{{ t('st.skill.' ~ r.skill) }}: {% if r.score is not none %}<meter min="0" max="100" value="{{ r.score }}"></meter> {{ r.score }}%{% else %}—{% endif %}</li>{% endfor %}</ul>
+</div>
+{% endfor %}
+<div class="grid g2">
+  <div class="card"><h2>{{ t('st.points_history') }}</h2>
+    {% if log %}<ul class="list">{% for r in log %}<li>{{ r.created_at|dt }} · {{ 'XP' if r.kind == 'xp' else 'Coin' }} {{ m.delta(r.amount) }} · {{ t('reason.' ~ r.reason_code) }}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+  <div class="card"><h2>{{ t('nav.battle') }}</h2>
+    {% if battles %}<ul class="list">{% for b in battles %}<li>{{ b.date|dt }} · {{ b.opponent }} · {{ m.badge(b.outcome) }} {{ b.score }}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+</div>
+<div class="grid g2">
+  <div class="card"><h2>{{ t('nav.exams') }}</h2>
+    {% if exams %}<ul class="list">{% for e in exams %}<li>{{ e.taken_on|dated }} · {{ e.subject_name }} · {{ e.exam_type }} · {{ e.score|round(1) }}/{{ e.max_score|round(0)|int }}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+  <div class="card"><h2>{{ t('nav.goals') }}</h2>
+    {% if goals %}<ul class="list">{% for item in goals %}<li>{{ item.goal.title }} — {{ item.pct }}%</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+</div>
+{% endblock %}

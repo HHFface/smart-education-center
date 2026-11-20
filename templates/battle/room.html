@@ -1,0 +1,104 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% set TTS = {'en': 'en-US', 'ru': 'ru-RU', 'ko': 'ko-KR'} %}
+{% set JS_TEXT = {'no_tts': t('bt.js.no_tts'), 'waiting': t('bt.js.waiting'), 'network': t('bt.js.network'), 'start': t('bt.js.start'),
+  'finishing': t('bt.js.finishing'), 'no_answer': t('bt.js.no_answer'), 'correct': t('bt.js.correct'), 'wrong': t('bt.js.wrong')} %}
+{% block title %}{{ t('nav.battle') }} · {{ app_name }}{% endblock %}
+{% block body_attrs %}{% if b.status != 'active' %}data-refresh="12"{% endif %}{% endblock %}
+{% block content %}
+{% set me_id = current_user.id %}
+<div class="arena" id="arena" data-status="{{ b.status }}" data-state="{{ url_for('battle.api_state', battle_id=b.id) }}"
+     data-answer="{{ url_for('battle.api_answer', battle_id=b.id) }}" data-result="{{ url_for('battle.result', battle_id=b.id) }}"
+     data-tts-lang="{{ TTS.get(subject.code, '') }}" data-i18n='{{ JS_TEXT|tojson }}'>
+  <h1>⚔️ {{ t('bt.versus', a=current_user.first_name or current_user.username, b=opp_name) }}</h1>
+  <div class="card">
+    <div class="row spread">
+      <div><strong>{{ opp_name }}</strong> <span class="league">{{ opp_league }}</span><br>
+        <span class="muted small">{{ t('bt.rating') }}: {{ opp_rating.rating }} · {{ opp_rating.wins }} {{ t('bt.wins') }}</span></div>
+      <div class="right">{{ m.badge(b.status) }}<br><span class="muted small">{{ subject.name|subject(subject.code) }} · {{ t('bt.kind.' ~ b.kind) }}</span></div>
+    </div>
+  </div>
+
+{% if b.status == 'pending' %}
+  <div class="card stack">
+  {% if me_is_challenger %}
+    <p aria-live="polite">⏳ {{ t('bt.waiting_accept', name=opp_name) }}</p>
+    <p class="muted small">{{ t('bt.expires_at') }}: {{ b.expires_at|dt }}</p>
+    <form method="post" action="{{ url_for('battle.cancel', battle_id=b.id) }}">{{ m.csrf() }}<button class="btn btn-danger" type="submit" data-confirm="{{ t('bt.cancel_confirm') }}">{{ t('btn.cancel') }}</button></form>
+  {% else %}
+    <p>{{ t('bt.invited_you', name=opp_name) }}</p>
+    <p class="muted small">{{ t('bt.expires_at') }}: {{ b.expires_at|dt }}</p>
+    <div class="row">
+      <form method="post" action="{{ url_for('battle.accept', battle_id=b.id) }}">{{ m.csrf() }}<button class="btn btn-primary" type="submit">{{ t('bt.accept') }}</button></form>
+      <form method="post" action="{{ url_for('battle.decline', battle_id=b.id) }}">{{ m.csrf() }}<button class="btn btn-danger" type="submit">{{ t('bt.decline') }}</button></form>
+    </div>
+    <details><summary>{{ t('bt.propose_other') }}</summary>
+      <form method="post" action="{{ url_for('battle.propose', battle_id=b.id) }}" class="form-grid">{{ m.csrf() }}
+        {% for i in (1, 2, 3) %}<div><label for="s{{ i }}">{{ t('bt.slot', n=i) }}</label><input class="input" id="s{{ i }}" name="slot{{ i }}" type="datetime-local" {{ 'required' if i == 1 }}></div>{% endfor %}
+        <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.send') }}</button></div>
+      </form>
+    </details>
+  {% endif %}
+  </div>
+
+{% elif b.status == 'counter' %}
+  <div class="card stack">
+    <h2>{{ t('bt.proposed_times') }}</h2>
+    <ul class="list">{% for s in slots %}
+      <li class="row spread"><span>{{ s.starts_at|dt }}</span>
+        {% if b.proposed_by != me_id %}<form method="post" action="{{ url_for('battle.choose', battle_id=b.id) }}">{{ m.csrf() }}<input type="hidden" name="slot_id" value="{{ s.id }}"><button class="btn btn-sm btn-primary" type="submit">{{ t('bt.choose_slot') }}</button></form>{% endif %}</li>
+    {% endfor %}</ul>
+    {% if b.proposed_by != me_id %}
+    <details><summary>{{ t('bt.propose_other') }}</summary>
+      <form method="post" action="{{ url_for('battle.propose', battle_id=b.id) }}" class="form-grid">{{ m.csrf() }}
+        {% for i in (1, 2, 3) %}<div><label for="s{{ i }}">{{ t('bt.slot', n=i) }}</label><input class="input" id="s{{ i }}" name="slot{{ i }}" type="datetime-local" {{ 'required' if i == 1 }}></div>{% endfor %}
+        <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.send') }}</button></div>
+      </form>
+    </details>
+    <form method="post" action="{{ url_for('battle.decline', battle_id=b.id) }}">{{ m.csrf() }}<button class="btn btn-danger" type="submit">{{ t('bt.decline') }}</button></form>
+    {% else %}
+    <p aria-live="polite">⏳ {{ t('bt.waiting_choice', name=opp_name) }}</p>
+    <form method="post" action="{{ url_for('battle.cancel', battle_id=b.id) }}">{{ m.csrf() }}<button class="btn btn-danger" type="submit" data-confirm="{{ t('bt.cancel_confirm') }}">{{ t('btn.cancel') }}</button></form>
+    {% endif %}
+  </div>
+
+{% elif b.status in ('scheduled', 'ready') %}
+  <div class="card stack">
+    {% if b.status == 'scheduled' %}<p>📅 {{ t('bt.scheduled_for') }}: <strong>{{ b.scheduled_at|dt }}</strong></p>{% endif %}
+    {% if lobby_open %}
+      {% if state.me_ready %}
+        <p class="pulse" aria-live="polite">⏳ {{ t('bt.waiting_ready', name=opp_name) }}</p>
+      {% else %}
+        <p>{{ t('bt.lobby_open') }}</p>
+        <form method="post" action="{{ url_for('battle.ready', battle_id=b.id) }}">{{ m.csrf() }}<button class="btn btn-primary btn-block" type="submit">✅ {{ t('bt.ready') }}</button></form>
+      {% endif %}
+      {% if state.opp_ready %}<p class="small muted">{{ t('bt.opp_is_ready', name=opp_name) }}</p>{% endif %}
+      {% if b.lobby_deadline %}<p class="small muted">{{ t('bt.wait_until') }}: {{ b.lobby_deadline|dt('%H:%M') }}</p>{% endif %}
+    {% else %}
+      <p class="muted">{{ t('bt.lobby_soon') }}</p>
+    {% endif %}
+    <form method="post" action="{{ url_for('battle.cancel', battle_id=b.id) }}">{{ m.csrf() }}<button class="btn btn-danger btn-sm" type="submit" data-confirm="{{ t('bt.cancel_confirm') }}">{{ t('btn.cancel') }}</button></form>
+  </div>
+
+{% elif b.status == 'active' %}
+  <div class="card">
+    <div class="vs">
+      <div class="side"><strong>{{ t('bt.you') }}</strong><div class="score" id="b-me">0</div></div>
+      <div class="mid" id="b-qnum">VS</div>
+      <div class="side"><strong>{{ opp_name }}</strong><div class="score" id="b-opp">0</div></div>
+    </div>
+    <div class="countdown hidden" id="b-countdown" aria-live="assertive"></div>
+    <div id="b-play">
+      <progress class="timer" id="b-timer" value="0" max="1000" aria-label="{{ t('bt.timer') }}"></progress>
+      <div class="qtext" id="b-qtext"></div>
+      <div class="passage hidden" id="b-passage"></div>
+      <button class="btn btn-sm hidden" type="button" id="b-listen">🔊 {{ t('bt.listen') }}</button>
+      <div class="options" id="b-options"></div>
+      <p class="muted" id="b-info" aria-live="polite"></p>
+      <div class="explain hidden" id="b-explain"></div>
+    </div>
+  </div>
+{% endif %}
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/battle.js') }}" defer></script>{% endblock %}

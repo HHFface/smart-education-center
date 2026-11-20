@@ -1,0 +1,7 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.schedule') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>📅 {{ t('nav.schedule') }}</h1>
+{{ m.week_view(days, week, today, 'teacher.schedule', 'teacher.attendance_mark') }}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.ai') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🤖 {{ t('nav.ai') }}</h1>
+{% if not enabled %}
+<div class="card"><p>{{ t('st.ai_disabled') }}</p></div>
+{% else %}
+<div class="card stack">
+  <p class="muted">{{ t('st.ai_hint') }}</p>
+  <form method="post" class="stack">{{ m.csrf() }}
+    <label for="q">{{ t('st.ai_question') }}</label>
+    <textarea id="q" name="question" required maxlength="1500">{{ question or '' }}</textarea>
+    <button class="btn btn-primary" type="submit">{{ t('btn.send') }}</button>
+  </form>
+</div>
+{% if answer %}
+<div class="card"><h2>{{ t('st.ai_answer') }}</h2><p class="break">{{ answer|e|replace('\n', '<br>'|safe) }}</p></div>
+{% endif %}
+{% endif %}
+{% endblock %}

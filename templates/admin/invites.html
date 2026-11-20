@@ -1,0 +1,40 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.invites') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>✉️ {{ t('nav.invites') }}</h1>
+
+<div class="card"><h2>{{ t('ad.inv.create') }}</h2>
+  <form method="post" action="{{ url_for('admin.invites') }}" class="stack">{{ m.csrf() }}
+    <div class="form-grid">
+      <div><label for="i-role">{{ t('ad.users.role') }}</label>
+        <select id="i-role" name="role">{% for r in roles %}<option value="{{ r }}" {{ 'selected' if r == 'student' }}>{{ t('role.' ~ r) }}</option>{% endfor %}</select></div>
+      <div><label for="i-days">{{ t('ad.inv.days') }}</label><input class="input" id="i-days" name="days" type="number" min="1" max="60" value="7"></div>
+      <div><label for="i-group">{{ t('ad.inv.group') }}</label>
+        <select id="i-group" name="group_id"><option value="">—</option>{% for g in groups %}<option value="{{ g.id }}">{{ g.name }}</option>{% endfor %}</select></div>
+      <div><label for="i-child">{{ t('ad.inv.child') }}</label><input class="input" id="i-child" name="child" autocomplete="off" placeholder="{{ t('ad.inv.child_hint') }}"></div>
+    </div>
+    <p class="muted small">{{ t('ad.inv.help') }}</p>
+    <button class="btn btn-primary" type="submit">{{ t('ad.inv.generate') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('ad.inv.code') }}</th><th>{{ t('ad.users.role') }}</th><th>{{ t('lbl.group') }}</th><th>{{ t('ad.inv.child') }}</th><th>{{ t('ad.inv.expires') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('ad.inv.link') }}</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td><strong>{{ r.code }}</strong></td><td>{{ t('role.' ~ r.role) }}</td><td>{{ r.group_name or '—' }}</td><td>{{ r.child_name or '—' }}</td>
+        <td class="nowrap">{{ r.expires_at|dt }}</td>
+        <td>{% if r.used_by %}<span class="badge b-info">{{ t('ad.inv.used') }}{% if r.used_name %}: {{ r.used_name }}{% endif %}</span>
+          {% elif r.expires_at < now %}<span class="badge">{{ t('status.expired') }}</span>
+          {% else %}<span class="badge b-ok">{{ t('ad.users.active') }}</span>{% endif %}</td>
+        <td class="small break">{% if not r.used_by and r.expires_at >= now %}{{ base_url }}{{ url_for('auth.register', invite=r.code) }}{% else %}—{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

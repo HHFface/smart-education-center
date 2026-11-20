@@ -1,0 +1,42 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('ae.battles') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ t('ae.battles') }}</h1>
+
+{% if noshows %}
+<div class="card">
+  <h2>{{ t('ae.noshow_users') }}</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.student') }}</th><th>{{ t('ae.noshow_count') }}</th></tr></thead>
+    <tbody>{% for u in noshows %}<tr><td><a href="{{ url_for('admin.user_detail', user_id=u.id) }}">{{ u.username }}</a></td><td>{{ u.n }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</div>
+{% endif %}
+
+<div class="card">
+  <p class="muted small">{{ t('ae.flags_hint') }}</p>
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>{{ t('lbl.date') }}</th><th>{{ t('lbl.subject') }}</th><th>{{ t('lbl.level') }}</th><th>{{ t('ae.players') }}</th>
+      <th>{{ t('ae.winner') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('ae.flags') }}</th><th>{{ t('lbl.actions') }}</th></tr></thead>
+    <tbody>
+    {% for b in rows %}
+      <tr>
+        <td>{{ b.id }}</td>
+        <td class="nowrap">{{ (b.finished_at or b.started_at or b.created_at)|dt }}</td>
+        <td>{{ b.subject_name|subject(b.subject_code) if b.subject_code else b.subject_name }}</td>
+        <td>{{ b.level }}</td>
+        <td>{{ b.cu }} {{ t('ae.vs') }} {{ b.ou }}</td>
+        <td>{% if b.winner_id == b.challenger_id %}{{ b.cu }}{% elif b.winner_id == b.opponent_id %}{{ b.ou }}{% else %}—{% endif %}</td>
+        <td>{{ m.badge(b.status) }}</td>
+        <td>{% if b.suspicious %}{% for f in b.suspicious.split(',') %}<span class="badge b-bad">{{ f }}</span> {% endfor %}{% else %}—{% endif %}</td>
+        <td>{% if b.suspicious %}<form method="post" action="{{ url_for('admin.battles') }}" class="inline-form" data-confirm="{{ t('ae.confirm_clear_flag') }}">{{ m.csrf() }}
+          <input type="hidden" name="action" value="clear_flag"><input type="hidden" name="battle_id" value="{{ b.id }}">
+          <button class="btn btn-sm" type="submit">{{ t('ae.clear_flag') }}</button></form>{% else %}—{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

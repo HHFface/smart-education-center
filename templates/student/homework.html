@@ -1,0 +1,32 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.homework') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>📝 {{ t('nav.homework') }}</h1>
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ m.pct(stats.pct) }}</div><div class="lbl">{{ t('st.hw_rate') }}</div></div>
+  <div class="card stat"><div class="num">{{ stats.done }}/{{ stats.due }}</div><div class="lbl">{{ t('st.hw_done_of') }}</div></div>
+  <div class="card stat"><div class="num">{{ stats.misses }}</div><div class="lbl">{{ t('st.hw_misses') }}</div></div>
+</div>
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('st.hw_title') }}</th><th>{{ t('lbl.group') }}</th><th>{{ t('st.due') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('lbl.score') }}</th></tr></thead>
+    <tbody>{% for h in rows %}
+      <tr>
+        <td><a href="{{ url_for('student.homework_detail', hw_id=h.id) }}">{{ h.title }}</a></td>
+        <td>{{ h.group_name }}</td>
+        <td class="nowrap">{{ h.due_at|dt }}</td>
+        <td>
+          {% if h.sub_status %}{{ m.badge(h.sub_status) }}{% if h.is_late %} <span class="badge b-warn">{{ t('st.late') }}</span>{% endif %}
+          {% elif h.miss_action %}{{ m.badge(h.miss_action) }}
+          {% elif h.due_at < now %}<span class="badge b-bad">{{ t('st.overdue') }}</span>
+          {% else %}<span class="badge b-warn">{{ t('st.todo') }}</span>{% endif %}
+        </td>
+        <td>{% if h.score is not none %}{{ h.score }}{% else %}—{% endif %}</td>
+      </tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

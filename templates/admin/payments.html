@@ -1,0 +1,87 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.payments') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ t('nav.payments') }}</h1>
+
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ summary.income|money }}</div><div class="lbl">{{ t('ae.income') }}</div></div>
+  <div class="card stat"><div class="num">{{ summary.expenses|money }}</div><div class="lbl">{{ t('ae.expenses') }}</div></div>
+  <div class="card stat"><div class="num">{{ summary.profit|money }}</div><div class="lbl">{{ t('ae.profit') }}</div></div>
+  <div class="card stat"><div class="num neg">{{ summary.debt|money }}</div><div class="lbl">{{ t('ae.debt') }}</div></div>
+</div>
+
+<div class="card">
+  <h2>{{ t('ae.new_payment') }}</h2>
+  <form method="post" action="{{ url_for('admin.payments') }}" class="form-grid">{{ m.csrf() }}
+    <input type="hidden" name="action" value="create">
+    <div><label for="p-user">{{ t('ae.username') }}</label><input class="input" id="p-user" name="username" required maxlength="60" autocomplete="off"></div>
+    <div><label for="p-course">{{ t('ae.course') }}</label>
+      <select id="p-course" name="course_id"><option value="">—</option>
+        {% for c in courses %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>
+    <div><label for="p-amount">{{ t('lbl.amount') }}</label><input class="input" id="p-amount" name="amount" type="number" min="0" step="1" required></div>
+    <div><label for="p-disc">{{ t('ae.discount') }}</label><input class="input" id="p-disc" name="discount" type="number" min="0" step="1" value="0"></div>
+    <div><label for="p-due">{{ t('ae.due_date') }}</label><input class="input" id="p-due" name="due_date" type="date" value="{{ today }}" required></div>
+    <div><label for="p-note">{{ t('ae.note') }}</label><input class="input" id="p-note" name="note" maxlength="200"></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+</div>
+
+<div class="card">
+  <form method="get" action="{{ url_for('admin.payments') }}" class="row no-print">
+    <div class="tabs">
+      <a href="{{ url_for('admin.payments', q=q or None) }}" class="{{ 'active' if not status }}">{{ t('lbl.all') }}</a>
+      {% for s in ['pending', 'debtors', 'paid', 'cancelled'] %}
+        <a href="{{ url_for('admin.payments', status=s, q=q or None) }}" class="{{ 'active' if status == s }}">{{ t('ae.tab_' ~ s) }}</a>
+      {% endfor %}
+    </div>
+    {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+    <label class="sr-only" for="f-q">{{ t('ae.username') }}</label>
+    <input class="input" id="f-q" name="q" value="{{ q }}" placeholder="{{ t('ae.username') }}" maxlength="60">
+    <button class="btn btn-sm" type="submit">{{ t('btn.filter') }}</button>
+  </form>
+
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>{{ t('lbl.student') }}</th><th>{{ t('ae.course') }}</th><th>{{ t('lbl.amount') }}</th><th>{{ t('ae.discount') }}</th><th>{{ t('ae.paid_sum') }}</th><th>{{ t('ae.remaining') }}</th>
+      <th>{{ t('ae.due_date') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('ae.note') }}</th><th>{{ t('lbl.actions') }}</th></tr></thead>
+    <tbody>
+    {% for p in rows %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td><a href="{{ url_for('admin.user_detail', user_id=p.student_id) }}">{{ names(p) }}</a></td>
+        <td>{{ p.course_name or '—' }}</td>
+        <td class="nowrap">{{ p.amount|money }}</td>
+        <td class="nowrap">{% if p.discount %}{{ p.discount|money }}{% else %}—{% endif %}</td>
+        <td class="nowrap">{{ p.paid_sum|money }}</td>
+        <td class="nowrap">{% if p.status == 'pending' %}{{ (p.amount - p.discount - p.paid_sum)|money }}{% else %}—{% endif %}</td>
+        <td class="nowrap">{{ p.due_date }}{% if p.status == 'pending' and p.due_date < today %} <span class="badge b-bad">{{ t('ae.overdue') }}</span>{% endif %}</td>
+        <td>{{ m.badge(p.status) }}{% if p.paid_at %}<div class="muted small">{{ p.paid_at|dt }}</div>{% endif %}</td>
+        <td class="small">{{ p.note or '' }}</td>
+        <td>{% if p.status == 'pending' %}
+          <div class="row">
+            <form method="post" action="{{ url_for('admin.payments') }}" class="inline-form" data-confirm="{{ t('ae.confirm_paid') }}">{{ m.csrf() }}
+              <input type="hidden" name="action" value="paid"><input type="hidden" name="payment_id" value="{{ p.id }}">
+              <label class="sr-only" for="m{{ p.id }}">{{ t('ae.method') }}</label>
+              <select id="m{{ p.id }}" name="method">{% for mt in methods %}<option value="{{ mt }}">{{ t('ae.method_' ~ mt) }}</option>{% endfor %}</select>
+              <button class="btn btn-sm btn-ok" type="submit">{{ t('ae.mark_paid') }}</button></form>
+            <form method="post" action="{{ url_for('admin.payments') }}" class="inline-form">{{ m.csrf() }}
+              <input type="hidden" name="action" value="partial"><input type="hidden" name="payment_id" value="{{ p.id }}">
+              <label class="sr-only" for="pa{{ p.id }}">{{ t('lbl.amount') }}</label>
+              <input class="input input-sm" id="pa{{ p.id }}" name="amount" type="number" min="1" max="{{ p.amount - p.discount - p.paid_sum }}" required placeholder="{{ t('ae.partial') }}">
+              <input type="hidden" name="method" value="cash">
+              <button class="btn btn-sm" type="submit">{{ t('ae.partial') }}</button></form>
+            <form method="post" action="{{ url_for('admin.payments') }}" class="inline-form" data-confirm="{{ t('ae.confirm_cancel_payment') }}">{{ m.csrf() }}
+              <input type="hidden" name="action" value="cancel"><input type="hidden" name="payment_id" value="{{ p.id }}">
+              <button class="btn btn-sm btn-danger" type="submit">{{ t('btn.cancel') }}</button></form>
+          </div>{% elif p.status == 'paid' %}
+            <form method="post" action="{{ url_for('admin.payments') }}" class="inline-form" data-confirm="{{ t('ae.confirm_cancel_payment') }}">{{ m.csrf() }}
+              <input type="hidden" name="action" value="cancel"><input type="hidden" name="payment_id" value="{{ p.id }}">
+              <button class="btn btn-sm btn-danger" type="submit">{{ t('btn.cancel') }}</button></form>
+          {% else %}—{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

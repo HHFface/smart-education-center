@@ -1,0 +1,26 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.absence') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🚫 {{ t('nav.absence') }}</h1>
+{% for a in rows %}
+<div class="card">
+  <div class="row spread"><strong>{{ names(a) }}</strong>{{ m.badge(a.status) }}</div>
+  <p class="muted small">{{ a.subject_name|subject(a.subject_code) }} · {{ t('lbl.date') }}: {{ a.lesson_date|dated }}
+    {% if a.return_date %}· {{ t('tc.return_date') }}: {{ a.return_date|dated }}{% endif %}</p>
+  <p>{{ t('tc.reason') }}: <strong>{{ t('tc.reason.' ~ a.reason) }}</strong></p>
+  {% if a.comment %}<p class="break passage">{{ a.comment }}</p>{% endif %}
+  {% if a.file_name %}<p><a href="{{ url_for('main.files', bucket='absence', name=a.file_name) }}">📎 {{ t('st.absence_document') }}</a></p>{% endif %}
+  {% if a.review_note %}<p class="small muted">{{ t('tc.review_note') }}: {{ a.review_note }}</p>{% endif %}
+  <form method="post" action="{{ action or url_for('teacher.absences') }}" class="stack">{{ m.csrf() }}
+    <input type="hidden" name="id" value="{{ a.id }}">
+    <div class="form-grid">
+      <div><label for="ast{{ a.id }}">{{ t('lbl.status') }}</label>
+        <select id="ast{{ a.id }}" name="status">{% for s in ['approved', 'rejected', 'info_needed'] %}<option value="{{ s }}" {{ 'selected' if a.status == s }}>{{ t('status.' ~ s) }}</option>{% endfor %}</select></div>
+      <div><label for="an{{ a.id }}">{{ t('lbl.comment') }}</label><input class="input" id="an{{ a.id }}" name="note" maxlength="500" value="{{ a.review_note or '' }}"></div>
+    </div>
+    <button class="btn btn-primary btn-sm" type="submit">{{ t('btn.save') }}</button>
+  </form>
+</div>
+{% else %}<div class="card">{{ m.empty() }}</div>{% endfor %}
+{% endblock %}

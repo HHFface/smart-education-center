@@ -1,0 +1,43 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.challenges') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>⚔️ {{ t('nav.challenges') }}</h1>
+<p class="muted">{{ t('tc.challenge_hint', n=min_q) }}</p>
+<div class="card">
+  <h2>{{ t('tc.new_challenge') }}</h2>
+  {% if subjects %}
+  <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="form" value="challenge">
+    <div><label for="c-title">{{ t('tc.title') }}</label><input class="input" id="c-title" name="title" maxlength="120" required></div>
+    <div><label for="c-sub">{{ t('lbl.subject') }}</label>
+      <select id="c-sub" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+    <div><label for="c-lvl">{{ t('lbl.level') }}</label>
+      <select id="c-lvl" name="level">{% for l in levels %}<option>{{ l }}</option>{% endfor %}</select></div>
+    <div><label for="c-grp">{{ t('lbl.group') }}</label>
+      <select id="c-grp" name="group_id"><option value="">{{ t('lbl.all') }}</option>{% for gr in groups %}<option value="{{ gr.id }}">{{ gr.name }}</option>{% endfor %}</select></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% for c in rows %}
+<div class="card stack">
+  <div class="row spread"><h2>{{ c.title }}</h2>
+    <span class="badge {{ 'b-ok' if c.qn >= min_q else 'b-warn' }}">{{ t('tc.questions_count', n=c.qn) }}</span></div>
+  <p class="muted small">{{ c.subject_name|subject(c.subject_code) }} · {{ c.level }}</p>
+  <details><summary>{{ t('tc.add_question') }}</summary>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="form" value="question"><input type="hidden" name="challenge_id" value="{{ c.id }}">
+      <div class="wide"><label for="q{{ c.id }}">{{ t('tc.question_text') }}</label><input class="input" id="q{{ c.id }}" name="text" maxlength="500" required></div>
+      <div><label for="t{{ c.id }}">{{ t('tc.qtype') }}</label>
+        <select id="t{{ c.id }}" name="qtype">{% for q in qtypes %}<option value="{{ q }}">{{ t('bt.kind.' ~ q) }}</option>{% endfor %}</select></div>
+      {% for i in range(1, 5) %}
+      <div><label for="o{{ c.id }}{{ i }}">{{ t('tc.option', n=i) }}</label><input class="input" id="o{{ c.id }}{{ i }}" name="opt{{ i }}" maxlength="200" {{ 'required' if i <= 2 }}></div>
+      {% endfor %}
+      <div><label for="r{{ c.id }}">{{ t('tc.correct') }}</label>
+        <select id="r{{ c.id }}" name="correct">{% for i in range(4) %}<option value="{{ i }}">{{ i + 1 }}</option>{% endfor %}</select></div>
+      <div class="wide"><label for="x{{ c.id }}">{{ t('tc.explanation') }}</label><input class="input" id="x{{ c.id }}" name="explanation" maxlength="500"></div>
+      <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+    </form>
+  </details>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "common/base.html" %}
+{% block title %}{{ t('cert.title') }} {{ cert.number }}{% endblock %}
+{% block content %}
+<div class="cert">
+  <p class="muted">{{ app_name }}</p>
+  <h1>{{ t('cert.title') }}</h1>
+  <p>{{ t('cert.awarded_to') }}</p>
+  <div class="name">{{ holder }}</div>
+  <p>{{ t('cert.text', course=cert.course) }}</p>
+  <p>{{ cert.subject_name|subject(cert.subject_code) }} · {{ cert.level }}</p>
+  <p class="muted">{{ cert.issued_at|dt('%d.%m.%Y') }} · № {{ cert.number }}</p>
+  <p class="small muted">{{ t('cert.verify_at') }}: {{ verify_url }}</p>
+</div>
+<p class="no-print center"><button class="btn btn-primary" type="button" id="print-btn">{{ t('btn.print') }}</button></p>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/print.js') }}" defer></script>{% endblock %}

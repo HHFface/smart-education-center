@@ -1,0 +1,38 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.clubs') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🎬 {{ t('nav.clubs') }}</h1>
+<div class="card">
+  <h2>{{ t('tc.new_event') }}</h2>
+  <form method="post" class="form-grid">{{ m.csrf() }}
+    <div><label for="ev-kind">{{ t('tc.event_kind') }}</label>
+      <select id="ev-kind" name="kind"><option value="speaking">{{ t('st.club.speaking') }}</option><option value="movie">{{ t('st.club.movie') }}</option></select></div>
+    <div><label for="ev-sub">{{ t('lbl.subject') }}</label>
+      <select id="ev-sub" name="subject_id"><option value="">—</option>{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+    <div><label for="ev-title">{{ t('tc.title') }}</label><input class="input" id="ev-title" name="title" maxlength="150" required></div>
+    <div><label for="ev-at">{{ t('lbl.date') }}</label><input class="input" id="ev-at" name="starts_at" type="datetime-local" required></div>
+    <div><label for="ev-xp">XP</label><input class="input" id="ev-xp" name="xp" type="number" min="0" value="10"></div>
+    <div><label for="ev-coin">Coin</label><input class="input" id="ev-coin" name="coin" type="number" min="0" value="5"></div>
+    <div class="wide"><label for="ev-desc">{{ t('tc.description') }}</label><textarea id="ev-desc" name="description" maxlength="1000"></textarea></div>
+    <div class="wide"><label for="ev-q">{{ t('tc.discussion_questions') }}</label><textarea id="ev-q" name="questions" maxlength="2000"></textarea></div>
+    <div class="wide"><label for="ev-w">{{ t('tc.new_words') }}</label><textarea id="ev-w" name="new_words" maxlength="1000"></textarea></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+</div>
+{% for e in events %}
+<div class="card stack">
+  <div class="row spread"><h2>{{ e.title }}</h2><span class="badge">{{ t('st.club.' ~ e.kind) }}</span></div>
+  <p class="muted">{{ e.starts_at|dt }}{% if e.subject_name %} · {{ e.subject_name }}{% endif %} · XP {{ e.reward_xp }} / Coin {{ e.reward_coin }}</p>
+  {% if attendees[e.id] %}
+  <ul class="list">{% for a in attendees[e.id] %}
+    <li class="row spread"><span>{{ names(a) }}</span>
+      {% if a.attended %}<span class="badge b-ok">✔ {{ t('st.club_attended') }}</span>
+      {% else %}<form method="post" class="inline-form">{{ m.csrf() }}<input type="hidden" name="form" value="attend"><input type="hidden" name="event_id" value="{{ e.id }}"><input type="hidden" name="student_id" value="{{ a.student_id }}">
+        <button class="btn btn-sm btn-ok" type="submit">{{ t('tc.mark_attended') }}</button></form>{% endif %}
+    </li>
+  {% endfor %}</ul>
+  {% else %}<p class="muted">{{ t('tc.nobody_joined') }}</p>{% endif %}
+</div>
+{% else %}<div class="card">{{ m.empty() }}</div>{% endfor %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.points') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>⭐ {{ t('nav.points') }}</h1>
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ stats.xp }}</div><div class="lbl">XP</div></div>
+  <div class="card stat"><div class="num">🪙 {{ stats.coins }}</div><div class="lbl">Coin</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(att.pct) }}</div><div class="lbl">{{ t('st.attendance_rate') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(hw.pct) }}</div><div class="lbl">{{ t('st.hw_rate') }}</div></div>
+</div>
+<div class="card">
+  <h2>{{ t('st.points_history') }}</h2>
+  <p class="muted small">{{ t('st.points_hint') }}</p>
+  {% if log %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.date') }}</th><th>{{ t('st.type') }}</th><th>{{ t('st.change') }}</th><th>{{ t('st.reason') }}</th><th></th></tr></thead>
+    <tbody>{% for r in log %}
+      <tr>
+        <td class="nowrap">{{ r.created_at|dt }}</td>
+        <td>{{ 'XP' if r.kind == 'xp' else 'Coin' }}</td>
+        <td>{{ m.delta(r.amount) }}{% if r.requested_amount != r.amount %} <span class="muted small">({{ r.requested_amount }})</span>{% endif %}</td>
+        <td class="break">{{ t('reason.' ~ r.reason_code) }}{% if r.reason and r.reason_code != 'revoked' %} · <span class="muted">{{ r.reason }}</span>{% endif %}
+          {% if r.revoked and r.reason_code != 'revoked' %} <span class="badge">{{ t('st.revoked') }}</span>{% endif %}</td>
+        <td>
+          {% if r.amount < 0 and not r.revoked and r.reason_code != 'revoked' %}
+            {% if r.id in disputed %}<span class="badge b-info">{{ t('st.dispute_sent') }}</span>
+            {% else %}
+            <details><summary>{{ t('st.dispute') }}</summary>
+              <form method="post" action="{{ url_for('student.dispute') }}" class="stack">{{ m.csrf() }}
+                <input type="hidden" name="log_id" value="{{ r.id }}">
+                <label for="d{{ r.id }}">{{ t('st.dispute_text') }}</label>
+                <textarea id="d{{ r.id }}" name="message" required maxlength="1000"></textarea>
+                <button class="btn btn-sm btn-primary" type="submit">{{ t('btn.send') }}</button>
+              </form>
+            </details>
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

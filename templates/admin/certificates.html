@@ -1,0 +1,32 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('ae.certificates') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ t('ae.certificates') }}</h1>
+<div class="card">
+  <h2>{{ t('ae.issue_certificate') }}</h2>
+  <form method="post" action="{{ url_for('admin.certificates') }}" class="form-grid">{{ m.csrf() }}
+    <div><label for="c-user">{{ t('ae.username') }}</label><input class="input" id="c-user" name="username" required maxlength="60" autocomplete="off"></div>
+    <div><label for="c-subj">{{ t('lbl.subject') }}</label>
+      <select id="c-subj" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+    <div><label for="c-course">{{ t('ae.course') }}</label><input class="input" id="c-course" name="course" required maxlength="150"></div>
+    <div><label for="c-level">{{ t('lbl.level') }}</label>
+      <select id="c-level" name="level">{% for l in levels %}<option value="{{ l }}">{{ l }}</option>{% endfor %}</select></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('ae.issue') }}</button></div>
+  </form>
+</div>
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('ae.number') }}</th><th>{{ t('lbl.student') }}</th><th>{{ t('ae.course') }}</th><th>{{ t('lbl.level') }}</th><th>{{ t('lbl.date') }}</th><th>{{ t('lbl.actions') }}</th></tr></thead>
+    <tbody>{% for c in rows %}
+      <tr><td class="nowrap"><strong>{{ c.number }}</strong></td><td><a href="{{ url_for('admin.user_detail', user_id=c.student_id) }}">{{ names(c) }}</a></td>
+        <td>{{ c.course }}</td><td>{{ c.level or '—' }}</td><td class="nowrap">{{ c.issued_at|dt }}</td>
+        <td>{% if c.revoked %}<span class="badge b-bad">{{ t('cert.revoked') }}</span><div class="muted small">{{ c.revoked_reason }}</div>{% else %}
+          <form method="post" action="{{ url_for('admin.certificates') }}" class="row">{{ m.csrf() }}<input type="hidden" name="action" value="revoke"><input type="hidden" name="number" value="{{ c.number }}">
+            <label class="sr-only" for="rv{{ c.id }}">{{ t('tc.reason') }}</label><input class="input" id="rv{{ c.id }}" name="reason" maxlength="200" required placeholder="{{ t('tc.reason') }}">
+            <button class="btn btn-sm btn-danger" type="submit" data-confirm="{{ t('cert.confirm_revoke') }}">{{ t('cert.revoke') }}</button></form>{% endif %}</td></tr>
+    {% endfor %}</tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

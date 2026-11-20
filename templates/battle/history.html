@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('bt.history') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>⚔️ {{ t('bt.history') }}</h1>
+<nav class="tabs"><a href="{{ url_for('battle.hub') }}">{{ t('bt.hub') }}</a><a href="{{ url_for('battle.center') }}">{{ t('bt.center') }}</a><a class="active" href="{{ url_for('battle.history') }}">{{ t('bt.history') }}</a></nav>
+<div class="card">
+  {% if items %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.date') }}</th><th>{{ t('bt.opponent') }}</th><th>{{ t('lbl.subject') }}</th><th>{{ t('bt.kind') }}</th><th>{{ t('bt.result') }}</th><th>{{ t('bt.score') }}</th><th>{{ t('bt.rating_change') }}</th><th></th></tr></thead>
+    <tbody>{% for h in items %}
+      <tr>
+        <td class="nowrap">{{ h.date|dt }}</td><td>{{ h.opponent }}</td><td>{{ h.subject }}</td><td>{{ t('bt.kind.' ~ h.kind) }}</td>
+        <td>{{ m.badge(h.outcome) }}</td><td>{{ h.score }}</td><td>{{ m.delta(h.delta) }}</td>
+        <td class="nowrap"><a class="btn btn-sm" href="{{ url_for('battle.result', battle_id=h.id) }}">{{ t('btn.open') }}</a>
+          {% if h.outcome in ('win', 'loss', 'draw') %}
+          <form method="post" action="{{ url_for('battle.invite') }}" class="inline-form">{{ m.csrf() }}
+            <input type="hidden" name="opponent_id" value="{{ h.opponent_id }}"><input type="hidden" name="subject_id" value="{{ h.subject_id }}">
+            <input type="hidden" name="kind" value="{{ 'mixed' if h.kind == 'teacher' else h.kind }}">
+            <button class="btn btn-sm btn-primary" type="submit">{{ t('bt.rematch') }}</button></form>
+          {% endif %}</td>
+      </tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

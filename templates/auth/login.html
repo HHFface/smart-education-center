@@ -1,0 +1,16 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.login') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="auth"><div class="card">
+  <h1>{{ t('nav.login') }}</h1>
+  <form method="post" class="stack">{{ m.csrf() }}
+    <div><label for="username">{{ t('lbl.username') }}</label>
+      <input class="input" id="username" name="username" value="{{ username }}" autocomplete="username" required autofocus></div>
+    <div><label for="password">{{ t('lbl.password') }}</label>
+      <input class="input" id="password" name="password" type="password" autocomplete="current-password" required></div>
+    <button class="btn btn-primary btn-block" type="submit">{{ t('nav.login') }}</button>
+  </form>
+  <p class="small"><a href="{{ url_for('auth.forgot') }}">{{ t('auth.forgot') }}</a> · <a href="{{ url_for('auth.register') }}">{{ t('nav.register') }}</a></p>
+</div></div>
+{% endblock %}

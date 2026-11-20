@@ -1,0 +1,20 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.award') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>⭐ {{ t('nav.award') }}</h1>
+<div class="card">
+  <p class="muted">{{ t('tc.award_hint') }}</p>
+  {% if students %}
+  <form method="post" class="form-grid">{{ m.csrf() }}
+    <div><label for="st">{{ t('lbl.student') }}</label>
+      <select id="st" name="student_id" required>{% for s in students %}<option value="{{ s.id }}">{{ names(s) }}</option>{% endfor %}</select></div>
+    <div><label for="kind">{{ t('tc.kind') }}</label>
+      <select id="kind" name="kind"><option value="xp">XP</option><option value="coin">Coin</option></select></div>
+    <div><label for="amount">{{ t('lbl.amount') }}</label><input class="input" id="amount" name="amount" type="number" min="1" max="500" value="10" required></div>
+    <div class="wide"><label for="reason">{{ t('tc.reason') }}</label><input class="input" id="reason" name="reason" maxlength="200"></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.send') }}</button></div>
+  </form>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

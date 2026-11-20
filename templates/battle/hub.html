@@ -1,0 +1,87 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.battle') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>⚔️ {{ t('nav.battle') }}</h1>
+<div id="quick-invite" data-url="{{ url_for('battle.api_quick_incoming') }}" data-base="{{ url_for('battle.hub') }}" data-text="{{ t('bt.quick_found', name='{name}') }}"></div>
+<nav class="tabs"><a class="active" href="{{ url_for('battle.hub') }}">{{ t('bt.hub') }}</a><a href="{{ url_for('battle.center') }}">{{ t('bt.center') }}</a><a href="{{ url_for('battle.history') }}">{{ t('bt.history') }}</a><a href="{{ url_for('battle.practice_home') }}">{{ t('bt.practice') }}</a></nav>
+{% if not subjects %}
+<div class="card">{{ t('bt.no_subjects') }}</div>
+{% else %}
+{% if subjects|length > 1 %}
+<form method="get" class="row"><label class="sr-only" for="subj">{{ t('lbl.subject') }}</label>
+  <select id="subj" name="subject" data-autosubmit>{% for s in subjects %}<option value="{{ s.id }}" {{ 'selected' if s.id == subject_id }}>{{ s.name|subject(s.code) }}</option>{% endfor %}</select></form>
+{% endif %}
+{% if rating %}
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ rating.value }}</div><div class="lbl">{{ t('bt.rating') }}</div></div>
+  <div class="card stat"><div class="num"><span class="league">{{ rating.league }}</span></div><div class="lbl">{{ t('bt.league') }}</div></div>
+  <div class="card stat"><div class="num">{{ rating.wins }}-{{ rating.losses }}-{{ rating.draws }}</div><div class="lbl">{{ t('bt.record') }}</div></div>
+  <div class="card stat"><div class="num">{{ rating.pct }}%</div><div class="lbl">{{ t('bt.win_rate') }} · {{ rating.level }}</div></div>
+</div>
+{% endif %}
+<div class="card stack">
+  <h2>{{ t('bt.find_opponent') }}</h2>
+  <form method="post" action="{{ url_for('battle.quick') }}" class="form-grid">{{ m.csrf() }}
+    <input type="hidden" name="subject_id" value="{{ subject_id }}">
+    <div><label for="q-kind">{{ t('bt.kind') }}</label>
+      <select id="q-kind" name="kind">{% for k in kinds if k != 'teacher' %}<option value="{{ k }}">{{ t('bt.kind.' ~ k) }}</option>{% endfor %}</select></div>
+    <div><button class="btn btn-primary btn-block" type="submit">⚡ {{ t('bt.find_btn') }}</button></div>
+  </form>
+  <p class="muted small">{{ t('bt.find_hint') }}</p>
+</div>
+
+<div class="grid g2">
+  {% for key, title in (('online', 'bt.online'), ('offline', 'bt.offline')) %}
+  <div class="card">
+    <h2>{{ '🟢' if key == 'online' else '⚪' }} {{ t(title) }}</h2>
+    {% if opponents[key] %}
+    <ul class="list">{% for o in opponents[key] %}
+      <li>
+        <div class="row spread"><strong>{{ o.name }}</strong><span class="league">{{ o.league }}</span></div>
+        <p class="muted small">{{ t('bt.rating') }}: {{ o.rating }} · {{ o.level }} · {{ o.wins }} {{ t('bt.wins') }}</p>
+        <details><summary>{{ t('bt.send_invite') }}</summary>
+          <form method="post" action="{{ url_for('battle.invite') }}" class="form-grid">{{ m.csrf() }}
+            <input type="hidden" name="opponent_id" value="{{ o.id }}"><input type="hidden" name="subject_id" value="{{ subject_id }}">
+            {% if key == 'online' %}<input type="hidden" name="quick" value="1">{% endif %}
+            <div><label for="k{{ o.id }}{{ key }}">{{ t('bt.kind') }}</label>
+              <select id="k{{ o.id }}{{ key }}" name="kind">{% for k in kinds if k != 'teacher' %}<option value="{{ k }}">{{ t('bt.kind.' ~ k) }}</option>{% endfor %}</select></div>
+            <div><button class="btn btn-primary btn-sm" type="submit">{{ t('bt.invite_btn') }}</button></div>
+          </form>
+        </details>
+      </li>
+    {% endfor %}</ul>
+    {% else %}<p class="muted">{{ t('bt.none_' ~ key) }}</p>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% if challenges %}
+<div class="card"><h2>🎓 {{ t('bt.teacher_challenges') }}</h2>
+  <p class="muted small">{{ t('bt.challenge_hint') }}</p>
+  <ul class="list">{% for c in challenges %}<li><strong>{{ c.title }}</strong> <span class="muted small">· {{ c.level }}</span></li>{% endfor %}</ul>
+  {% if opponents.online or opponents.offline %}
+  <form method="post" action="{{ url_for('battle.invite') }}" class="form-grid">{{ m.csrf() }}
+    <input type="hidden" name="subject_id" value="{{ subject_id }}"><input type="hidden" name="kind" value="teacher">
+    <div><label for="ch-id">{{ t('bt.teacher_challenges') }}</label><select id="ch-id" name="challenge_id">{% for c in challenges %}<option value="{{ c.id }}">{{ c.title }}</option>{% endfor %}</select></div>
+    <div><label for="ch-op">{{ t('bt.opponent') }}</label><select id="ch-op" name="opponent_id">{% for o in opponents.online + opponents.offline %}<option value="{{ o.id }}">{{ o.name }}</option>{% endfor %}</select></div>
+    <div><button class="btn btn-primary" type="submit">{{ t('bt.invite_btn') }}</button></div>
+  </form>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if center.incoming or center.scheduled %}
+<div class="card"><h2>{{ t('bt.my_battles') }}</h2>
+  <ul class="list">
+  {% for it in center.incoming + center.scheduled %}<li><a href="{{ url_for('battle.room', battle_id=it.b.id) }}">{{ t('bt.versus', a=it.challenger, b=it.opponent) }}</a> {{ m.badge(it.b.status) }}{% if it.b.scheduled_at %} · {{ it.b.scheduled_at|dt }}{% endif %}</li>{% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% if history %}
+<div class="card"><h2>{{ t('bt.last_battles') }}</h2>
+  <ul class="list">{% for h in history %}<li><a href="{{ url_for('battle.result', battle_id=h.id) }}">{{ h.date|dt }} · {{ h.opponent }}</a> {{ m.badge(h.outcome) }} {{ h.score }} {{ m.delta(h.delta) }}</li>{% endfor %}</ul>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

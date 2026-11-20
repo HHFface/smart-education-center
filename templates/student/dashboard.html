@@ -1,0 +1,64 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.home') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>👋 {{ t('st.hello', name=current_user.first_name or current_user.username) }}</h1>
+
+<div id="quick-invite" data-url="{{ url_for('battle.api_quick_incoming') }}" data-base="{{ url_for('battle.hub') }}" data-text="{{ t('st.quick_invite', name='{name}') }}" aria-live="polite"></div>
+
+{% if notes %}
+<div class="card"><h2>🔔 {{ t('st.new_notes') }}</h2>
+  <ul class="list">{% for n in notes %}
+    <li>{% if n.link %}<a href="{{ n.link }}">{{ n.text }}</a>{% else %}{{ n.text }}{% endif %}</li>
+  {% endfor %}</ul>
+  <p class="small"><a href="{{ url_for('account.notifications') }}">{{ t('btn.open') }} →</a></p>
+</div>
+{% endif %}
+
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ summary.xp|money }}</div><div class="lbl">XP</div></div>
+  <div class="card stat"><div class="num">{{ summary.coins|money }}</div><div class="lbl">{{ t('st.coins') }}</div></div>
+  <div class="card stat"><div class="num">{% if summary.rank %}#{{ summary.rank }}{% else %}—{% endif %}</div>
+    <div class="lbl">{{ t('st.rank_of', total=summary.ranked_total) }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(summary.attendance.pct) }}</div><div class="lbl">{{ t('nav.attendance') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(summary.homework.pct) }}</div><div class="lbl">{{ t('nav.homework') }}</div></div>
+</div>
+
+<div class="grid g2">
+  <div class="card"><h2>📅 {{ t('st.next_lesson') }}</h2>
+    {% if next_lesson %}
+      <p><strong>{{ next_lesson.starts_at|dt }}</strong> – {{ next_lesson.ends_at|dt('%H:%M') }}</p>
+      <p>{{ next_lesson.group_name }} · {{ next_lesson.subject_name|subject(next_lesson.subject_code) }}
+        {% if next_lesson.room %}<br><span class="muted">{{ t('lbl.room') }}: {{ next_lesson.room }}</span>{% endif %}</p>
+    {% else %}{{ m.empty() }}{% endif %}
+    <h3>{{ t('st.today_lessons') }}</h3>
+    <ul class="list">{% for l in lessons_today %}
+      <li class="row spread"><span>{{ l.starts_at|dt('%H:%M') }}–{{ l.ends_at|dt('%H:%M') }} · {{ l.group_name }}</span>
+        {% if l.status == 'cancelled' %}{{ m.badge('cancelled') }}{% endif %}</li>
+    {% else %}<li class="muted">{{ t('st.no_lessons_today') }}</li>{% endfor %}</ul>
+    <p class="small"><a href="{{ url_for('student.schedule') }}">{{ t('nav.schedule') }} →</a></p>
+  </div>
+
+  <div class="card"><h2>📝 {{ t('st.hw_due') }}</h2>
+    <ul class="list">{% for h in homework_due %}
+      <li><a href="{{ url_for('student.homework_detail', hw_id=h.id) }}">{{ h.title }}</a>
+        <br><span class="muted small">{{ h.group_name }} · {{ t('st.due') }}: {{ h.due_at|dt }}</span></li>
+    {% else %}<li class="muted">{{ t('st.hw_none') }}</li>{% endfor %}</ul>
+    <p class="small"><a href="{{ url_for('student.homework') }}">{{ t('nav.homework') }} →</a></p>
+  </div>
+
+  <div class="card"><h2>🎬 {{ t('st.upcoming_events') }}</h2>
+    <ul class="list">{% for e in events %}
+      <li><strong>{{ e.title }}</strong> <span class="badge">{{ t('st.kind_' ~ e.kind) }}</span>
+        <br><span class="muted small">{{ e.starts_at|dt }}</span></li>
+    {% else %}<li class="muted">{{ t('msg.empty') }}</li>{% endfor %}</ul>
+    <p class="small"><a href="{{ url_for('student.clubs') }}">{{ t('nav.clubs') }} →</a></p>
+  </div>
+
+  <div class="card"><h2>⚔️ {{ t('nav.battle') }}</h2>
+    <p class="muted">{{ t('st.battle_hint') }}</p>
+    <a class="btn btn-primary" href="{{ url_for('battle.hub') }}">{{ t('btn.open') }}</a>
+    <a class="btn" href="{{ url_for('student.leaderboard') }}">{{ t('nav.leaderboard') }}</a>
+  </div>
+</div>
+{% endblock %}

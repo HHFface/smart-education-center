@@ -1,0 +1,75 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('ae.questions') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ t('ae.questions') }}</h1>
+
+<div class="card">
+  <h2>{{ t('ae.bank_stats') }}</h2>
+  {% if counts %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.subject') }}</th><th>{{ t('lbl.level') }}</th><th>{{ t('ae.active_count') }}</th></tr></thead>
+    <tbody>{% for c in counts %}<tr><td>{{ c.code|upper }}</td><td>{{ c.level }}</td><td>{{ c.n }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+
+<div class="card">
+  <h2>{{ t('ae.add_question') }}</h2>
+  <form method="post" action="{{ url_for('admin.questions') }}" class="form-grid">{{ m.csrf() }}
+    <div><label for="q-subj">{{ t('lbl.subject') }}</label>
+      <select id="q-subj" name="subject_id" required>{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+    <div><label for="q-level">{{ t('lbl.level') }}</label>
+      <select id="q-level" name="level">{% for l in levels %}<option value="{{ l }}">{{ l }}</option>{% endfor %}</select></div>
+    <div><label for="q-type">{{ t('ae.qtype') }}</label>
+      <select id="q-type" name="qtype">{% for k in qtypes %}<option value="{{ k }}">{{ t('ae.qtype_' ~ k) }}</option>{% endfor %}</select></div>
+    <div class="wide"><label for="q-text">{{ t('ae.question_text') }}</label><textarea id="q-text" name="text" required maxlength="500"></textarea></div>
+    {% for i in range(1, 5) %}
+    <div><label for="q-o{{ i }}">{{ t('ae.option') }} {{ i }}</label><input class="input" id="q-o{{ i }}" name="opt{{ i }}" maxlength="200" {{ 'required' if i <= 2 }}></div>
+    {% endfor %}
+    <div><label for="q-correct">{{ t('ae.correct_option') }}</label>
+      <select id="q-correct" name="correct">{% for i in range(4) %}<option value="{{ i }}">{{ t('ae.option') }} {{ i + 1 }}</option>{% endfor %}</select></div>
+    <div class="wide"><label for="q-expl">{{ t('ae.explanation') }}</label><input class="input" id="q-expl" name="explanation" maxlength="500"></div>
+    <div class="wide"><label for="q-pass">{{ t('ae.passage') }}</label><textarea id="q-pass" name="passage" maxlength="3000"></textarea></div>
+    <div class="wide"><label for="q-audio">{{ t('ae.audio_url') }}</label><input class="input" id="q-audio" name="audio_url" maxlength="300"></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+</div>
+
+<div class="card">
+  <h2>{{ t('ae.import_json') }}</h2>
+  <p class="muted small">{{ t('ae.import_hint') }}</p>
+  <form method="post" action="{{ url_for('admin.questions') }}" class="stack">{{ m.csrf() }}
+    <input type="hidden" name="form" value="import">
+    <label class="sr-only" for="q-json">{{ t('ae.import_json') }}</label>
+    <textarea id="q-json" name="json" required></textarea>
+    <button class="btn" type="submit">{{ t('ae.import') }}</button>
+  </form>
+</div>
+
+<div class="card">
+  <div class="tabs">
+    <a href="{{ url_for('admin.questions') }}" class="{{ 'active' if not subject_id }}">{{ t('lbl.all') }}</a>
+    {% for s in subjects %}<a href="{{ url_for('admin.questions', subject=s.id) }}" class="{{ 'active' if subject_id == s.id }}">{{ s.name|subject(s.code) }}</a>{% endfor %}
+  </div>
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>{{ t('lbl.subject') }}</th><th>{{ t('lbl.level') }}</th><th>{{ t('ae.qtype') }}</th><th>{{ t('ae.question_text') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('lbl.actions') }}</th></tr></thead>
+    <tbody>
+    {% for q in rows %}
+      {% set opts = jloads(q.options, []) %}
+      <tr>
+        <td>{{ q.id }}</td><td>{{ q.subject_code|upper }}</td><td>{{ q.level }}</td><td>{{ t('ae.qtype_' ~ q.qtype) }}</td>
+        <td><details><summary>{{ q.text }}</summary>
+          <ol class="small">{% for o in opts %}<li>{{ o }}{% if loop.index0 == q.correct_index %} <span class="pos">✓</span>{% endif %}</li>{% endfor %}</ol>
+          {% if q.explanation %}<p class="muted small">{{ q.explanation }}</p>{% endif %}</details></td>
+        <td>{% if q.is_active %}<span class="badge b-ok">{{ t('ae.active') }}</span>{% else %}<span class="badge">{{ t('ae.inactive') }}</span>{% endif %}</td>
+        <td><form method="post" action="{{ url_for('admin.questions') }}" class="inline-form">{{ m.csrf() }}
+          <input type="hidden" name="form" value="toggle"><input type="hidden" name="id" value="{{ q.id }}">
+          <button class="btn btn-sm" type="submit">{{ t('ae.deactivate') if q.is_active else t('ae.activate') }}</button></form></td>
+      </tr>
+    {% endfor %}
+    </tbody></table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

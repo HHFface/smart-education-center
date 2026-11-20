@@ -1,0 +1,34 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.shop') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🛍 {{ t('nav.shop') }}</h1>
+<div class="flash flash-info">{{ t('st.your_coins', coins=stats.coins) }}</div>
+{% if items %}
+<div class="grid g3">
+  {% for i in items %}
+  <div class="card stack">
+    <h3>{{ i.name }}</h3>
+    {% if i.description %}<p class="muted">{{ i.description }}</p>{% endif %}
+    <p><strong>🪙 {{ i.price_coins }}</strong>{% if i.stock is not none %} · <span class="muted small">{{ t('st.in_stock', n=i.stock) }}</span>{% endif %}</p>
+    <form method="post">{{ m.csrf() }}
+      <input type="hidden" name="item_id" value="{{ i.id }}">
+      <button class="btn btn-primary btn-block" type="submit" data-confirm="{{ t('st.buy_confirm', name=i.name, price=i.price_coins) }}"
+        {{ 'disabled' if (i.stock is not none and i.stock <= 0) or stats.coins < i.price_coins }}>
+        {% if i.stock is not none and i.stock <= 0 %}{{ t('st.sold_out') }}{% elif stats.coins < i.price_coins %}{{ t('st.not_enough') }}{% else %}{{ t('st.buy') }}{% endif %}
+      </button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}<div class="card">{{ m.empty() }}</div>{% endif %}
+<div class="card">
+  <h2>{{ t('st.my_orders') }}</h2>
+  {% if orders %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.date') }}</th><th>{{ t('st.item') }}</th><th>{{ t('lbl.price') }}</th><th>{{ t('lbl.status') }}</th></tr></thead>
+    <tbody>{% for o in orders %}<tr><td class="nowrap">{{ o.created_at|dt }}</td><td>{{ o.item_name }}</td><td>🪙 {{ o.price }}</td><td>{{ m.badge(o.status) }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

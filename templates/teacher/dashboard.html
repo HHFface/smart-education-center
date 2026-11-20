@@ -1,0 +1,41 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.home') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🏠 {{ t('tc.dashboard_title') }}</h1>
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ lessons|length }}</div><div class="lbl">{{ t('tc.lessons_today') }}</div></div>
+  <div class="card stat"><div class="num">{{ groups|length }}</div><div class="lbl">{{ t('tc.my_groups') }}</div></div>
+  <a class="card stat" href="{{ url_for('teacher.homework_list') }}"><div class="num">{{ pending }}</div><div class="lbl">{{ t('tc.to_check') }}</div></a>
+  <a class="card stat" href="{{ url_for('teacher.absences') }}"><div class="num">{{ absences }}</div><div class="lbl">{{ t('tc.pending_absences') }}</div></a>
+</div>
+<div class="grid g2">
+  <div class="card"><h2>📅 {{ t('tc.today_lessons') }}</h2>
+    <ul class="list">{% for l in lessons %}
+      <li class="row spread {{ 'muted' if l.status == 'cancelled' }}">
+        <span><strong>{{ l.starts_at|dt('%H:%M') }}–{{ l.ends_at|dt('%H:%M') }}</strong> · {{ l.group_name }}
+          {% if l.room %}<span class="muted small">· {{ t('lbl.room') }}: {{ l.room }}</span>{% endif %}
+          {% if l.topic %}<br><span class="muted small">{{ l.topic }}</span>{% endif %}</span>
+        {% if l.status == 'cancelled' %}{{ m.badge('cancelled') }}
+        {% else %}<a class="btn btn-sm btn-primary" href="{{ url_for('teacher.attendance_mark', lesson_id=l.id) }}">{{ t('nav.attendance') }}</a>{% endif %}
+      </li>{% else %}<li>{{ t('tc.no_lessons_today') }}</li>{% endfor %}</ul>
+    <a class="btn btn-sm" href="{{ url_for('teacher.schedule') }}">{{ t('nav.schedule') }} →</a>
+  </div>
+  <div class="card"><h2>👥 {{ t('tc.my_groups') }}</h2>
+    <ul class="list">{% for gr in groups %}
+      <li class="row spread"><span><a href="{{ url_for('teacher.group', group_id=gr.id) }}"><strong>{{ gr.name }}</strong></a><br>
+        <span class="muted small">{{ gr.subject_name|subject(gr.subject_code) }} · {{ gr.course_name }}{% if gr.room %} · {{ t('lbl.room') }}: {{ gr.room }}{% endif %}</span></span>
+        <span class="badge">{{ t('tc.students_n', n=gr.students) }}</span></li>
+    {% else %}<li>{{ m.empty() }}</li>{% endfor %}</ul>
+  </div>
+</div>
+<div class="card"><h2>{{ t('tc.quick_links') }}</h2>
+  <div class="row">
+    <a class="btn" href="{{ url_for('teacher.homework_list') }}">📝 {{ t('nav.homework') }}</a>
+    <a class="btn" href="{{ url_for('teacher.award') }}">⭐ {{ t('nav.award') }}</a>
+    <a class="btn" href="{{ url_for('teacher.exams') }}">📊 {{ t('nav.exams') }}</a>
+    <a class="btn" href="{{ url_for('teacher.challenges') }}">⚔️ {{ t('nav.challenges') }}</a>
+    <a class="btn" href="{{ url_for('teacher.goals') }}">🎯 {{ t('nav.goals') }}</a>
+  </div>
+</div>
+{% endblock %}

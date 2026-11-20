@@ -1,0 +1,38 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ hw.title }} · {{ app_name }}{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('student.homework') }}">← {{ t('btn.back') }}</a></p>
+<h1>📝 {{ hw.title }}</h1>
+<div class="card">
+  <p class="muted">{{ hw.group_name }} · {{ t('st.due') }}: <strong>{{ hw.due_at|dt }}</strong>
+    {% if overdue %}<span class="badge b-bad">{{ t('st.overdue') }}</span>{% endif %}</p>
+  {% if hw.description %}<p class="break">{{ hw.description }}</p>{% endif %}
+  {% if miss %}<p>{{ m.badge(miss.action) }}{% if miss.coins %} {{ m.delta(-miss.coins) }} {{ t('st.coins') }}{% endif %}</p>{% endif %}
+</div>
+
+{% if sub %}
+<div class="card"><h2>{{ t('st.my_submission') }}</h2>
+  <p>{{ m.badge(sub.status) }}{% if sub.is_late %} <span class="badge b-warn">{{ t('st.late') }}</span>{% endif %}
+    <span class="muted small">{{ sub.submitted_at|dt }} · {{ t('st.kind.' ~ sub.kind) }}</span></p>
+  {% if sub.text %}<p class="break">{{ sub.text }}</p>{% endif %}
+  {% if sub.file_name %}<p><a href="{{ url_for('main.files', bucket='hw', name=sub.file_name) }}" rel="noopener">📎 {{ t('btn.download') }}</a></p>{% endif %}
+  {% if sub.status == 'checked' %}
+    <p><strong>{{ t('lbl.score') }}: {% if sub.score is not none %}{{ sub.score }}{% else %}—{% endif %}</strong></p>
+    {% if sub.feedback %}<p><span class="muted">{{ t('lbl.comment') }}:</span> {{ sub.feedback }}</p>{% endif %}
+  {% endif %}
+</div>
+{% endif %}
+
+{% if not sub or sub.status != 'checked' %}
+<div class="card"><h2>{{ t('st.resubmit') if sub else t('st.submit') }}</h2>
+  <form method="post" enctype="multipart/form-data" class="stack">{{ m.csrf() }}
+    <div><label for="kind">{{ t('st.kind_label') }}</label>
+      <select id="kind" name="kind">{% for k in kinds %}<option value="{{ k }}">{{ t('st.kind.' ~ k) }}</option>{% endfor %}</select></div>
+    <div><label for="text">{{ t('st.answer_text') }}</label><textarea id="text" name="text" maxlength="8000">{{ sub.text if sub and sub.text else '' }}</textarea></div>
+    <div><label for="file">{{ t('st.file') }}</label><input id="file" name="file" type="file"></div>
+    <button class="btn btn-primary" type="submit">{{ t('btn.send') }}</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

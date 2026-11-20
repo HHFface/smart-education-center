@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.attendance') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>✅ {{ t('nav.attendance') }}</h1>
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ m.pct(stats.pct) }}</div><div class="lbl">{{ t('st.attendance_rate') }}</div></div>
+  {% for s in ['present', 'late', 'excused', 'absent'] %}
+  <div class="card stat"><div class="num">{{ stats[s] }}</div><div class="lbl">{{ t('status.' ~ s) }}</div></div>
+  {% endfor %}
+</div>
+
+{% if missed %}
+<div class="flash flash-info">{{ t('st.missed_hint') }} <a href="{{ url_for('student.absence') }}">{{ t('nav.absence') }} →</a></div>
+{% endif %}
+
+<div class="card"><h2>{{ t('st.history') }}</h2>
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.date') }}</th><th>{{ t('lbl.group') }}</th><th>{{ t('lbl.status') }}</th></tr></thead>
+    <tbody>{% for r in rows %}
+      <tr><td class="nowrap">{{ r.starts_at|dt }}</td><td>{{ r.group_name }}</td><td>{{ m.badge(r.status) }}</td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

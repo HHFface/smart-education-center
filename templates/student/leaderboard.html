@@ -1,0 +1,48 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.leaderboard') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🏆 {{ t('nav.leaderboard') }}</h1>
+<nav class="tabs" aria-label="{{ t('st.rating_type') }}">
+  {% for key in ['overall', 'subject', 'group', 'weekly', 'monthly', 'battle'] %}
+    <a href="{{ url_for('student.leaderboard', scope=key, subject=subject_id, group=group_id) }}" class="{{ 'active' if scope == key }}">{{ t('st.scope.' ~ key) }}</a>
+  {% endfor %}
+</nav>
+{% if scope in ('subject', 'battle', 'weekly', 'monthly') and subjects|length > 1 %}
+<form method="get" class="row no-print">
+  <input type="hidden" name="scope" value="{{ scope }}">
+  <label class="sr-only" for="subj">{{ t('lbl.subject') }}</label>
+  <select id="subj" name="subject" data-autosubmit>{% for s in subjects %}<option value="{{ s.id }}" {{ 'selected' if s.id == subject_id }}>{{ s.name|subject(s.code) }}</option>{% endfor %}</select>
+</form>
+{% endif %}
+{% if scope == 'group' and groups|length > 1 %}
+<form method="get" class="row no-print">
+  <input type="hidden" name="scope" value="group">
+  <label class="sr-only" for="grp">{{ t('lbl.group') }}</label>
+  <select id="grp" name="group" data-autosubmit>{% for gr in groups %}<option value="{{ gr.id }}" {{ 'selected' if gr.id == group_id }}>{{ gr.name }}</option>{% endfor %}</select>
+</form>
+{% endif %}
+{% if me %}<div class="flash flash-info">{{ t('st.your_rank', rank=me) }}</div>{% endif %}
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>{{ t('lbl.name') }}</th><th>{{ t('st.points_col') }}</th>{% if scope == 'battle' %}<th>{{ t('st.league') }}</th><th>W-L-D</th>{% else %}<th>XP</th>{% endif %}</tr></thead>
+    <tbody>{% for r in rows %}
+      <tr class="{{ 'me' if r.id == my_id }}">
+        <td>{% if r.rank == 1 %}<span class="medal">🥇</span>{% elif r.rank == 2 %}<span class="medal">🥈</span>{% elif r.rank == 3 %}<span class="medal">🥉</span>{% else %}{{ r.rank }}{% endif %}</td>
+        <td>{{ r.name }}{% if r.id == my_id %} ({{ t('st.you') }}){% endif %}</td>
+        <td>{{ r.value }}</td>
+        {% if scope == 'battle' %}<td>{% if r.league %}<span class="league">{{ r.league }}</span>{% endif %}</td><td>{{ r.extra or '—' }}</td>
+        {% else %}<td>{{ r.xp }}</td>{% endif %}
+      </tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% if me and me > rows|length %}<p class="muted small">{{ t('st.your_rank', rank=me) }}</p>{% endif %}
+  {% if above %}
+  <h3>{{ t('st.above_you') }}</h3>
+  <ul class="list">{% for r in above %}<li>#{{ r.rank }} · {{ r.name }} — {{ r.value }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+<p class="muted small">{{ t('st.rating_note') }}</p>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.schedule') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>📅 {{ t('nav.schedule') }}</h1>
+<div class="grid g2">
+  <div class="card"><h2>{{ t('ad.single_lesson') }}</h2>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="single">
+      <div><label for="s-g">{{ t('lbl.group') }}</label><select id="s-g" name="group_id" required>{% for gr in groups %}<option value="{{ gr.id }}">{{ gr.name }}</option>{% endfor %}</select></div>
+      <div><label for="s-at">{{ t('lbl.date') }}</label><input class="input" id="s-at" name="starts_at" type="datetime-local" required></div>
+      <div><label for="s-d">{{ t('ad.duration') }}</label><input class="input" id="s-d" name="duration" type="number" min="15" max="360" value="90"></div>
+      <div><label for="s-r">{{ t('lbl.room') }}</label><input class="input" id="s-r" name="room" maxlength="50"></div>
+      <div class="wide"><label for="s-t">{{ t('ad.topic') }}</label><input class="input" id="s-t" name="topic" maxlength="150"></div>
+      <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+    </form></div>
+  <div class="card"><h2>{{ t('ad.weekly_lessons') }}</h2>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="weekly">
+      <div><label for="w-g">{{ t('lbl.group') }}</label><select id="w-g" name="group_id" required>{% for gr in groups %}<option value="{{ gr.id }}">{{ gr.name }}</option>{% endfor %}</select></div>
+      <div class="wide"><span class="lbl-like">{{ t('ad.weekdays') }}</span>
+        <div class="row">{% for d in range(7) %}<label class="check" for="wd{{ d }}"><input id="wd{{ d }}" type="checkbox" name="weekday" value="{{ d }}">{{ t('weekday.' ~ d) }}</label>{% endfor %}</div></div>
+      <div><label for="w-s">{{ t('ad.start_time') }}</label><input class="input" id="w-s" name="start" type="time" value="09:00" required></div>
+      <div><label for="w-d">{{ t('ad.duration') }}</label><input class="input" id="w-d" name="duration" type="number" min="15" max="360" value="90"></div>
+      <div><label for="w-f">{{ t('ad.first_day') }}</label><input class="input" id="w-f" name="first_day" type="date" required></div>
+      <div><label for="w-w">{{ t('ad.weeks') }}</label><input class="input" id="w-w" name="weeks" type="number" min="1" max="26" value="8"></div>
+      <div><label for="w-r">{{ t('lbl.room') }}</label><input class="input" id="w-r" name="room" maxlength="50"></div>
+      <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+    </form></div>
+</div>
+<div class="card"><h2>{{ t('ad.upcoming_lessons') }}</h2>
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('lbl.date') }}</th><th>{{ t('lbl.group') }}</th><th>{{ t('lbl.room') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('lbl.actions') }}</th></tr></thead>
+    <tbody>{% for l in rows %}
+      <tr class="{{ 'muted' if l.status == 'cancelled' }}">
+        <td class="nowrap">{{ l.starts_at|dt('%d.%m %H:%M') }}–{{ l.ends_at|dt('%H:%M') }}</td><td>{{ l.group_name }}</td><td>{{ l.room or '—' }}</td><td>{{ m.badge(l.status) }}</td>
+        <td>{% if l.status != 'cancelled' %}
+          <details><summary>{{ t('btn.edit') }}</summary>
+            <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="reschedule"><input type="hidden" name="lesson_id" value="{{ l.id }}">
+              <div><label for="rs{{ l.id }}">{{ t('lbl.date') }}</label><input class="input" id="rs{{ l.id }}" name="starts_at" type="datetime-local" value="{{ l.starts_at|dt('%Y-%m-%dT%H:%M') }}" required></div>
+              <div><label for="rd{{ l.id }}">{{ t('ad.duration') }}</label><input class="input" id="rd{{ l.id }}" name="duration" type="number" min="15" max="360" value="90"></div>
+              <div><label for="rr{{ l.id }}">{{ t('lbl.room') }}</label><input class="input" id="rr{{ l.id }}" name="room" value="{{ l.room or '' }}" maxlength="50"></div>
+              <div><button class="btn btn-sm btn-primary" type="submit">{{ t('btn.save') }}</button></div>
+            </form>
+            <form method="post">{{ m.csrf() }}<input type="hidden" name="action" value="cancel"><input type="hidden" name="lesson_id" value="{{ l.id }}">
+              <button class="btn btn-sm btn-danger" type="submit" data-confirm="{{ t('ad.confirm_cancel_lesson') }}">{{ t('btn.cancel') }}</button></form>
+          </details>{% endif %}</td>
+      </tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.settings') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>⚙️ {{ t('nav.settings') }}</h1>
+<p class="muted">{{ t('ad.settings_hint') }}</p>
+{% for section, items in groups.items() if section != 'sys' %}
+<div class="card stack"><h2>{{ t('ad.section.' ~ section) }}</h2>
+  {% for key, value, kind in items %}
+  <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="key" value="{{ key }}">
+    <div class="{{ 'wide' if kind in ('list', 'dict') }}"><label for="v-{{ key }}">{{ t('ad.set.' ~ key) }}</label>
+      {% if kind == 'bool' %}
+        <select id="v-{{ key }}" name="value"><option value="true" {{ 'selected' if value == 'true' }}>{{ t('ad.on') }}</option><option value="false" {{ 'selected' if value == 'false' }}>{{ t('ad.off') }}</option></select>
+      {% elif kind in ('list', 'dict') %}
+        <textarea id="v-{{ key }}" name="value" spellcheck="false">{{ value }}</textarea>
+      {% else %}
+        <input class="input" id="v-{{ key }}" name="value" value="{{ value }}" inputmode="numeric">
+      {% endif %}
+      <span class="muted small">{{ key }}</span></div>
+    <div><button class="btn btn-sm btn-primary" type="submit">{{ t('btn.save') }}</button></div>
+  </form>
+  {% endfor %}
+</div>
+{% endfor %}
+<div class="card stack"><h2>{{ t('ad.integrations') }}</h2>
+  <ul class="list">
+    <li>Telegram: {{ t('ad.on') if cfg.TELEGRAM_BOT_TOKEN else t('ad.off') }}</li>
+    <li>AI: {{ cfg.AI_PROVIDER }}</li>
+    <li>Email: {{ cfg.EMAIL_PROVIDER }}</li>
+    <li>{{ t('ad.payments_provider') }}: {{ cfg.PAYMENT_PROVIDER }}</li>
+  </ul>
+  <p class="muted small">{{ t('ad.integrations_hint') }}</p>
+</div>
+<div class="card stack"><h2>{{ t('ad.backup') }}</h2>
+  <p class="muted">{{ t('ad.backup_hint') }}</p>
+  <form method="post" action="{{ url_for('admin.backup') }}">{{ m.csrf() }}<button class="btn" type="submit">💾 {{ t('ad.backup_btn') }}</button></form>
+</div>
+{% endblock %}

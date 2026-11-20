@@ -1,0 +1,40 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('bt.practice') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🎯 {{ t('bt.practice') }}</h1>
+<nav class="tabs"><a href="{{ url_for('battle.hub') }}">{{ t('bt.hub') }}</a><a class="active" href="{{ url_for('battle.practice_home') }}">{{ t('bt.practice') }}</a></nav>
+{% if session_id %}
+<div class="card stack" id="practice" data-state-url="{{ url_for('battle.api_practice_state', session_id=session_id) }}"
+     data-answer-url="{{ url_for('battle.api_practice_answer', session_id=session_id) }}"
+     data-home="{{ url_for('battle.practice_home') }}"
+     data-i18n='{{ {"correct": t("bt.js.correct"), "wrong": t("bt.js.wrong"), "network": t("bt.js.network"), "finished": t("bt.practice_done"), "next": t("btn.next"), "score": t("bt.score"), "no_tts": t("bt.js.no_tts")}|tojson }}'>
+  <div class="row spread"><span id="p-progress" class="muted"></span><span class="badge">{{ t('bt.practice_note') }}</span></div>
+  <p id="p-passage" class="passage hidden"></p>
+  <h2 id="p-text"></h2>
+  <button type="button" class="btn btn-sm hidden" id="p-listen">🔊 {{ t('bt.listen') }}</button>
+  <div id="p-options" class="stack"></div>
+  <div id="p-feedback" class="flash hidden" role="status"></div>
+  <p id="p-explain" class="muted hidden"></p>
+  <button type="button" class="btn btn-primary hidden" id="p-next">{{ t('btn.next') }}</button>
+  <div id="p-final" class="hidden stack"><h2 id="p-final-text"></h2><a class="btn btn-primary" href="{{ url_for('battle.practice_home') }}">{{ t('bt.practice_again') }}</a></div>
+</div>
+{% else %}
+<div class="card stack">
+  <p class="muted">{{ t('bt.practice_note') }}</p>
+  {% if subjects %}
+  <form method="post" class="form-grid">{{ m.csrf() }}
+    <div><label for="pr-s">{{ t('lbl.subject') }}</label>
+      <select id="pr-s" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+    <div><label for="pr-k">{{ t('bt.kind') }}</label>
+      <select id="pr-k" name="kind">{% for k in kinds %}<option value="{{ k }}">{{ t('bt.kind.' ~ k) }}</option>{% endfor %}</select></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">▶ {{ t('bt.practice_start') }}</button></div>
+  </form>
+  {% else %}{{ t('bt.no_subjects') }}{% endif %}
+</div>
+<div class="card"><h2>{{ t('bt.practice_history') }}</h2>
+  {% if history %}<ul class="list">{% for h in history %}<li>{{ h.finished_at|dt }} · {{ h.subject_name|subject(h.subject_code) }} · {{ t('bt.kind.' ~ h.kind) }} · <strong>{{ h.correct }}/{{ h.total }}</strong></li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}{% if session_id %}<script src="{{ url_for('static', filename='js/practice.js') }}" defer></script>{% endif %}{% endblock %}

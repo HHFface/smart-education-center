@@ -1,0 +1,82 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.account') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>👤 {{ t('nav.account') }}</h1>
+<div class="grid g2">
+<div class="card"><h2>{{ t('account.profile') }}</h2>
+  <form method="post" action="{{ url_for('account.save_profile') }}" enctype="multipart/form-data" class="stack">{{ m.csrf() }}
+    <div class="row">
+      {% if current_user.avatar %}<img class="avatar" alt="" src="{{ url_for('main.files', bucket='avatar', name=current_user.avatar) }}">{% else %}<span class="avatar">{{ (current_user.first_name or current_user.username)[:1]|upper }}</span>{% endif %}
+      <div><label for="avatar">{{ t('lbl.avatar') }}</label><input id="avatar" name="avatar" type="file" accept="image/png,image/jpeg,image/gif,image/webp"></div></div>
+    <div class="form-grid">
+      <div><label for="fn">{{ t('lbl.first_name') }}</label><input class="input" id="fn" name="first_name" value="{{ current_user.first_name }}"></div>
+      <div><label for="ln">{{ t('lbl.last_name') }}</label><input class="input" id="ln" name="last_name" value="{{ current_user.last_name }}"></div>
+      <div><label for="ph">{{ t('lbl.phone') }}</label><input class="input" id="ph" name="phone" type="tel" value="{{ current_user.phone or '' }}"></div>
+      <div><label for="em">{{ t('lbl.email') }}</label><input class="input" id="em" name="email" type="email" value="{{ current_user.email or '' }}"></div>
+      <div><label for="bd">{{ t('lbl.birth_date') }}</label><input class="input" id="bd" name="birth_date" type="date" value="{{ current_user.birth_date or '' }}"></div>
+    </div>
+    <button class="btn btn-primary" type="submit">{{ t('btn.save') }}</button>
+  </form>
+  {% if current_user.email %}
+  <p class="small">{{ t('lbl.email') }}:
+    {% if current_user.email_verified %}<span class="badge b-ok">{{ t('account.verified') }}</span>
+    {% else %}<span class="badge b-warn">{{ t('account.not_verified') }}</span>
+      <form method="post" action="{{ url_for('account.send_verification') }}" class="inline-form">{{ m.csrf() }}<button class="btn btn-sm" type="submit">{{ t('account.verify_email') }}</button></form>{% endif %}</p>
+  {% endif %}
+</div>
+
+<div class="card"><h2>🔗 Telegram</h2>
+  {% if not bot_enabled %}<p class="muted">{{ t('account.bot_off') }}</p>
+  {% elif current_user.telegram_chat_id %}
+    <p><span class="badge b-ok">{{ t('account.linked') }}</span></p>
+    <form method="post" action="{{ url_for('account.telegram_link') }}">{{ m.csrf() }}<input type="hidden" name="action" value="unlink">
+      <button class="btn btn-danger btn-sm" type="submit" data-confirm="{{ t('msg.confirm') }}">{{ t('account.unlink') }}</button></form>
+  {% else %}
+    <p class="muted">{{ t('account.link_help') }}</p>
+    {% if link_code %}
+      <p class="flash flash-info">{{ t('account.link_code') }}: <strong>{{ link_code }}</strong>
+        {% if bot_username %}<br><a href="https://t.me/{{ bot_username }}?start={{ link_code }}" rel="noopener">@{{ bot_username }}</a>{% endif %}</p>
+    {% endif %}
+    <form method="post" action="{{ url_for('account.telegram_link') }}">{{ m.csrf() }}<input type="hidden" name="action" value="code">
+      <button class="btn btn-primary" type="submit">{{ t('account.get_code') }}</button></form>
+  {% endif %}
+</div>
+
+<div class="card"><h2>{{ t('account.password') }}</h2>
+  <form method="post" action="{{ url_for('account.change_password') }}" class="stack">{{ m.csrf() }}
+    <div><label for="cur">{{ t('account.current_password') }}</label><input class="input" id="cur" name="current" type="password" autocomplete="current-password" required></div>
+    <div><label for="np">{{ t('lbl.password') }}</label><input class="input" id="np" name="password" type="password" minlength="8" autocomplete="new-password" required></div>
+    <div><label for="np2">{{ t('lbl.password2') }}</label><input class="input" id="np2" name="password2" type="password" minlength="8" autocomplete="new-password" required></div>
+    <button class="btn btn-primary" type="submit">{{ t('btn.save') }}</button>
+  </form></div>
+
+<div class="card"><h2>{{ t('account.sessions') }}</h2>
+  <ul class="list">{% for s in sessions %}
+    <li class="row spread"><span class="small break">{{ (s.user_agent or '?')[:60] }}<br><span class="muted">{{ s.ip }} · {{ s.last_seen|dt }}</span></span>
+      {% if s.id == current_session %}<span class="badge b-ok">{{ t('account.this_device') }}</span>
+      {% else %}<form method="post" action="{{ url_for('account.revoke_sessions') }}">{{ m.csrf() }}<input type="hidden" name="id" value="{{ s.id }}"><button class="btn btn-sm btn-danger" type="submit">{{ t('account.sign_out') }}</button></form>{% endif %}</li>
+  {% endfor %}</ul>
+  <form method="post" action="{{ url_for('account.revoke_sessions') }}">{{ m.csrf() }}<button class="btn btn-sm" type="submit" data-confirm="{{ t('msg.confirm') }}">{{ t('account.sign_out_all') }}</button></form>
+</div>
+</div>
+
+<div class="card"><h2>{{ t('account.preferences') }}</h2>
+  <form method="post" action="{{ url_for('account.save_preferences') }}" class="stack">{{ m.csrf() }}
+    <div class="form-grid">
+      <div><label for="pl">{{ t('lbl.language') }}</label><select id="pl" name="lang">{% for code, label in LANGS %}<option value="{{ code }}" {{ 'selected' if code == current_user.lang }}>{{ label }}</option>{% endfor %}</select></div>
+      <div><label for="pt">{{ t('lbl.theme') }}</label><select id="pt" name="theme">{% for mode in ['system', 'light', 'dark'] %}<option value="{{ mode }}" {{ 'selected' if mode == current_user.theme }}>{{ t('theme.' ~ mode) }}</option>{% endfor %}</select></div>
+      <div class="wide"><label for="rm">{{ t('account.reminders') }}</label><input class="input" id="rm" name="reminders" value="{{ current_user.reminder_minutes }}" pattern="[0-9, ]*">
+        <span class="muted small">{{ t('account.reminders_hint') }}</span></div>
+    </div>
+    <details><summary>{{ t('account.notification_settings') }}</summary>
+      <div class="table-wrap"><table><thead><tr><th>{{ t('lbl.type') }}</th><th>{{ t('account.in_app') }}</th><th>Telegram</th></tr></thead><tbody>
+        {% for kind in kinds %}{% set p = prefs.get(kind) %}
+        <tr><td>{{ t('notif_name.' ~ kind) }}</td>
+          <td><input type="checkbox" name="app_{{ kind }}" {{ 'checked' if (not p or p.in_app) }} aria-label="{{ t('account.in_app') }}"></td>
+          <td><input type="checkbox" name="tg_{{ kind }}" {{ 'checked' if (not p or p.telegram) }} aria-label="Telegram"></td></tr>
+        {% endfor %}</tbody></table></div>
+    </details>
+    <button class="btn btn-primary" type="submit">{{ t('btn.save') }}</button>
+  </form></div>
+{% endblock %}

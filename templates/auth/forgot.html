@@ -1,0 +1,14 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('auth.forgot') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="auth"><div class="card">
+  <h1>{{ t('auth.forgot') }}</h1>
+  <p class="muted">{{ t('auth.forgot_hint') }}</p>
+  <form method="post" class="stack">{{ m.csrf() }}
+    <div><label for="identifier">{{ t('lbl.username') }} / {{ t('lbl.email') }}</label>
+      <input class="input" id="identifier" name="identifier" required autofocus></div>
+    <button class="btn btn-primary btn-block" type="submit">{{ t('btn.send') }}</button>
+  </form>
+</div></div>
+{% endblock %}

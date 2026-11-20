@@ -1,0 +1,79 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ name }} · {{ app_name }}{% endblock %}
+{% block content %}
+<div class="row spread"><h1>{{ name }} <span class="badge">{{ t('role.' ~ u.role) }}</span>{% if not u.is_active %} <span class="badge b-bad">{{ t('ad.blocked') }}</span>{% endif %}</h1>
+  <a class="btn btn-sm" href="{{ url_for('admin.users') }}">← {{ t('btn.back') }}</a></div>
+<p class="muted">@{{ u.username }} · {{ t('ad.created') }}: {{ u.created_at|dt }}{% if u.last_seen %} · {{ t('ad.last_seen') }}: {{ u.last_seen|dt }}{% endif %}</p>
+
+<div class="grid g2">
+  <div class="card"><h2>{{ t('ad.profile') }}</h2>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="profile">
+      <div><label for="fn">{{ t('ad.first_name') }}</label><input class="input" id="fn" name="first_name" value="{{ u.first_name }}" maxlength="60"></div>
+      <div><label for="ln">{{ t('ad.last_name') }}</label><input class="input" id="ln" name="last_name" value="{{ u.last_name }}" maxlength="60"></div>
+      <div><label for="ph">{{ t('ad.phone') }}</label><input class="input" id="ph" name="phone" value="{{ u.phone or '' }}" maxlength="20"></div>
+      <div><label for="em">Email</label><input class="input" id="em" name="email" type="email" value="{{ u.email or '' }}" maxlength="120"></div>
+      <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.save') }}</button></div>
+    </form>
+  </div>
+  <div class="card stack"><h2>{{ t('ad.access') }}</h2>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="role">
+      <div><label for="role">{{ t('ad.role') }}</label><select id="role" name="role">{% for r in roles %}<option value="{{ r }}" {{ 'selected' if r == u.role }}>{{ t('role.' ~ r) }}</option>{% endfor %}</select></div>
+      <div><button class="btn" type="submit" data-confirm="{{ t('ad.confirm_role') }}">{{ t('btn.save') }}</button></div>
+    </form>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="password">
+      <div><label for="pw">{{ t('ad.new_password') }}</label><input class="input" id="pw" name="password" type="password" minlength="8" autocomplete="new-password" required></div>
+      <div><button class="btn" type="submit" data-confirm="{{ t('ad.confirm_password') }}">{{ t('ad.set_password') }}</button></div>
+    </form>
+    {% if u.id != current_user.id %}
+    <form method="post">{{ m.csrf() }}<input type="hidden" name="action" value="{{ 'block' if u.is_active else 'unblock' }}">
+      <button class="btn {{ 'btn-danger' if u.is_active else 'btn-ok' }}" type="submit" data-confirm="{{ t('ad.confirm_block') }}">{{ t('ad.block') if u.is_active else t('ad.unblock') }}</button></form>
+    {% endif %}
+  </div>
+</div>
+
+{% if u.role == 'student' %}
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ summary.xp }}</div><div class="lbl">XP</div></div>
+  <div class="card stat"><div class="num">🪙 {{ summary.coins }}</div><div class="lbl">Coin</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(summary.attendance.pct) }}</div><div class="lbl">{{ t('st.attendance_rate') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(summary.homework.pct) }}</div><div class="lbl">{{ t('st.hw_rate') }}</div></div>
+</div>
+<div class="grid g2">
+  <div class="card stack"><h2>{{ t('ad.groups') }}</h2>
+    {% if groups %}<ul class="list">{% for gr in groups %}<li>{{ gr.name }}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}
+    <h3>{{ t('ad.parents') }}</h3>
+    {% if parents %}<ul class="list">{% for p in parents %}<li class="row spread"><a href="{{ url_for('admin.user_detail', user_id=p.id) }}">{{ names(p) }}</a></li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="level">
+      <div><label for="lv-sub">{{ t('lbl.subject') }}</label><select id="lv-sub" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+      <div><label for="lv-l">{{ t('lbl.level') }}</label><select id="lv-l" name="level">{% for l in levels %}<option>{{ l }}</option>{% endfor %}</select></div>
+      <div><button class="btn" type="submit">{{ t('ad.set_level') }}</button></div>
+    </form>
+  </div>
+  <div class="card stack"><h2>{{ t('ad.adjust_points') }}</h2>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="adjust">
+      <div><label for="ad-k">{{ t('tc.kind') }}</label><select id="ad-k" name="kind"><option value="xp">XP</option><option value="coin">Coin</option></select></div>
+      <div><label for="ad-a">{{ t('lbl.amount') }}</label><input class="input" id="ad-a" name="amount" type="number" min="-10000" max="10000" required></div>
+      <div class="wide"><label for="ad-r">{{ t('tc.reason') }}</label><input class="input" id="ad-r" name="reason" maxlength="200"></div>
+      <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.save') }}</button></div>
+    </form>
+    {% if payments.debt %}<p class="flash flash-error">{{ t('pa.debt', amount=payments.debt|money) }}</p>{% endif %}
+  </div>
+</div>
+<div class="card"><h2>{{ t('st.points_history') }}</h2>
+  {% if log %}<ul class="list">{% for r in log %}<li>{{ r.created_at|dt }} · {{ 'XP' if r.kind == 'xp' else 'Coin' }} {{ m.delta(r.amount) }} · {{ t('reason.' ~ r.reason_code) }}{% if r.reason %} · <span class="muted">{{ r.reason }}</span>{% endif %}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endif %}
+
+{% if u.role == 'parent' %}
+<div class="card stack"><h2>{{ t('ad.children') }}</h2>
+  {% if children %}<ul class="list">{% for c in children %}<li class="row spread"><a href="{{ url_for('admin.user_detail', user_id=c.id) }}">{{ names(c) }}</a>
+    <form method="post" class="inline-form">{{ m.csrf() }}<input type="hidden" name="action" value="unlink_parent"><input type="hidden" name="student_id" value="{{ c.id }}">
+      <button class="btn btn-sm btn-danger" type="submit" data-confirm="{{ t('ad.confirm_unlink') }}">{{ t('btn.delete') }}</button></form></li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}
+  <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="link_parent">
+    <div><label for="ch">{{ t('ad.child_username') }}</label><input class="input" id="ch" name="child" required maxlength="32"></div>
+    <div><button class="btn btn-primary" type="submit">{{ t('ad.link') }}</button></div>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.goals') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🎯 {{ t('nav.goals') }}</h1>
+<div class="card">
+  <h2>{{ t('tc.new_goal') }}</h2>
+  {% if students %}
+  <form method="post" class="form-grid">{{ m.csrf() }}
+    <div><label for="g-st">{{ t('lbl.student') }}</label>
+      <select id="g-st" name="student_id" required>{% for s in students %}<option value="{{ s.id }}">{{ names(s) }}</option>{% endfor %}</select></div>
+    <div><label for="g-sub">{{ t('lbl.subject') }}</label>
+      <select id="g-sub" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+    <div><label for="g-title">{{ t('tc.goal_title') }}</label><input class="input" id="g-title" name="title" maxlength="200" required></div>
+    <div><label for="g-date">{{ t('st.target_date') }}</label><input class="input" id="g-date" name="target_date" type="date"></div>
+    <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% for item in items %}
+<div class="card stack">
+  <div class="row spread"><h2>{{ item.goal.title }}</h2><span class="muted">{{ names(item.student) }}</span></div>
+  <progress max="100" value="{{ item.pct }}" aria-label="{{ item.goal.title }}"></progress>
+  <p class="small muted">{{ item.done }}/{{ item.total }} ({{ item.pct }}%){% if item.goal.target_date %} · {{ item.goal.target_date|dated }}{% endif %}</p>
+  <ul class="list">{% for task in item.tasks %}<li><span class="{{ 'muted' if task.done }}">{{ '✔' if task.done else '○' }} {{ task.title }}</span>{% if task.due_on %} <span class="muted small">· {{ task.due_on|dated }}</span>{% endif %}</li>{% endfor %}</ul>
+  <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="form" value="task"><input type="hidden" name="goal_id" value="{{ item.goal.id }}">
+    <div><label for="t{{ item.goal.id }}">{{ t('tc.weekly_task') }}</label><input class="input" id="t{{ item.goal.id }}" name="title" maxlength="200" required></div>
+    <div><label for="d{{ item.goal.id }}">{{ t('tc.due') }}</label><input class="input" id="d{{ item.goal.id }}" name="due_on" type="date"></div>
+    <div><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+</div>
+{% else %}<div class="card">{{ m.empty() }}</div>{% endfor %}
+{% endblock %}

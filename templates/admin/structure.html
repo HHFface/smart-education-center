@@ -1,0 +1,56 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.structure') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🏫 {{ t('nav.structure') }}</h1>
+<div class="grid g2">
+  <div class="card stack"><h2>{{ t('ad.subjects') }}</h2>
+    <ul class="list">{% for s in subjects %}<li class="row spread"><span>{{ s.name|subject(s.code) }} <span class="muted small">({{ s.code }})</span>{% if not s.is_active %} <span class="badge b-bad">{{ t('ad.inactive') }}</span>{% endif %}</span>
+      <form method="post" class="inline-form">{{ m.csrf() }}<input type="hidden" name="action" value="toggle_subject"><input type="hidden" name="subject_id" value="{{ s.id }}"><button class="btn btn-sm" type="submit">{{ t('ad.toggle') }}</button></form></li>{% endfor %}</ul>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="subject">
+      <div><label for="sc">{{ t('ad.code') }}</label><input class="input" id="sc" name="code" maxlength="12" required></div>
+      <div><label for="sn">{{ t('lbl.name') }}</label><input class="input" id="sn" name="name" maxlength="60" required></div>
+      <div><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+    </form>
+  </div>
+  <div class="card stack"><h2>{{ t('ad.courses') }}</h2>
+    {% if courses %}<ul class="list">{% for c in courses %}<li>{{ c.name }} <span class="muted small">· {{ c.subject_name|subject(c.subject_code) }} · {{ c.level }} · {{ c.price|money }}</span></li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="course">
+      <div><label for="cs">{{ t('lbl.subject') }}</label><select id="cs" name="subject_id">{% for s in subjects %}<option value="{{ s.id }}">{{ s.name|subject(s.code) }}</option>{% endfor %}</select></div>
+      <div><label for="cn">{{ t('lbl.name') }}</label><input class="input" id="cn" name="name" maxlength="100" required></div>
+      <div><label for="cl">{{ t('lbl.level') }}</label><select id="cl" name="level">{% for l in levels %}<option>{{ l }}</option>{% endfor %}</select></div>
+      <div><label for="cp">{{ t('lbl.price') }}</label><input class="input" id="cp" name="price" type="number" min="0" value="0"></div>
+      <div class="wide"><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+    </form>
+  </div>
+</div>
+<div class="card"><h2>{{ t('ad.new_group') }}</h2>
+  <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="group">
+    <div><label for="gc">{{ t('ad.course') }}</label><select id="gc" name="course_id" required>{% for c in courses %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>
+    <div><label for="gn">{{ t('lbl.name') }}</label><input class="input" id="gn" name="name" maxlength="80" required></div>
+    <div><label for="gt">{{ t('lbl.teacher') }}</label><select id="gt" name="teacher_id"><option value="">—</option>{% for tt in teachers %}<option value="{{ tt.id }}">{{ names(tt) }}</option>{% endfor %}</select></div>
+    <div><label for="gr">{{ t('lbl.room') }}</label><input class="input" id="gr" name="room" maxlength="40"></div>
+    <div><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+  </form>
+</div>
+{% for gr in groups %}
+<div class="card stack">
+  <div class="row spread"><h2>{{ gr.name }} {% if not gr.is_active %}<span class="badge b-bad">{{ t('ad.inactive') }}</span>{% endif %}</h2><span class="muted">{{ gr.course_name }}</span></div>
+  <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="group_edit"><input type="hidden" name="group_id" value="{{ gr.id }}">
+    <div><label for="et{{ gr.id }}">{{ t('lbl.teacher') }}</label><select id="et{{ gr.id }}" name="teacher_id"><option value="">—</option>{% for tt in teachers %}<option value="{{ tt.id }}" {{ 'selected' if tt.id == gr.teacher_id }}>{{ names(tt) }}</option>{% endfor %}</select></div>
+    <div><label for="er{{ gr.id }}">{{ t('lbl.room') }}</label><input class="input" id="er{{ gr.id }}" name="room" value="{{ gr.room or '' }}" maxlength="40"></div>
+    <div class="check"><input id="ea{{ gr.id }}" type="checkbox" name="active" value="1" {{ 'checked' if gr.is_active }}><label for="ea{{ gr.id }}">{{ t('ad.active') }}</label></div>
+    <div><button class="btn" type="submit">{{ t('btn.save') }}</button></div>
+  </form>
+  <details><summary>{{ t('ad.members') }} ({{ members[gr.id]|length }})</summary>
+    <ul class="list">{% for s in members[gr.id] %}<li class="row spread"><a href="{{ url_for('admin.user_detail', user_id=s.id) }}">{{ names(s) }}</a>
+      <form method="post" class="inline-form">{{ m.csrf() }}<input type="hidden" name="action" value="remove_student"><input type="hidden" name="group_id" value="{{ gr.id }}"><input type="hidden" name="student_id" value="{{ s.id }}">
+        <button class="btn btn-sm btn-danger" type="submit" data-confirm="{{ t('ad.confirm_remove') }}">{{ t('btn.delete') }}</button></form></li>{% endfor %}</ul>
+    <form method="post" class="form-grid">{{ m.csrf() }}<input type="hidden" name="action" value="add_student"><input type="hidden" name="group_id" value="{{ gr.id }}">
+      <div><label for="as{{ gr.id }}">{{ t('ad.student_username') }}</label><input class="input" id="as{{ gr.id }}" name="username" maxlength="32" required></div>
+      <div><button class="btn btn-primary" type="submit">{{ t('btn.add') }}</button></div>
+    </form>
+  </details>
+</div>
+{% endfor %}
+{% endblock %}

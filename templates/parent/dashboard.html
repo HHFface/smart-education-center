@@ -1,0 +1,58 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.home') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>{{ t('pa.title') }}</h1>
+{% if not children %}
+<div class="card">{{ t('pa.no_children') }}</div>
+{% else %}
+<nav class="tabs" aria-label="{{ t('pa.children') }}">
+  {% for c in children %}<a href="{{ url_for('parent.dashboard', child=c.user.id) }}" class="{{ 'active' if c.user.id == selected }}">{{ c.name }}{% if c.debt %} ⚠{% endif %}</a>{% endfor %}
+</nav>
+{% if d %}
+<div class="grid g4">
+  <div class="card stat"><div class="num">{{ d.summary.xp }}</div><div class="lbl">XP</div></div>
+  <div class="card stat"><div class="num">🪙 {{ d.summary.coins }}</div><div class="lbl">Coin</div></div>
+  <div class="card stat"><div class="num">{% if d.summary.rank %}#{{ d.summary.rank }}{% else %}—{% endif %}</div><div class="lbl">{{ t('pa.rank') }}</div></div>
+  <div class="card stat"><div class="num">{{ m.pct(d.summary.attendance.pct) }}</div><div class="lbl">{{ t('st.attendance_rate') }}</div></div>
+</div>
+{% if d.payments.debt %}<div class="flash flash-error">{{ t('pa.debt', amount=d.payments.debt|money) }}</div>{% endif %}
+
+<div class="grid g2">
+  <div class="card"><h2>📅 {{ t('nav.schedule') }}</h2>
+    {% if d.lessons %}<ul class="list">{% for l in d.lessons %}<li>{{ l.starts_at|dt }} · {{ l.group_name }}{% if l.room %} · {{ l.room }}{% endif %}{% if l.status == 'cancelled' %} <span class="badge b-bad">{{ t('status.cancelled') }}</span>{% endif %}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+  <div class="card"><h2>✅ {{ t('nav.attendance') }}</h2>
+    {% if d.attendance %}<ul class="list">{% for a in d.attendance %}<li>{{ a.starts_at|dt }} · {{ a.group_name }} {{ m.badge(a.status) }}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+</div>
+<div class="card"><h2>📝 {{ t('nav.homework') }}</h2>
+  {% if d.homework %}<div class="table-wrap"><table>
+    <thead><tr><th>{{ t('st.hw_title') }}</th><th>{{ t('st.due') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('lbl.score') }}</th></tr></thead>
+    <tbody>{% for h in d.homework %}<tr><td>{{ h.title }}</td><td class="nowrap">{{ h.due_at|dt }}</td>
+      <td>{% if h.sub_status %}{{ m.badge(h.sub_status) }}{% elif h.miss_action %}{{ m.badge(h.miss_action) }}{% else %}<span class="badge b-warn">{{ t('st.todo') }}</span>{% endif %}</td>
+      <td>{% if h.score is not none %}{{ h.score }}{% else %}—{% endif %}</td></tr>{% endfor %}</tbody>
+  </table></div>{% else %}{{ m.empty() }}{% endif %}</div>
+
+<div class="grid g2">
+  <div class="card"><h2>📊 {{ t('nav.exams') }}</h2>
+    {% if d.exams %}<ul class="list">{% for e in d.exams %}<li>{{ e.taken_on|dated }} · {{ e.subject_name|subject(e.subject_code) }} · {{ e.exam_type }} · {{ e.score|round(1) }}/{{ e.max_score|round(0)|int }}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+  <div class="card"><h2>💬 {{ t('pa.comments') }}</h2>
+    {% if d.comments %}<ul class="list">{% for c in d.comments %}<li><strong>{{ c.title }}</strong><br>{{ c.feedback }}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+</div>
+<div class="grid g2">
+  <div class="card"><h2>⚠ {{ t('pa.penalties') }}</h2>
+    {% if d.penalties %}<ul class="list">{% for p in d.penalties %}<li>{{ p.created_at|dt }} · {{ p.kind|upper }} {{ m.delta(p.amount) }} · {{ t('reason.' ~ p.reason_code) }}{% if p.revoked %} <span class="badge">{{ t('st.revoked') }}</span>{% endif %}</li>{% endfor %}</ul>{% else %}{{ t('pa.no_penalties') }}{% endif %}</div>
+  <div class="card"><h2>💳 {{ t('pa.payments') }}</h2>
+    {% if d.payments['items'] %}<ul class="list">{% for p in d.payments['items'] %}<li>{{ p.row.due_date|dated }} · {{ p.paid|money }} / {{ p.net|money }} · {{ m.badge(p.row.status) }}{% if p.overdue %} <span class="badge b-bad">{{ t('pa.overdue') }}</span>{% endif %}</li>{% endfor %}</ul>{% else %}{{ m.empty() }}{% endif %}</div>
+</div>
+<div class="grid g2">
+  <div class="card"><h2>🎯 {{ t('pa.skills') }}</h2>
+    {% for s in d.subjects %}{% set ov = d.skills[s.id] %}<h3>{{ s.name|subject(s.code) }}</h3>
+      <ul class="list">{% for r in ov.rows if r.score is not none %}<li>{{ t('st.skill.' ~ r.skill) }}: {{ r.score }}%</li>{% else %}<li class="muted">—</li>{% endfor %}</ul>
+    {% else %}{{ m.empty() }}{% endfor %}</div>
+  <div class="card"><h2>⚔️ {{ t('nav.battle') }}</h2>
+    {% for b in d.battle %}<p>{{ b.subject.name|subject(b.subject.code) }}: <strong>{{ b.rating.rating }}</strong> · {{ b.rating.wins }}-{{ b.rating.losses }}-{{ b.rating.draws }}</p>{% else %}{{ m.empty() }}{% endfor %}</div>
+</div>
+{% if d.notices %}<div class="card"><h2>📣 {{ t('pa.notices') }}</h2><ul class="list">{% for n in d.notices %}<li>{{ n.created_at|dt }} · {{ n.text }}</li>{% endfor %}</ul></div>{% endif %}
+{% endif %}
+{% endif %}
+{% endblock %}

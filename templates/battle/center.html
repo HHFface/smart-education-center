@@ -1,0 +1,32 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('bt.center') }} · {{ app_name }}{% endblock %}
+{% block body_attrs %}data-refresh="20"{% endblock %}
+{% block content %}
+<h1>⚔️ {{ t('bt.center') }}</h1>
+<nav class="tabs"><a href="{{ url_for('battle.hub') }}">{{ t('bt.hub') }}</a><a class="active" href="{{ url_for('battle.center') }}">{{ t('bt.center') }}</a><a href="{{ url_for('battle.history') }}">{{ t('bt.history') }}</a></nav>
+{% macro section(title_key, items, show_when=False) %}
+<div class="card"><h2>{{ t(title_key) }} <span class="badge">{{ items|length }}</span></h2>
+  {% if items %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('bt.opponent') }}</th><th>{{ t('lbl.subject') }}</th><th>{{ t('bt.kind') }}</th><th>{{ t('lbl.status') }}</th><th>{{ t('lbl.date') }}</th><th></th></tr></thead>
+    <tbody>{% for it in items %}
+      <tr>
+        <td>{{ it.opponent if it.b.challenger_id == current_user.id else it.challenger }}</td>
+        <td>{{ it.b.subject_name }}</td>
+        <td>{{ t('bt.kind.' ~ it.b.kind) }}</td>
+        <td>{{ m.badge(it.b.status) }}</td>
+        <td class="nowrap">{% if it.b.scheduled_at %}{{ it.b.scheduled_at|dt }}{% elif it.b.expires_at %}{{ t('bt.until') }} {{ it.b.expires_at|dt }}{% else %}{{ it.b.created_at|dt }}{% endif %}</td>
+        <td><a class="btn btn-sm" href="{{ url_for('battle.room', battle_id=it.b.id) }}">{{ t('btn.open') }}</a></td>
+      </tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ m.empty() }}{% endif %}
+</div>
+{% endmacro %}
+{{ section('bt.incoming', center.incoming) }}
+{{ section('bt.outgoing', center.outgoing) }}
+{{ section('bt.scheduled_list', center.scheduled) }}
+{{ section('bt.declined_list', center.declined) }}
+{{ section('bt.expired_list', center.expired) }}
+{% endblock %}

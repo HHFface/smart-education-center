@@ -1,0 +1,17 @@
+{% extends "common/base.html" %}
+{% import "common/macros.html" as m with context %}
+{% block title %}{{ t('nav.certificates') }} · {{ app_name }}{% endblock %}
+{% block content %}
+<h1>🎓 {{ t('nav.certificates') }}</h1>
+<div class="card">
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{ t('st.cert_number') }}</th><th>{{ t('st.course') }}</th><th>{{ t('lbl.level') }}</th><th>{{ t('lbl.date') }}</th><th></th></tr></thead>
+    <tbody>{% for c in rows %}
+      <tr><td class="nowrap">{{ c.number }}</td><td>{{ c.course }}</td><td>{{ c.level or '—' }}</td><td>{{ c.issued_at|dt('%d.%m.%Y') }}</td>
+        <td><a class="btn btn-sm" href="{{ url_for('main.certificate', number=c.number) }}">{{ t('btn.open') }}</a></td></tr>
+    {% endfor %}</tbody>
+  </table></div>
+  {% else %}{{ t('st.cert_none') }}{% endif %}
+</div>
+{% endblock %}
