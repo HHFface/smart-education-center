@@ -1,0 +1,36 @@
+bt.incoming|Kelgan takliflar|Incoming invites|Входящие приглашения|받은 초대
+bt.outgoing|Yuborilgan takliflar|Sent invites|Отправленные приглашения|보낸 초대
+bt.scheduled_list|Rejalashtirilgan battlelar|Scheduled battles|Запланированные баттлы|예정된 배틀
+bt.declined_list|Rad etilgan takliflar|Declined invites|Отклонённые приглашения|거절된 초대
+bt.expired_list|Muddati o'tgan takliflar|Expired invites|Просроченные приглашения|만료된 초대
+bt.online|Hozir onlayn|Online now|Сейчас онлайн|지금 접속 중
+bt.offline|Offlayn|Offline|Не в сети|오프라인
+nav.disputes|E'tirozlar|Disputes|Споры|이의 신청
+nav.expenses|Xarajatlar|Expenses|Расходы|지출
+nav.questions|Savollar banki|Question bank|Банк вопросов|문제은행
+err.too_many_requests|Juda ko'p urinish. Keyinroq qayta urinib ko'ring.|Too many attempts. Please try again later.|Слишком много попыток. Повторите позже.|시도 횟수가 너무 많습니다. 잠시 후 다시 시도하세요.
+st.absence_document|Hujjat (ma'lumotnoma, rasm yoki PDF)|Supporting document (note, image or PDF)|Документ (справка, изображение или PDF)|증빙 서류 (진단서, 이미지 또는 PDF)
+err.review_note_required|Rad etishda sababni yozing.|Please write a reason when rejecting.|При отклонении укажите причину.|거절할 때는 사유를 입력하세요.
+notif.payment_paid|To'lov qabul qilindi: {amount} ({date}).|Payment received: {amount} ({date}).|Платёж принят: {amount} ({date}).|결제가 확인되었습니다: {amount} ({date}).
+notif_name.payment_paid|To'lov tasdiqlandi|Payment confirmed|Платёж подтверждён|결제 확인
+err.overpay|Summa qolgan qarzdan oshib ketdi.|The amount exceeds the remaining balance.|Сумма превышает остаток долга.|금액이 남은 잔액을 초과합니다.
+ae.paid_sum|To'langan|Paid|Оплачено|결제액
+ae.remaining|Qoldiq|Remaining|Остаток|잔액
+ae.partial|Qisman to'lov|Partial payment|Частичная оплата|부분 결제
+ae.method|To'lov usuli|Payment method|Способ оплаты|결제 방법
+ae.method_cash|Naqd|Cash|Наличные|현금
+ae.method_card|Karta|Card|Карта|카드
+ae.method_transfer|O'tkazma|Bank transfer|Перевод|계좌 이체
+ae.method_manual|Boshqa|Other|Другое|기타
+cert.revoked|Bekor qilingan|Revoked|Отозван|취소됨
+cert.revoke|Bekor qilish|Revoke|Отозвать|취소 처리
+cert.confirm_revoke|Sertifikatni bekor qilasizmi? Buni qaytarib bo'lmaydi.|Revoke this certificate? This cannot be undone.|Отозвать сертификат? Это нельзя отменить.|이 수료증을 취소하시겠습니까? 되돌릴 수 없습니다.
+cert.revoked_notice|Bu sertifikat bekor qilingan va haqiqiy emas.|This certificate has been revoked and is not valid.|Этот сертификат отозван и недействителен.|이 수료증은 취소되어 유효하지 않습니다.
+bt.practice|Mashq|Practice|Тренировка|연습
+bt.practice_note|Mashq rejimi — reytingga ta'sir qilmaydi.|Practice mode — does not affect your rating.|Режим тренировки — не влияет на рейтинг.|연습 모드 — 레이팅에 영향을 주지 않습니다.
+bt.practice_start|Mashqni boshlash|Start practice|Начать тренировку|연습 시작
+bt.practice_done|Mashq yakunlandi|Practice finished|Тренировка завершена|연습 완료
+bt.practice_again|Yana mashq qilish|Practice again|Тренироваться ещё|다시 연습
+bt.practice_history|Mashq tarixi|Practice history|История тренировок|연습 기록
+ad.set.practice.questions|Mashqdagi savollar soni|Practice question count|Количество вопросов в тренировке|연습 문제 수
+ad.section.practice|Mashq|Practice|Тренировка|연습

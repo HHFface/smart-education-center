@@ -1,0 +1,126 @@
+st.above_you|Sizdan yuqorida|Above you|Выше вас|나보다 위
+st.absence_hint|Dars boshlanishidan oldin so'rov yuboring. Kechiktirilgan so'rovlar ko'rib chiqilmasligi mumkin.|Send the request before the lesson. Late requests may not be reviewed.|Отправляйте заявку до начала занятия. Поздние заявки могут не рассматриваться.|수업 시작 전에 신청하세요. 늦은 신청은 검토되지 않을 수 있습니다.
+st.absence_new|Yangi so'rov|New request|Новая заявка|새 신청
+st.ai_answer|Javob|Answer|Ответ|답변
+st.ai_disabled|AI yordamchi hozir o'chirilgan.|The AI assistant is currently off.|ИИ-помощник сейчас отключён.|AI 도우미가 현재 꺼져 있습니다.
+st.ai_hint|Til o'rganish bo'yicha savol bering: grammatika, tarjima, misollar.|Ask a language question: grammar, translation, examples.|Задайте вопрос по языку: грамматика, перевод, примеры.|문법, 번역, 예문 등 언어 학습 질문을 해 보세요.
+st.ai_question|Savolingiz|Your question|Ваш вопрос|질문
+st.answer_text|Javob matni|Answer text|Текст ответа|답안 내용
+st.attendance_rate|Davomat|Attendance|Посещаемость|출석률
+st.battle_hint|Do'stlaringiz bilan 1v1 bellashing, reytingingizni oshiring!|Duel your friends 1v1 and raise your rating!|Сразитесь с друзьями 1 на 1 и повысьте рейтинг!|친구와 1대1로 겨루고 레이팅을 올리세요!
+st.before|Oldin|Before|До|이전
+st.buy|Sotib olish|Buy|Купить|구매
+st.buy_confirm|«{name}» ni {price} coin evaziga sotib olasizmi?|Buy "{name}" for {price} coins?|Купить «{name}» за {price} коинов?|"{name}"을(를) {price}코인에 구매하시겠습니까?
+st.cert_none|Sertifikatlar yo'q.|No certificates yet.|Сертификатов пока нет.|수료증이 없습니다.
+st.cert_number|Sertifikat raqami|Certificate number|Номер сертификата|수료증 번호
+st.change|O'zgarish|Change|Изменение|변동
+st.checked_homework|Tekshirilgan vazifalar|Checked homework|Проверенные задания|채점된 숙제
+st.club.movie|Kino klubi|Movie club|Киноклуб|영화 클럽
+st.club.speaking|Speaking klubi|Speaking club|Разговорный клуб|스피킹 클럽
+st.club_attended|Qatnashdim|I attended|Я посетил|참석했습니다
+st.club_going|Qatnashadiganlar: {n}|Going: {n}|Придут: {n}|참석 예정: {n}
+st.club_join|Qatnashaman|I'll join|Приду|참석할게요
+st.club_joined|Siz yozildingiz ✔|You are signed up ✔|Вы записаны ✔|신청 완료 ✔
+st.club_questions|Muhokama savollari|Discussion questions|Вопросы для обсуждения|토론 질문
+st.club_reward|Qatnashganlik uchun: +{coin} coin, +{xp} XP|For attending: +{coin} coins, +{xp} XP|За участие: +{coin} коинов, +{xp} XP|참석 보상: +{coin}코인, +{xp} XP
+st.club_words|Yangi so'zlar|New words|Новые слова|새 단어
+st.coins|Coin|Coins|Коины|코인
+st.course|Kurs|Course|Курс|강좌
+st.dispute|E'tiroz|Dispute|Оспаривание|이의 신청
+st.dispute_sent|E'tirozingiz yuborildi.|Your dispute was submitted.|Ваше оспаривание отправлено.|이의 신청이 접수되었습니다.
+st.dispute_text|Nima noto'g'ri ekanini yozing|Describe what is wrong|Опишите, что неверно|무엇이 잘못되었는지 적어 주세요
+st.due|Muddat|Due|Срок|기한
+st.file|Fayl|File|Файл|파일
+st.goal.active|Jarayonda|In progress|В процессе|진행 중
+st.goal.done|Bajarildi|Done|Выполнено|완료
+st.goals_none|Maqsadlar yo'q.|No goals yet.|Целей пока нет.|목표가 없습니다.
+st.hello|Salom, {name}!|Hello, {name}!|Привет, {name}!|안녕하세요, {name}님!
+st.history|Tarix|History|История|기록
+st.hw_done_of|Bajarilgan vazifalar|Homework done|Выполнено заданий|완료한 숙제
+st.hw_due|Muddati|Due|Срок сдачи|제출 기한
+st.hw_misses|Bajarilmagan vazifalar|Missed homework|Пропущенные задания|미제출 숙제
+st.hw_none|Uy vazifalari yo'q.|No homework.|Домашних заданий нет.|숙제가 없습니다.
+st.hw_rate|Uy vazifasi|Homework|Домашние задания|숙제 이행률
+st.hw_title|Uy vazifalari|Homework|Домашние задания|숙제
+st.i_didnt|Bilmadim|I didn't know|Не знал|몰랐어요
+st.i_knew|Bildim|I knew it|Знал|알았어요
+st.in_stock|Omborda: {n}|In stock: {n}|В наличии: {n}|재고: {n}
+st.internal_exams|Ichki imtihonlar|Internal exams|Внутренние экзамены|교내 시험
+st.item|Mahsulot|Item|Товар|상품
+st.kind_label|Javob turi|Answer type|Тип ответа|답안 유형
+st.kind.text|Matn|Text|Текст|텍스트
+st.kind.image|Rasm|Image|Изображение|이미지
+st.kind.document|Hujjat|Document|Документ|문서
+st.kind.audio|Audio|Audio|Аудио|오디오
+st.kind.video|Video|Video|Видео|비디오
+st.kind.test|Test|Test|Тест|테스트
+st.kind_text|Matn|Text|Текст|텍스트
+st.kind_image|Rasm|Image|Изображение|이미지
+st.kind_document|Hujjat|Document|Документ|문서
+st.kind_audio|Audio|Audio|Аудио|오디오
+st.kind_video|Video|Video|Видео|비디오
+st.kind_test|Test|Test|Тест|테스트
+st.late|Kechikib|Late|С опозданием|지각 제출
+st.league|Liga|League|Лига|리그
+st.lesson_date|Dars sanasi|Lesson date|Дата занятия|수업 날짜
+st.missed_hint|Bajarilmagan vazifa jarimaga olib keladi: 1-marta ogohlantirish, 2-marta −10, 3-marta −20 coin.|A missed homework leads to a penalty: warning first, then −10, then −20 coins.|Пропуск задания ведёт к штрафу: сначала предупреждение, затем −10, затем −20 коинов.|숙제를 제출하지 않으면 첫 번째는 경고, 이후 −10, −20 코인이 차감됩니다.
+st.my_orders|Buyurtmalarim|My orders|Мои заказы|내 주문
+st.my_requests|So'rovlarim|My requests|Мои заявки|내 신청
+st.my_submission|Mening javobim|My submission|Моя работа|내 제출물
+st.new_notes|Yangi izohlar|New notes|Новые заметки|새 메모
+st.next_lesson|Keyingi dars|Next lesson|Следующее занятие|다음 수업
+st.no_lessons_today|Bugun dars yo'q.|No lessons today.|Сегодня занятий нет.|오늘은 수업이 없습니다.
+st.not_enough|Yetarli emas|Not enough|Недостаточно|부족함
+st.now|Hozir|Now|Сейчас|지금
+st.official_exams|Rasmiy imtihonlar|Official exams|Официальные экзамены|공식 시험
+st.overdue|Muddati o'tgan|Overdue|Просрочено|기한 초과
+st.points_col|Ball|Points|Баллы|포인트
+st.points_hint|XP — o'rganish uchun, Coin — do'kon uchun.|XP is for progress, Coins are for the shop.|XP — за прогресс, коины — для магазина.|XP는 성장용, 코인은 상점용입니다.
+st.points_history|Ballar tarixi|Points history|История баллов|포인트 내역
+st.progress|Jarayon|Progress|Прогресс|진행도
+st.quick_invite|{name} ga tezkor taklif|Quick invite to {name}|Быстрое приглашение для {name}|{name}님에게 빠른 초대
+st.rank_of|{total} tadan|of {total}|из {total}|전체 {total}명 중
+st.rating_note|Reyting davomat, vazifa, XP va battle natijalaridan hisoblanadi.|The rating combines attendance, homework, XP and battle results.|Рейтинг учитывает посещаемость, задания, XP и баттлы.|순위는 출석, 숙제, XP, 배틀 결과를 종합해 계산됩니다.
+st.rating_type|Reyting turi|Rating type|Тип рейтинга|순위 유형
+st.reason|Sabab|Reason|Причина|사유
+st.reason_health|Sog'liq|Health|Здоровье|건강
+st.reason_family|Oilaviy sabab|Family|Семейные обстоятельства|가정 사정
+st.reason_ceremony|Marosim|Ceremony|Церемония|행사
+st.reason_personal|Shaxsiy|Personal|Личные причины|개인 사정
+st.reason_other|Boshqa|Other|Другое|기타
+st.resubmit|Qayta topshirish|Resubmit|Отправить снова|다시 제출
+st.return_date|Qaytish sanasi|Return date|Дата возвращения|복귀 날짜
+st.revoked|Bekor qilingan|Revoked|Отозвано|취소됨
+st.scope.overall|Umumiy|Overall|Общий|전체
+st.scope.subject|Fan bo'yicha|By subject|По предмету|과목별
+st.scope.group|Guruh bo'yicha|By group|По группе|그룹별
+st.scope.weekly|Haftalik|Weekly|За неделю|주간
+st.scope.monthly|Oylik|Monthly|За месяц|월간
+st.scope.battle|Battle|Battle|Баттл|배틀
+st.show_answer|Javobni ko'rsatish|Show answer|Показать ответ|정답 보기
+st.skill|Ko'nikma|Skill|Навык|기술
+st.skill.grammar|Grammatika|Grammar|Грамматика|문법
+st.skill.vocabulary|Lug'at|Vocabulary|Словарный запас|어휘
+st.skill.listening|Tinglab tushunish|Listening|Аудирование|듣기
+st.skill.reading|O'qish|Reading|Чтение|읽기
+st.skill.speaking|Gapirish|Speaking|Говорение|말하기
+st.skill.writing|Yozish|Writing|Письмо|쓰기
+st.skills|Ko'nikmalar|Skills|Навыки|기술 항목
+st.sold_out|Tugagan|Sold out|Нет в наличии|품절
+st.strong|Kuchli tomonlar|Strengths|Сильные стороны|강점
+st.submit|Topshirish|Submit|Сдать|제출
+st.target_date|Maqsad sanasi|Target date|Целевая дата|목표 날짜
+st.today_lessons|Bugungi darslar|Today's lessons|Занятия сегодня|오늘 수업
+st.todo|Bajarilishi kerak|To do|К выполнению|해야 할 일
+st.type|Turi|Type|Тип|유형
+st.upcoming_events|Yaqin tadbirlar|Upcoming events|Ближайшие события|다가오는 행사
+st.vocab_done|Bugungi takrorlash tugadi 🎉|Today's review is done 🎉|Повторение на сегодня завершено 🎉|오늘의 복습을 마쳤습니다 🎉
+st.vocab_error|Lug'at yuklanmadi.|Could not load vocabulary.|Не удалось загрузить словарь.|단어를 불러오지 못했습니다.
+st.vocab_none|Takrorlash uchun so'z yo'q.|No words to review.|Нет слов для повторения.|복습할 단어가 없습니다.
+st.weak|Zaif tomonlar|Weaknesses|Слабые стороны|약점
+st.words_learned|O'zlashtirilgan so'zlar|Words learned|Выучено слов|익힌 단어
+st.words_started|O'rganilayotgan so'zlar|Words in progress|Слов в изучении|학습 중인 단어
+st.words_total|Jami so'zlar|Total words|Всего слов|전체 단어
+st.you|Siz|You|Вы|나
+st.your_coins|Coinlaringiz: {coins}|Your coins: {coins}|Ваши коины: {coins}|보유 코인: {coins}
+st.your_rank|Sizning o'rningiz: {rank}|Your rank: {rank}|Ваше место: {rank}|내 순위: {rank}

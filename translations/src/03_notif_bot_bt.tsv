@@ -1,0 +1,205 @@
+notif.homework_new|Yangi uy vazifasi: {title}|New homework: {title}|Новое домашнее задание: {title}|새 숙제: {title}
+notif.homework_checked|«{title}» tekshirildi: {score} ball|"{title}" was checked: {score} points|«{title}» проверено: {score} баллов|"{title}" 채점 완료: {score}점
+notif.lesson_changed|Dars vaqti o'zgardi: {time}|Lesson time changed: {time}|Время занятия изменено: {time}|수업 시간이 변경되었습니다: {time}
+notif.attendance_marked|Davomat: {status} ({group})|Attendance: {status} ({group})|Посещаемость: {status} ({group})|출석: {status} ({group})
+notif.penalty_applied|Jarima: {amount} — {reason_text}|Penalty: {amount} — {reason_text}|Штраф: {amount} — {reason_text}|벌점: {amount} — {reason_text}
+notif.hw_warning|Ogohlantirish: «{title}» vazifasi topshirilmadi (#{seq}).|Warning: homework "{title}" was not submitted (#{seq}).|Предупреждение: задание «{title}» не сдано (№{seq}).|경고: 숙제 "{title}"을(를) 제출하지 않았습니다 (#{seq}).
+notif.coin_added|Coin: {amount} — {reason_text}|Coin: {amount} — {reason_text}|Коины: {amount} — {reason_text}|코인: {amount} — {reason_text}
+notif.xp_added|XP: {amount} — {reason_text}|XP: {amount} — {reason_text}|XP: {amount} — {reason_text}|XP: {amount} — {reason_text}
+notif.battle_invite|{name} sizni {kind} battleiga taklif qildi.|{name} invited you to a {kind} battle.|{name} приглашает вас на баттл ({kind}).|{name}님이 {kind} 배틀에 초대했습니다.
+notif.battle_counter|{name} boshqa vaqt taklif qildi.|{name} proposed other times.|{name} предложил другое время.|{name}님이 다른 시간을 제안했습니다.
+notif.battle_scheduled|Battle {name} bilan {time} da belgilandi.|Battle with {name} is set for {time}.|Баттл с {name} назначен на {time}.|{name}님과의 배틀이 {time}에 정해졌습니다.
+notif.battle_reminder|{minutes} daqiqadan so'ng {name} bilan battle ({time}).|Battle with {name} in {minutes} minutes ({time}).|Через {minutes} мин баттл с {name} ({time}).|{minutes}분 후 {name}님과 배틀 ({time}).
+notif.battle_result|Battle natijasi ({name}): {result}, hisob {score}, reyting {delta}.|Battle result vs {name}: {result}, score {score}, rating {delta}.|Результат баттла с {name}: {result}, счёт {score}, рейтинг {delta}.|{name}님과의 배틀 결과: {result}, 점수 {score}, 레이팅 {delta}.
+notif.battle_declined|{name} taklifni rad etdi.|{name} declined the invite.|{name} отклонил приглашение.|{name}님이 초대를 거절했습니다.
+notif.battle_ready|{name} battlega tayyor!|{name} is ready for the battle!|{name} готов к баттлу!|{name}님이 배틀 준비를 마쳤습니다!
+notif.battle_noshow|{name} battlega kelmadi.|{name} did not show up for the battle.|{name} не явился на баттл.|{name}님이 배틀에 나타나지 않았습니다.
+notif.battle_expired|{name} bilan taklif muddati tugadi.|The invite with {name} has expired.|Приглашение с {name} истекло.|{name}님과의 초대가 만료되었습니다.
+notif.certificate_new|Yangi sertifikat: {course}|New certificate: {course}|Новый сертификат: {course}|새 수료증: {course}
+notif.payment_due|To'lov muddati: {amount}, {date} gacha.|Payment due: {amount} by {date}.|К оплате {amount} до {date}.|결제 예정: {amount}, 기한 {date}.
+notif.absence_new|{name} {date} uchun sababli kelmaslik so'rovi yubordi.|{name} requested an excused absence for {date}.|{name} подал заявку на отсутствие на {date}.|{name}님이 {date} 결석 사유서를 제출했습니다.
+notif.absence_reviewed|{date} uchun so'rov: {status}|Your request for {date}: {status}|Заявка на {date}: {status}|{date} 신청 결과: {status}
+notif.message_new|{name} dan yangi xabar|New message from {name}|Новое сообщение от {name}|{name}님의 새 메시지
+notif.shop_order_status|Buyurtma «{item}»: {status}|Order "{item}": {status}|Заказ «{item}»: {status}|주문 "{item}": {status}
+notif.club_reward|«{title}» klubi uchun mukofot: +{xp} XP, +{coin} coin.|Reward for club "{title}": +{xp} XP, +{coin} coins.|Награда за клуб «{title}»: +{xp} XP, +{coin} коинов.|"{title}" 클럽 보상: +{xp} XP, +{coin} 코인.
+notif.announcement|E'lon: {text}|Announcement: {text}|Объявление: {text}|공지: {text}
+notif_name.homework_new|Yangi uy vazifasi|New homework|Новое задание|새 숙제
+notif_name.homework_checked|Vazifa tekshirildi|Homework checked|Задание проверено|숙제 채점
+notif_name.lesson_changed|Dars o'zgarishi|Lesson changes|Изменения занятий|수업 변경
+notif_name.attendance_marked|Davomat|Attendance|Посещаемость|출석
+notif_name.penalty_applied|Jarima|Penalty|Штраф|벌점
+notif_name.hw_warning|Vazifa ogohlantirishi|Homework warning|Предупреждение по ДЗ|숙제 경고
+notif_name.coin_added|Coin o'zgarishi|Coin changes|Изменение коинов|코인 변동
+notif_name.xp_added|XP o'zgarishi|XP changes|Изменение XP|XP 변동
+notif_name.battle_invite|Battle taklifi|Battle invite|Приглашение на баттл|배틀 초대
+notif_name.battle_counter|Battle: boshqa vaqt|Battle: other time|Баттл: другое время|배틀: 다른 시간
+notif_name.battle_scheduled|Battle vaqti belgilandi|Battle scheduled|Баттл назначен|배틀 일정
+notif_name.battle_reminder|Battle eslatmasi|Battle reminder|Напоминание о баттле|배틀 리마인더
+notif_name.battle_result|Battle natijasi|Battle result|Результат баттла|배틀 결과
+notif_name.battle_declined|Battle rad etildi|Battle declined|Баттл отклонён|배틀 거절
+notif_name.battle_ready|Raqib tayyor|Opponent ready|Соперник готов|상대 준비 완료
+notif_name.battle_noshow|Raqib kelmadi|Opponent no-show|Соперник не явился|상대 불참
+notif_name.certificate_new|Sertifikat|Certificate|Сертификат|수료증
+notif_name.payment_due|To'lov eslatmasi|Payment due|Напоминание об оплате|결제 알림
+notif_name.absence_new|Yangi so'rov|New absence request|Новая заявка|새 결석 신청
+notif_name.absence_reviewed|So'rov natijasi|Absence request result|Результат заявки|결석 신청 결과
+notif_name.message_new|Yangi xabar|New message|Новое сообщение|새 메시지
+notif_name.shop_order_status|Buyurtma holati|Order status|Статус заказа|주문 상태
+notif_name.club_reward|Klub mukofoti|Club reward|Награда за клуб|클럽 보상
+notif_name.announcement|E'lonlar|Announcements|Объявления|공지
+reason.admin_adjust|Administrator tuzatishi|Admin adjustment|Корректировка администратора|관리자 조정
+reason.battle_reward|Battle mukofoti|Battle reward|Награда за баттл|배틀 보상
+reason.club|Klub|Club|Клуб|클럽
+reason.homework_checked|Uy vazifasi tekshirildi|Homework checked|Домашнее задание проверено|숙제 채점
+reason.homework_done|Uy vazifasi bajarildi|Homework completed|Домашнее задание выполнено|숙제 완료
+reason.homework_missed|Uy vazifasi bajarilmadi|Homework missed|Домашнее задание не сдано|숙제 미제출
+reason.shop_purchase|Do'kondan xarid|Shop purchase|Покупка в магазине|상점 구매
+reason.shop_refund|Xarid qaytarildi|Shop refund|Возврат покупки|구매 환불
+reason.teacher_award|O'qituvchi mukofoti|Teacher award|Награда от учителя|교사 보상
+reason.revoked|Bekor qilindi|Revoked|Отменено|취소됨
+reason.attendance_present|Darsga keldi|Attended lesson|Посещение занятия|출석
+reason.attendance_late|Darsga kechikdi|Late to lesson|Опоздание на занятие|지각
+reason.attendance_excused|Sababli kelmadi|Excused absence|Отсутствие по причине|사유 결석
+reason.attendance_absent|Darsga kelmadi|Absent from lesson|Пропуск занятия|결석
+bot.absence_pick_date|Sanani tanlang:|Pick a date:|Выберите дату:|날짜를 선택하세요:
+bot.absence_pick_reason|Sababni tanlang:|Pick a reason:|Выберите причину:|사유를 선택하세요:
+bot.absence_pick_subject|Fanni tanlang:|Pick a subject:|Выберите предмет:|과목을 선택하세요:
+bot.absence_sent|✅ So'rov yuborildi.|✅ Request sent.|✅ Заявка отправлена.|✅ 신청이 전송되었습니다.
+bot.accept|✅ Qabul qilish|✅ Accept|✅ Принять|✅ 수락
+bot.back|⬅️ Orqaga|⬅️ Back|⬅️ Назад|⬅️ 뒤로
+bot.bad_code|Kod noto'g'ri yoki muddati o'tgan.|The code is wrong or expired.|Код неверный или истёк.|코드가 잘못되었거나 만료되었습니다.
+bot.battle_accepted|✅ Taklif qabul qilindi.|✅ Invite accepted.|✅ Приглашение принято.|✅ 초대를 수락했습니다.
+bot.battle_declined|❌ Taklif rad etildi.|❌ Invite declined.|❌ Приглашение отклонено.|❌ 초대를 거절했습니다.
+bot.battle_invite_line|⚔️ {name} — {kind}|⚔️ {name} — {kind}|⚔️ {name} — {kind}|⚔️ {name} — {kind}
+bot.battle_scheduled_line|📅 Rejalashtirilgan battlelar:|📅 Scheduled battles:|📅 Запланированные баттлы:|📅 예정된 배틀:
+bot.battle_title|⚔️ Battle|⚔️ Battle|⚔️ Баттл|⚔️ 배틀
+bot.btn_absence|📝 Sababli kelmaslik|📝 Absence|📝 Отсутствие|📝 결석 신청
+bot.btn_battle|⚔️ Battle|⚔️ Battle|⚔️ Баттл|⚔️ 배틀
+bot.btn_homework|📚 Uy vazifasi|📚 Homework|📚 Домашние задания|📚 숙제
+bot.btn_kids|👨‍👩‍👧 Farzandlarim|👨‍👩‍👧 My children|👨‍👩‍👧 Мои дети|👨‍👩‍👧 내 자녀
+bot.btn_language|🌐 Til|🌐 Language|🌐 Язык|🌐 언어
+bot.btn_notifications|🔔 Bildirishnomalar|🔔 Notifications|🔔 Уведомления|🔔 알림
+bot.btn_points|🪙 Ballarim|🪙 My points|🪙 Мои баллы|🪙 내 포인트
+bot.btn_rank|🏆 Reyting|🏆 Ranking|🏆 Рейтинг|🏆 순위
+bot.btn_requests|📨 So'rovlar|📨 Requests|📨 Заявки|📨 신청 목록
+bot.btn_schedule|📅 Jadval|📅 Schedule|📅 Расписание|📅 시간표
+bot.btn_shop|🛍 Do'kon|🛍 Shop|🛍 Магазин|🛍 상점
+bot.btn_stats|📊 Statistika|📊 Statistics|📊 Статистика|📊 통계
+bot.btn_today|📍 Bugun|📍 Today|📍 Сегодня|📍 오늘
+bot.choose_language|Tilni tanlang:|Choose a language:|Выберите язык:|언어를 선택하세요:
+bot.debt|💳 Qarzdorlik|💳 Debt|💳 Задолженность|💳 미납금
+bot.decline|❌ Rad etish|❌ Decline|❌ Отклонить|❌ 거절
+bot.empty|Hozircha ma'lumot yo'q.|Nothing here yet.|Пока ничего нет.|아직 데이터가 없습니다.
+bot.help|Buyruqlar: /start — menyu, /link KOD — akkauntni ulash, /lang — til, /help — yordam.|Commands: /start — menu, /link CODE — link account, /lang — language, /help — help.|Команды: /start — меню, /link КОД — привязать аккаунт, /lang — язык, /help — помощь.|명령어: /start — 메뉴, /link 코드 — 계정 연결, /lang — 언어, /help — 도움말.
+bot.homework_stats|Bajarilmagan: {misses} ({pct}%)|Missed: {misses} ({pct}%)|Не сдано: {misses} ({pct}%)|미제출: {misses} ({pct}%)
+bot.homework_title|📚 Uy vazifalari|📚 Homework|📚 Домашние задания|📚 숙제
+bot.kids_title|👨‍👩‍👧 Farzandlarim|👨‍👩‍👧 My children|👨‍👩‍👧 Мои дети|👨‍👩‍👧 내 자녀
+bot.lang_set|✅ Til o'zgartirildi.|✅ Language changed.|✅ Язык изменён.|✅ 언어가 변경되었습니다.
+bot.linked|✅ Akkaunt ulandi: {name}|✅ Account linked: {name}|✅ Аккаунт привязан: {name}|✅ 계정이 연결되었습니다: {name}
+bot.mark_read|✔ O'qildi|✔ Mark read|✔ Прочитано|✔ 읽음
+bot.menu_title|Salom, {name}! Menyudan tanlang:|Hi, {name}! Pick from the menu:|Привет, {name}! Выберите в меню:|안녕하세요, {name}님! 메뉴를 선택하세요:
+bot.no|Yo'q|No|Нет|아니요
+bot.not_linked|Akkaunt ulanmagan. {site} saytida Profil → Telegram bo'limidan kod oling va /link KOD yuboring.|Account not linked. Get a code at {site} (Profile → Telegram) and send /link CODE.|Аккаунт не привязан. Получите код на {site} (Профиль → Telegram) и отправьте /link КОД.|계정이 연결되지 않았습니다. {site}의 프로필 → 텔레그램에서 코드를 받아 /link 코드 를 보내세요.
+bot.notifications_title|🔔 Bildirishnomalar|🔔 Notifications|🔔 Уведомления|🔔 알림
+bot.now|Hozir|Now|Сейчас|지금
+bot.open_site|🌐 Saytni ochish|🌐 Open website|🌐 Открыть сайт|🌐 웹사이트 열기
+bot.points_title|🪙 Ballarim|🪙 My points|🪙 Мои баллы|🪙 내 포인트
+bot.rank_me|Sizning o'rningiz: {rank} / {total}|Your rank: {rank} / {total}|Ваше место: {rank} / {total}|내 순위: {rank} / {total}
+bot.rank_title|🏆 Reyting|🏆 Ranking|🏆 Рейтинг|🏆 순위
+bot.requests_title|📨 So'rovlar|📨 Requests|📨 Заявки|📨 신청 목록
+bot.schedule_title|📅 Dars jadvali|📅 Schedule|📅 Расписание|📅 시간표
+bot.shop_confirm|«{item}» — {price} coin. Sotib olasizmi?|"{item}" — {price} coins. Buy it?|«{item}» — {price} коинов. Купить?|"{item}" — {price}코인. 구매하시겠습니까?
+bot.shop_title|🛍 Do'kon|🛍 Shop|🛍 Магазин|🛍 상점
+bot.stats_text|O'quvchilar: {students}, o'qituvchilar: {teachers}, guruhlar: {groups}\nDaromad: {income}, qarz: {debt}\nBuyurtmalar: {orders}, e'tirozlar: {disputes}, kelmasliklar: {absences}|Students: {students}, teachers: {teachers}, groups: {groups}\nIncome: {income}, debt: {debt}\nOrders: {orders}, disputes: {disputes}, absences: {absences}|Учеников: {students}, учителей: {teachers}, групп: {groups}\nДоход: {income}, долг: {debt}\nЗаказы: {orders}, споры: {disputes}, пропуски: {absences}|학생 {students}명, 교사 {teachers}명, 그룹 {groups}개\n수입: {income}, 미납: {debt}\n주문: {orders}, 이의: {disputes}, 결석: {absences}
+bot.stats_title|📊 Statistika|📊 Statistics|📊 Статистика|📊 통계
+bot.today|Bugun|Today|Сегодня|오늘
+bot.today_title|📍 Bugungi darslar|📍 Today's lessons|📍 Занятия сегодня|📍 오늘 수업
+bot.tomorrow|Ertaga|Tomorrow|Завтра|내일
+bot.webhook|Webhook ishlayapti.|Webhook is running.|Webhook работает.|Webhook이 작동 중입니다.
+bot.yes|Ha|Yes|Да|예
+bt.accept|Qabul qilish|Accept|Принять|수락
+bt.answer_time|Javob vaqti (soniya)|Answer time (sec)|Время на ответ (сек)|답변 시간(초)
+bt.back_to_hub|Battle markaziga|Back to battle hub|В центр баттлов|배틀 센터로
+bt.cancel_confirm|Taklifni bekor qilasizmi?|Cancel this invite?|Отменить приглашение?|초대를 취소하시겠습니까?
+bt.center|Battle markazi|Battle center|Центр баттлов|배틀 센터
+bt.challenge_hint|Musobaqa {n} ta savoldan iborat.|The challenge has {n} questions.|В задании {n} вопросов.|챌린지는 {n}문제로 구성됩니다.
+bt.choose_slot|Vaqtni tanlang|Choose a time|Выберите время|시간을 선택하세요
+bt.correct_count|To'g'ri javoblar|Correct answers|Правильных ответов|정답 수
+bt.decline|Rad etish|Decline|Отклонить|거절
+bt.dispute|E'tiroz bildirish|Dispute|Оспорить|이의 신청
+bt.dispute_text|Natija noto'g'ri deb hisoblasangiz, izoh yozing.|If you think the result is wrong, write a note.|Если считаете результат неверным, напишите комментарий.|결과가 잘못되었다고 생각되면 내용을 적어 주세요.
+bt.draw|Durang|Draw|Ничья|무승부
+bt.duration|Davomiyligi|Duration|Длительность|소요 시간
+bt.expires_at|Amal qilish muddati|Expires at|Действует до|만료 시각
+bt.find_btn|Raqib qidirish|Find opponent|Найти соперника|상대 찾기
+bt.find_hint|Hozir onlayn bo'lgan raqib bilan tezkor battle.|A quick battle with someone who is online now.|Быстрый баттл с тем, кто сейчас онлайн.|지금 접속 중인 상대와 빠른 배틀.
+bt.find_opponent|Raqib topish|Find an opponent|Поиск соперника|상대 찾기
+bt.history|Battlelar tarixi|Battle history|История баттлов|배틀 기록
+bt.hub|Battle|Battle|Баттл|배틀
+bt.invite_btn|Taklif qilish|Invite|Пригласить|초대하기
+bt.invited_you|{name} sizni battlega taklif qildi|{name} invited you to a battle|{name} приглашает вас на баттл|{name}님이 배틀에 초대했습니다
+bt.js.correct|To'g'ri!|Correct!|Верно!|정답!
+bt.js.finishing|Yakunlanmoqda…|Finishing…|Завершение…|마무리 중…
+bt.js.network|Tarmoq xatosi. Qayta urinilmoqda…|Network error. Retrying…|Ошибка сети. Повтор…|네트워크 오류. 다시 시도 중…
+bt.js.no_answer|Javob berilmadi|No answer|Нет ответа|답변 없음
+bt.js.no_tts|Brauzeringiz ovozni qo'llab-quvvatlamaydi.|Your browser does not support speech.|Ваш браузер не поддерживает озвучку.|브라우저가 음성을 지원하지 않습니다.
+bt.js.start|Boshlandi!|Go!|Поехали!|시작!
+bt.js.waiting|Raqib kutilmoqda…|Waiting for the opponent…|Ожидание соперника…|상대를 기다리는 중…
+bt.js.wrong|Noto'g'ri|Wrong|Неверно|오답
+bt.kind|Savol turi|Question type|Тип вопросов|문제 유형
+bt.kind.vocabulary|Lug'at|Vocabulary|Словарь|어휘
+bt.kind.grammar|Grammatika|Grammar|Грамматика|문법
+bt.kind.translation|Tarjima|Translation|Перевод|번역
+bt.kind.listening|Tinglab tushunish|Listening|Аудирование|듣기
+bt.kind.reading|O'qib tushunish|Reading|Чтение|읽기
+bt.kind.mixed|Aralash|Mixed|Смешанный|혼합
+bt.kind.teacher|O'qituvchi savollari|Teacher's questions|Вопросы учителя|교사 출제
+bt.end.void|Texnik sabab bilan bekor qilindi (reytingga ta'sir qilmaydi).|Voided due to a technical issue (rating unaffected).|Аннулировано по технической причине (рейтинг не изменён).|기술적 문제로 무효 처리되었습니다 (레이팅 영향 없음).
+bt.end.no_show|Raqib kelmadi.|The opponent did not show up.|Соперник не явился.|상대가 나타나지 않았습니다.
+bt.end.expired|Taklif muddati tugadi.|The invite expired.|Срок приглашения истёк.|초대가 만료되었습니다.
+bt.end.declined|Taklif rad etildi.|The invite was declined.|Приглашение отклонено.|초대가 거절되었습니다.
+bt.end.cancelled|Battle bekor qilindi.|The battle was cancelled.|Баттл отменён.|배틀이 취소되었습니다.
+bt.last_battles|So'nggi battlelar|Recent battles|Последние баттлы|최근 배틀
+bt.league|Liga|League|Лига|리그
+bt.listen|Tinglash|Listen|Слушать|듣기
+bt.lobby_open|Xona ochiq — kiring!|The lobby is open — join!|Комната открыта — заходите!|대기실이 열렸습니다 — 입장하세요!
+bt.lobby_soon|Xona tez orada ochiladi.|The lobby opens soon.|Комната скоро откроется.|곧 대기실이 열립니다.
+bt.my_battles|Mening battlelarim|My battles|Мои баттлы|내 배틀
+bt.no_answer|Javob berilmadi|No answer|Нет ответа|답변 없음
+bt.no_subjects|Sizda battle uchun fan yo'q.|You have no subjects for battles.|У вас нет предметов для баттлов.|배틀에 사용할 과목이 없습니다.
+bt.none_online|Hozir onlayn raqib yo'q.|No opponents online right now.|Сейчас нет соперников онлайн.|지금 접속 중인 상대가 없습니다.
+bt.none_offline|Offlayn raqiblar yo'q.|No offline opponents.|Нет соперников офлайн.|오프라인 상대가 없습니다.
+bt.opp_is_ready|{name} tayyor!|{name} is ready!|{name} готов!|{name}님이 준비되었습니다!
+bt.opponent|Raqib|Opponent|Соперник|상대
+bt.propose_other|Boshqa vaqt taklif qilish|Propose other times|Предложить другое время|다른 시간 제안
+bt.proposed_times|Taklif qilingan vaqtlar|Proposed times|Предложенное время|제안된 시간
+bt.quick_found|Raqib topildi: {name}. Qabul qilishini kuting.|Opponent found: {name}. Wait for them to accept.|Соперник найден: {name}. Ждите принятия.|상대를 찾았습니다: {name}. 수락을 기다리세요.
+bt.rating|Battle reytingi|Battle rating|Рейтинг баттлов|배틀 레이팅
+bt.rating_change|Reyting o'zgarishi|Rating change|Изменение рейтинга|레이팅 변동
+bt.ready|Tayyorman|I'm ready|Я готов|준비 완료
+bt.record|G'alaba / durang / mag'lubiyat|W / D / L|П / Н / Пор|승 / 무 / 패
+bt.rematch|Qayta o'ynash|Rematch|Реванш|재대결
+bt.result|Natija|Result|Результат|결과
+bt.res.win|G'alaba|Win|Победа|승리
+bt.res.loss|Mag'lubiyat|Loss|Поражение|패배
+bt.res.draw|Durang|Draw|Ничья|무승부
+bt.review|Javoblarni ko'rish|Review answers|Разбор ответов|답안 검토
+bt.scheduled_for|Belgilangan vaqt|Scheduled for|Назначено на|예정 시각
+bt.score|Hisob|Score|Счёт|점수
+bt.send_invite|Taklif yuborish|Send invite|Отправить приглашение|초대 보내기
+bt.slot|Variant {n}|Option {n}|Вариант {n}|옵션 {n}
+bt.teacher_challenges|O'qituvchi musobaqalari|Teacher challenges|Задания от учителя|교사 챌린지
+bt.timer|Vaqt|Time|Время|시간
+bt.until|gacha|until|до|까지
+bt.versus|{a} — {b}|{a} vs {b}|{a} — {b}|{a} vs {b}
+bt.wait_until|Kutish vaqti:|Waiting until:|Ожидание до:|대기 시한:
+bt.waiting_accept|{name} qabul qilishini kutyapmiz…|Waiting for {name} to accept…|Ждём, пока {name} примет…|{name}님의 수락을 기다리는 중…
+bt.waiting_choice|{name} vaqtni tanlashini kutyapmiz…|Waiting for {name} to choose a time…|Ждём, пока {name} выберет время…|{name}님이 시간을 선택하기를 기다리는 중…
+bt.waiting_ready|{name} tayyor bo'lishini kutyapmiz…|Waiting for {name} to get ready…|Ждём готовности {name}…|{name}님의 준비를 기다리는 중…
+bt.win_rate|G'alaba foizi|Win rate|Процент побед|승률
+bt.wins|G'alabalar|Wins|Победы|승리 수
+bt.wrong_count|Noto'g'ri javoblar|Wrong answers|Неправильных ответов|오답 수
+bt.you|Siz|You|Вы|나
+bt.you_lost|Siz {name} ga yutqazdingiz.|You lost to {name}.|Вы проиграли {name}.|{name}님에게 졌습니다.
+bt.you_won|Siz g'olib bo'ldingiz!|You won!|Вы победили!|승리했습니다!
+notif.battle_expired|{name} bilan taklif muddati tugadi.|The invite with {name} has expired.|Приглашение с {name} истекло.|{name}님과의 초대가 만료되었습니다.

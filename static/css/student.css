@@ -1,0 +1,5 @@
+/* O'quvchi kabinetiga xos qo'shimcha uslublar */
+.flash-card { max-width: 640px; margin-left: auto; margin-right: auto; text-align: center; }
+.vocab-word { font-size: 2.4rem; font-weight: 800; margin: .4rem 0; word-break: break-word; }
+.flash-card .row { justify-content: center; margin-top: 1rem; }
+.flash-card audio { max-width: 100%; margin-bottom: .6rem; }

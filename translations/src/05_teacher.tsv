@@ -1,0 +1,75 @@
+tc.add_exam|Imtihon natijasini qo'shish|Add exam result|Добавить результат экзамена|시험 결과 추가
+tc.add_question|Savol qo'shish|Add question|Добавить вопрос|문제 추가
+tc.add_skill|Ko'nikma bahosini qo'shish|Add skill score|Добавить оценку навыка|기술 점수 추가
+tc.add_word|So'z qo'shish|Add word|Добавить слово|단어 추가
+tc.all_homework|Barcha uy vazifalari|All homework|Все задания|전체 숙제
+tc.all_submitted|Hammasi topshirilgan|All submitted|Все сдали|모두 제출함
+tc.announce|E'lon yuborish|Send announcement|Отправить объявление|공지 보내기
+tc.announce_hint|E'lon guruhdagi barcha o'quvchilarga boradi.|The announcement goes to every student in the group.|Объявление получат все ученики группы.|공지는 그룹의 모든 학생에게 전달됩니다.
+tc.announce_text|E'lon matni|Announcement text|Текст объявления|공지 내용
+tc.approved_absence|Tasdiqlangan kelmasliklar|Approved absences|Одобренные отсутствия|승인된 결석
+tc.attendance_hint|Belgilangan davomat avtomatik Coin beradi/ayiradi: Keldi +10, Kechikdi −5, Sababli 0, Kelmadi −20.|Marked attendance adjusts Coins automatically: Present +10, Late −5, Excused 0, Absent −20.|Отметка посещаемости автоматически меняет коины: был +10, опоздал −5, по причине 0, не был −20.|출석 처리에 따라 코인이 자동 반영됩니다: 출석 +10, 지각 −5, 사유 결석 0, 결석 −20.
+tc.audio_url|Audio havolasi|Audio URL|Ссылка на аудио|오디오 링크
+tc.award_hint|Faqat bir marta, sababini yozing — hammasi audit jurnaliga yoziladi.|Write a reason — everything is recorded in the audit log.|Укажите причину — всё записывается в журнал аудита.|사유를 적어 주세요. 모든 내용은 감사 로그에 기록됩니다.
+tc.challenge_hint|Kamida {n} ta savol qo'shing.|Add at least {n} questions.|Добавьте минимум {n} вопросов.|최소 {n}개의 문제를 추가하세요.
+tc.correct|To'g'ri javob|Correct answer|Правильный ответ|정답
+tc.dashboard_title|O'qituvchi paneli|Teacher dashboard|Панель учителя|교사 대시보드
+tc.description|Tavsif|Description|Описание|설명
+tc.discussion_questions|Muhokama savollari (har qatorda bittadan)|Discussion questions (one per line)|Вопросы для обсуждения (по одному в строке)|토론 질문 (한 줄에 하나)
+tc.due|Muddat|Due|Срок|기한
+tc.due_at|Topshirish muddati|Due date|Срок сдачи|제출 기한
+tc.event_kind|Tadbir turi|Event type|Тип события|행사 유형
+tc.exam_type|Imtihon turi|Exam type|Тип экзамена|시험 유형
+tc.example|Misol|Example|Пример|예문
+tc.excuse|Sababli deb belgilash|Mark as excused|Отметить как уважительное|사유 결석 처리
+tc.explanation|Izoh|Explanation|Пояснение|해설
+tc.feedback|Fikr-mulohaza|Feedback|Отзыв|피드백
+tc.file|Fayl|File|Файл|파일
+tc.goal_title|Maqsad|Goal|Цель|목표
+tc.internal|Ichki|Internal|Внутренний|교내
+tc.kind|Turi|Kind|Вид|종류
+tc.late|Kechikkan|Late|С опозданием|지각 제출
+tc.lessons_today|Bugungi darslar|Today's lessons|Занятия сегодня|오늘 수업
+tc.mark_attended|Qatnashdi deb belgilash|Mark attended|Отметить посещение|참석 처리
+tc.max_score|Maksimal ball|Max score|Максимальный балл|만점
+tc.my_groups|Guruhlarim|My groups|Мои группы|내 그룹
+tc.new_challenge|Yangi musobaqa|New challenge|Новое задание-вызов|새 챌린지
+tc.new_event|Yangi tadbir|New event|Новое событие|새 행사
+tc.new_goal|Yangi maqsad|New goal|Новая цель|새 목표
+tc.new_homework|Yangi uy vazifasi|New homework|Новое домашнее задание|새 숙제
+tc.new_words|Yangi so'zlar|New words|Новые слова|새 단어
+tc.no_lessons_today|Bugun dars yo'q.|No lessons today.|Сегодня занятий нет.|오늘은 수업이 없습니다.
+tc.nobody_joined|Hech kim yozilmagan.|Nobody signed up.|Никто не записался.|신청자가 없습니다.
+tc.not_submitted|Topshirmagan|Not submitted|Не сдано|미제출
+tc.official|Rasmiy|Official|Официальный|공식
+tc.option|Variant {n}|Option {n}|Вариант {n}|선택지 {n}
+tc.overdue|Muddati o'tgan|Overdue|Просрочено|기한 초과
+tc.pending_absences|Kutilayotgan so'rovlar|Pending absence requests|Заявки на рассмотрении|대기 중인 결석 신청
+tc.pronunciation|Talaffuz|Pronunciation|Произношение|발음
+tc.qtype|Savol turi|Question type|Тип вопроса|문제 유형
+tc.question_text|Savol matni|Question text|Текст вопроса|문제 내용
+tc.questions_count|Savollar: {n}|Questions: {n}|Вопросов: {n}|문제 수: {n}
+tc.quick_links|Tezkor havolalar|Quick links|Быстрые ссылки|바로가기
+tc.rank|O'rin|Rank|Место|순위
+tc.reason|Sabab|Reason|Причина|사유
+tc.reason.health|Sog'liq|Health|Здоровье|건강
+tc.reason.family|Oilaviy sabab|Family|Семейные обстоятельства|가정 사정
+tc.reason.ceremony|Marosim|Ceremony|Церемония|행사
+tc.reason.personal|Shaxsiy|Personal|Личные причины|개인 사정
+tc.reason.other|Boshqa|Other|Другое|기타
+tc.recent_results|So'nggi natijalar|Recent results|Последние результаты|최근 결과
+tc.return_date|Qaytish sanasi|Return date|Дата возвращения|복귀 날짜
+tc.review_note|Ko'rib chiqish izohi|Review note|Комментарий к решению|검토 메모
+tc.saved_status|Saqlangan holat|Saved status|Сохранённый статус|저장된 상태
+tc.skill|Ko'nikma|Skill|Навык|기술
+tc.students|O'quvchilar|Students|Ученики|학생
+tc.students_n|O'quvchilar: {n}|Students: {n}|Учеников: {n}|학생 수: {n}
+tc.submissions|Topshiriqlar|Submissions|Работы|제출물
+tc.submitted|Topshirgan|Submitted|Сдали|제출함
+tc.title|Sarlavha|Title|Заголовок|제목
+tc.to_check|Tekshirish kerak|To check|Нужно проверить|채점 필요
+tc.today_lessons|Bugungi darslar|Today's lessons|Занятия сегодня|오늘 수업
+tc.translation|Tarjima|Translation|Перевод|번역
+tc.unchecked|Tekshirilmagan|Unchecked|Не проверено|미채점
+tc.weekly_task|Haftalik topshiriq|Weekly task|Задание недели|주간 과제
+tc.word|So'z|Word|Слово|단어

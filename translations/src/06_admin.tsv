@@ -1,0 +1,242 @@
+ad.access|Kirish huquqlari|Access|Доступ|접근 권한
+ad.active|Faol|Active|Активна|활성
+ad.adjust_points|Ballarni tuzatish|Adjust points|Корректировка баллов|포인트 조정
+ad.audit.action|Amal|Action|Действие|작업
+ad.audit.actor|Kim|Actor|Кто|수행자
+ad.audit.detail|Tafsilot|Details|Детали|상세
+ad.audit.entity|Obyekt|Entity|Объект|대상
+ad.audit.hint|Muhim amallar shu yerda saqlanadi.|Important actions are recorded here.|Здесь сохраняются важные действия.|중요한 작업이 여기에 기록됩니다.
+ad.backup|Zaxira nusxa|Backup|Резервная копия|백업
+ad.backup_btn|Zaxira nusxa olish|Create backup|Создать копию|백업 만들기
+ad.backup_hint|Ma'lumotlar bazasining nusxasi backups papkasiga saqlanadi.|A copy of the database is saved to the backups folder.|Копия базы данных сохраняется в папку backups.|데이터베이스 사본이 backups 폴더에 저장됩니다.
+ad.block|Bloklash|Block|Заблокировать|차단
+ad.blocked|Bloklangan|Blocked|Заблокирован|차단됨
+ad.child_username|Farzand logini|Child's username|Логин ребёнка|자녀 아이디
+ad.children|Farzandlar|Children|Дети|자녀
+ad.code|Kod|Code|Код|코드
+ad.confirm_block|Holatni o'zgartirishni tasdiqlaysizmi?|Confirm the status change?|Подтвердить изменение статуса?|상태 변경을 확인하시겠습니까?
+ad.confirm_cancel_lesson|Darsni bekor qilasizmi?|Cancel this lesson?|Отменить занятие?|수업을 취소하시겠습니까?
+ad.confirm_password|Parolni o'zgartirasizmi?|Change the password?|Сменить пароль?|비밀번호를 변경하시겠습니까?
+ad.confirm_remove|O'quvchini guruhdan chiqarasizmi?|Remove the student from the group?|Удалить ученика из группы?|그룹에서 학생을 제외하시겠습니까?
+ad.confirm_role|Rolni o'zgartirasizmi?|Change the role?|Изменить роль?|역할을 변경하시겠습니까?
+ad.confirm_unlink|Bog'lanishni uzasizmi?|Unlink?|Отвязать?|연결을 해제하시겠습니까?
+ad.course|Kurs|Course|Курс|강좌
+ad.courses|Kurslar|Courses|Курсы|강좌
+ad.created|Yaratilgan|Created|Создан|생성일
+ad.dash.absences|Sababli kelmasliklar|Absence requests|Заявки на отсутствие|결석 신청
+ad.dash.active_students|Faol o'quvchilar|Active students|Активные ученики|활동 학생
+ad.dash.attendance|Davomat (30 kun)|Attendance (30 days)|Посещаемость (30 дней)|출석 (30일)
+ad.dash.attention|Diqqat talab qiladi|Needs attention|Требует внимания|확인 필요
+ad.dash.battles_week|Haftalik battlelar|Battles this week|Баттлов за неделю|주간 배틀
+ad.dash.by_subject|Fanlar bo'yicha|By subject|По предметам|과목별
+ad.dash.debt|Qarzdorlik|Debt|Задолженность|미납금
+ad.dash.disputes|E'tirozlar|Disputes|Споры|이의 신청
+ad.dash.expenses|Xarajatlar|Expenses|Расходы|지출
+ad.dash.finance|Moliya (oy)|Finance (month)|Финансы (месяц)|재무 (월)
+ad.dash.groups|Guruhlar|Groups|Группы|그룹
+ad.dash.homework|Uy vazifasi (30 kun)|Homework (30 days)|Домашние задания (30 дней)|숙제 (30일)
+ad.dash.income|Daromad|Income|Доход|수입
+ad.dash.income_by_group|Guruhlar bo'yicha daromad|Income by group|Доход по группам|그룹별 수입
+ad.dash.new_users|Yangi foydalanuvchilar|New users|Новые пользователи|신규 사용자
+ad.dash.orders|Buyurtmalar|Orders|Заказы|주문
+ad.dash.profit|Foyda|Profit|Прибыль|이익
+ad.dash.students|O'quvchilar|Students|Ученики|학생
+ad.dash.suspicious|Shubhali battlelar|Suspicious battles|Подозрительные баттлы|의심스러운 배틀
+ad.dash.teachers|O'qituvchilar|Teachers|Учителя|교사
+ad.dash.title|Administrator paneli|Admin dashboard|Панель администратора|관리자 대시보드
+ad.dash.top|Eng yaxshi o'quvchilar|Top students|Лучшие ученики|우수 학생
+ad.duration|Davomiyligi (daqiqa)|Duration (min)|Длительность (мин)|시간(분)
+ad.first_day|Birinchi kun|First day|Первый день|첫 날짜
+ad.first_name|Ism|First name|Имя|이름
+ad.groups|Guruhlar|Groups|Группы|그룹
+ad.inactive|Nofaol|Inactive|Неактивна|비활성
+ad.integrations|Integratsiyalar|Integrations|Интеграции|연동
+ad.integrations_hint|Integratsiyalar .env faylida sozlanadi. Bepul variantlar standart holatda yoqilgan.|Integrations are configured in the .env file. Free options are the defaults.|Интеграции настраиваются в файле .env. По умолчанию включены бесплатные варианты.|연동은 .env 파일에서 설정합니다. 기본값은 무료 옵션입니다.
+ad.inv.child|Farzand logini|Child's username|Логин ребёнка|자녀 아이디
+ad.inv.child_hint|Ota-ona taklifi uchun farzandning logini.|The child's username for a parent invite.|Логин ребёнка для приглашения родителя.|학부모 초대를 위한 자녀 아이디.
+ad.inv.code|Kod|Code|Код|코드
+ad.inv.create|Taklif kodi yaratish|Create invite code|Создать код приглашения|초대 코드 만들기
+ad.inv.days|Amal qilish muddati (kun)|Valid for (days)|Срок действия (дней)|유효 기간(일)
+ad.inv.expires|Tugash sanasi|Expires|Истекает|만료일
+ad.inv.generate|Yaratish|Generate|Создать|생성
+ad.inv.group|Guruh (ixtiyoriy)|Group (optional)|Группа (необязательно)|그룹 (선택)
+ad.inv.help|Kod bilan foydalanuvchi mustaqil ro'yxatdan o'tadi.|Users sign up on their own with the code.|Пользователь самостоятельно регистрируется по коду.|사용자는 코드를 사용해 직접 가입합니다.
+ad.inv.link|Ro'yxatdan o'tish havolasi|Sign-up link|Ссылка для регистрации|가입 링크
+ad.inv.used|Ishlatilgan|Used|Использован|사용됨
+ad.last_name|Familiya|Last name|Фамилия|성
+ad.last_seen|Oxirgi faollik|Last seen|Был в сети|마지막 접속
+ad.link|Bog'lash|Link|Привязать|연결
+ad.members|A'zolar|Members|Участники|구성원
+ad.new_group|Yangi guruh|New group|Новая группа|새 그룹
+ad.new_password|Yangi parol|New password|Новый пароль|새 비밀번호
+ad.off|O'chiq|Off|Выкл.|꺼짐
+ad.on|Yoqilgan|On|Вкл.|켜짐
+ad.parents|Ota-onalar|Parents|Родители|학부모
+ad.payments_provider|To'lov provayderi|Payment provider|Платёжный провайдер|결제 제공자
+ad.phone|Telefon|Phone|Телефон|전화번호
+ad.profile|Profil|Profile|Профиль|프로필
+ad.role|Rol|Role|Роль|역할
+ad.section.coin|Coin va davomat|Coins and attendance|Коины и посещаемость|코인과 출석
+ad.section.hw|Uy vazifasi|Homework|Домашние задания|숙제
+ad.section.battle|Battle|Battle|Баттл|배틀
+ad.section.rating|Reyting|Rating|Рейтинг|순위
+ad.section.shop|Do'kon|Shop|Магазин|상점
+ad.section.ai|AI yordamchi|AI assistant|ИИ-помощник|AI 도우미
+ad.section.registration|Ro'yxatdan o'tish|Registration|Регистрация|회원가입
+ad.section.absence|Sababli kelmaslik|Absence|Отсутствие|결석
+ad.set.coin.attendance_present|Keldi uchun Coin|Coins for Present|Коины за «был»|출석 코인
+ad.set.coin.attendance_late|Kechikish uchun Coin|Coins for Late|Коины за опоздание|지각 코인
+ad.set.coin.attendance_excused|Sababli uchun Coin|Coins for Excused|Коины за уважительную причину|사유 결석 코인
+ad.set.coin.attendance_absent|Kelmaslik uchun Coin|Coins for Absent|Коины за пропуск|결석 코인
+ad.set.hw.penalties|Uy vazifasi jarimalari (ro'yxat: ogohlantirish, −10, −20)|Homework penalties (list: warning, −10, −20)|Штрафы за ДЗ (список: предупреждение, −10, −20)|숙제 벌점 (목록: 경고, −10, −20)
+ad.set.hw.reward_coin|Vazifa uchun Coin mukofoti|Coin reward per homework|Награда коинами за задание|숙제 코인 보상
+ad.set.hw.xp_divisor|Vazifa XP bo'luvchisi|Homework XP divisor|Делитель XP за задание|숙제 XP 나눗수
+ad.set.battle.questions|Battle savollar soni|Battle question count|Количество вопросов в баттле|배틀 문제 수
+ad.set.battle.seconds_per_question|Savol uchun soniya|Seconds per question|Секунд на вопрос|문제당 시간(초)
+ad.set.battle.gap_seconds|Savollar orasidagi tanaffus (soniya)|Gap between questions (sec)|Пауза между вопросами (сек)|문제 간격(초)
+ad.set.battle.countdown_seconds|Boshlanishdan oldingi sanoq (soniya)|Start countdown (sec)|Обратный отсчёт до старта (сек)|시작 카운트다운(초)
+ad.set.battle.initial_rating|Boshlang'ich reyting|Initial rating|Начальный рейтинг|초기 레이팅
+ad.set.battle.k_placement|K koeffitsienti (saralash o'yinlari)|K factor (placement games)|Коэффициент K (калибровочные игры)|K 계수 (배치 게임)
+ad.set.battle.k_normal|K koeffitsienti (oddiy)|K factor (normal)|Коэффициент K (обычный)|K 계수 (일반)
+ad.set.battle.placement_games|Saralash o'yinlari soni|Placement games|Калибровочных игр|배치 게임 수
+ad.set.battle.rating_windows|Reyting oynalari|Rating windows|Рейтинговые окна|레이팅 범위
+ad.set.battle.max_level_gap|Maksimal daraja farqi|Max level gap|Макс. разница уровней|최대 레벨 차이
+ad.set.battle.invite_ttl_minutes|Taklif amal qilish muddati (daqiqa)|Invite lifetime (min)|Срок приглашения (мин)|초대 유효 시간(분)
+ad.set.battle.quick_ttl_seconds|Tezkor taklif muddati (soniya)|Quick invite lifetime (sec)|Срок быстрого приглашения (сек)|빠른 초대 유효 시간(초)
+ad.set.battle.invites_per_day|Kunlik takliflar limiti|Invites per day|Приглашений в день|일일 초대 한도
+ad.set.battle.pair_weekly_limit|Bir juftlik haftalik limiti|Weekly limit per pair|Недельный лимит на пару|같은 상대와 주간 한도
+ad.set.battle.lobby_open_minutes|Xona ochilishi (daqiqa oldin)|Lobby opens (min before)|Открытие комнаты (мин до)|대기실 오픈(분 전)
+ad.set.battle.wait_minutes|Kutish vaqti (daqiqa)|Wait time (min)|Время ожидания (мин)|대기 시간(분)
+ad.set.battle.online_seconds|Onlayn deb hisoblash (soniya)|Online threshold (sec)|Порог «онлайн» (сек)|온라인 판정(초)
+ad.set.battle.tiebreak_by_time|Durangda tezlik bo'yicha aniqlash|Break ties by speed|Решать ничью по скорости|동점 시 속도로 결정
+ad.set.battle.reward_win|G'alaba uchun Coin|Coins for a win|Коины за победу|승리 코인
+ad.set.battle.reward_draw|Durang uchun Coin|Coins for a draw|Коины за ничью|무승부 코인
+ad.set.battle.reward_loss|Mag'lubiyat uchun Coin|Coins for a loss|Коины за поражение|패배 코인
+ad.set.battle.daily_reward_cap|Kunlik mukofot chegarasi|Daily reward cap|Дневной лимит наград|일일 보상 상한
+ad.set.battle.leagues|Ligalar (nomi: minimal reyting)|Leagues (name: min rating)|Лиги (название: мин. рейтинг)|리그 (이름: 최소 레이팅)
+ad.set.rating.weights|Reyting og'irliklari|Rating weights|Веса рейтинга|순위 가중치
+ad.set.shop.monthly_limit|Oylik xarid limiti|Monthly purchase limit|Месячный лимит покупок|월간 구매 한도
+ad.set.ai.daily_limit|AI kunlik limiti|AI daily limit|Дневной лимит ИИ|AI 일일 한도
+ad.set.registration.open_for_students|O'quvchilar ro'yxatdan o'tishi ochiq|Student sign-up open|Регистрация учеников открыта|학생 가입 허용
+ad.set.absence.late_days|So'rov yuborish muddati (necha kun keyin ham mumkin)|Late request window (days)|Окно для поздней заявки (дней)|늦은 신청 허용 기간(일)
+ad.set_level|Darajani belgilash|Set level|Установить уровень|레벨 설정
+ad.set_password|Parolni o'rnatish|Set password|Установить пароль|비밀번호 설정
+ad.settings_hint|Sozlamalar darhol kuchga kiradi. O'zgartirishlar audit jurnaliga yoziladi.|Settings apply immediately. Changes are written to the audit log.|Настройки применяются сразу. Изменения записываются в журнал аудита.|설정은 즉시 적용되며 변경 내용은 감사 로그에 기록됩니다.
+ad.single_lesson|Bitta dars|Single lesson|Одно занятие|단일 수업
+ad.start_time|Boshlanish vaqti|Start time|Время начала|시작 시간
+ad.student_username|O'quvchi logini|Student username|Логин ученика|학생 아이디
+ad.subjects|Fanlar|Subjects|Предметы|과목
+ad.toggle|Yoqish/o'chirish|Toggle|Вкл./выкл.|전환
+ad.topic|Mavzu|Topic|Тема|주제
+ad.unblock|Blokdan chiqarish|Unblock|Разблокировать|차단 해제
+ad.upcoming_lessons|Yaqin darslar|Upcoming lessons|Ближайшие занятия|예정된 수업
+ad.users.active|Faol|Active|Активен|활성
+ad.users.birth_date|Tug'ilgan sana|Date of birth|Дата рождения|생년월일
+ad.users.blocked|Bloklangan|Blocked|Заблокирован|차단됨
+ad.users.create|Foydalanuvchi yaratish|Create user|Создать пользователя|사용자 만들기
+ad.users.created|Yaratilgan|Created|Создан|생성일
+ad.users.email|Email|Email|Email|이메일
+ad.users.first_name|Ism|First name|Имя|이름
+ad.users.lang|Til|Language|Язык|언어
+ad.users.last_name|Familiya|Last name|Фамилия|성
+ad.users.password|Parol|Password|Пароль|비밀번호
+ad.users.password_hint|Kamida 8 belgi, harf va raqam.|At least 8 characters, letters and digits.|Не менее 8 символов, буквы и цифры.|8자 이상, 영문과 숫자 포함.
+ad.users.phone|Telefon|Phone|Телефон|전화번호
+ad.users.reset|Tiklash|Reset|Сбросить|초기화
+ad.users.role|Rol|Role|Роль|역할
+ad.users.search_hint|Ism yoki login bo'yicha qidirish|Search by name or username|Поиск по имени или логину|이름 또는 아이디로 검색
+ad.users.username|Login|Username|Логин|아이디
+ad.weekdays|Hafta kunlari|Weekdays|Дни недели|요일
+ad.weekly_lessons|Haftalik darslar|Weekly lessons|Еженедельные занятия|주간 수업
+ad.weeks|Haftalar soni|Number of weeks|Количество недель|주 수
+ae.accept|Qabul qilish|Accept|Принять|수락
+ae.accept_hint|Qabul qilinsa, ballar/natija tuzatiladi.|If accepted, points/results are corrected.|При принятии баллы/результат корректируются.|수락하면 포인트/결과가 정정됩니다.
+ae.activate|Faollashtirish|Activate|Активировать|활성화
+ae.active|Faol|Active|Активно|활성
+ae.active_count|Faol: {n}|Active: {n}|Активных: {n}|활성: {n}
+ae.add_question|Savol qo'shish|Add question|Добавить вопрос|문제 추가
+ae.attendance|Davomat|Attendance|Посещаемость|출석
+ae.attendance_30|Davomat (30 kun)|Attendance (30 days)|Посещаемость (30 дней)|출석 (30일)
+ae.audio_url|Audio havolasi|Audio URL|Ссылка на аудио|오디오 링크
+ae.avg_score|O'rtacha ball|Average score|Средний балл|평균 점수
+ae.bank_stats|Savollar banki|Question bank|Банк вопросов|문제은행
+ae.battles|Battlelar|Battles|Баттлы|배틀
+ae.category|Kategoriya|Category|Категория|카테고리
+ae.certificates|Sertifikatlar|Certificates|Сертификаты|수료증
+ae.clear_flag|Belgini olib tashlash|Clear flag|Снять отметку|표시 해제
+ae.confirm_accept|E'tirozni qabul qilasizmi?|Accept the dispute?|Принять оспаривание?|이의 신청을 수락하시겠습니까?
+ae.confirm_cancel_order|Buyurtmani bekor qilasizmi? Coin qaytariladi.|Cancel the order? Coins will be refunded.|Отменить заказ? Коины будут возвращены.|주문을 취소하시겠습니까? 코인이 환불됩니다.
+ae.confirm_cancel_payment|To'lovni bekor qilasizmi?|Cancel the payment?|Отменить платёж?|결제를 취소하시겠습니까?
+ae.confirm_clear_flag|Belgini olib tashlaysizmi?|Clear the flag?|Снять отметку?|표시를 해제하시겠습니까?
+ae.confirm_paid|To'langan deb belgilaysizmi?|Mark as paid?|Отметить как оплаченный?|결제 완료로 표시하시겠습니까?
+ae.confirm_reject|E'tirozni rad etasizmi?|Reject the dispute?|Отклонить оспаривание?|이의 신청을 거절하시겠습니까?
+ae.correct_option|To'g'ri variant|Correct option|Правильный вариант|정답 선택지
+ae.course|Kurs|Course|Курс|강좌
+ae.deactivate|O'chirish|Deactivate|Деактивировать|비활성화
+ae.debt|Qarz|Debt|Долг|미납
+ae.description|Tavsif|Description|Описание|설명
+ae.discount|Chegirma|Discount|Скидка|할인
+ae.disputes|E'tirozlar|Disputes|Споры|이의 신청
+ae.due_date|To'lov muddati|Due date|Срок оплаты|결제 기한
+ae.expenses|Xarajatlar|Expenses|Расходы|지출
+ae.explanation|Izoh|Explanation|Пояснение|해설
+ae.finance_month|Moliya (oy)|Finance (month)|Финансы (месяц)|재무 (월)
+ae.flags|Shubhali belgilar|Flags|Отметки|의심 표시
+ae.flags_hint|Tizim shubhali battlelarni avtomatik belgilaydi; qaror administratorniki.|The system flags suspicious battles automatically; the decision is the admin's.|Система автоматически отмечает подозрительные баттлы; решение за администратором.|시스템이 의심스러운 배틀을 자동 표시하며 판단은 관리자가 합니다.
+ae.from|Dan|From|С|시작
+ae.fulfil|Bajarildi|Fulfil|Выполнить|처리 완료
+ae.games|O'yinlar|Games|Игры|게임
+ae.homework|Uy vazifasi|Homework|Домашние задания|숙제
+ae.homework_30|Uy vazifasi (30 kun)|Homework (30 days)|Домашние задания (30 дней)|숙제 (30일)
+ae.import|Import|Import|Импорт|가져오기
+ae.import_hint|Savollarni JSON ro'yxati sifatida yuklang.|Upload questions as a JSON list.|Загрузите вопросы в виде списка JSON.|문제를 JSON 목록으로 업로드하세요.
+ae.import_json|JSON import|JSON import|Импорт JSON|JSON 가져오기
+ae.inactive|Nofaol|Inactive|Неактивно|비활성
+ae.income|Daromad|Income|Доход|수입
+ae.issue|Berish|Issue|Выдать|발급
+ae.issue_certificate|Sertifikat berish|Issue certificate|Выдать сертификат|수료증 발급
+ae.item|Mahsulot|Item|Товар|상품
+ae.items|Mahsulotlar|Items|Товары|상품 목록
+ae.late_n|kechikkan|late|с опозданием|지각
+ae.mark_paid|To'landi deb belgilash|Mark as paid|Отметить оплаченным|결제 완료 처리
+ae.new_expense|Yangi xarajat|New expense|Новый расход|새 지출
+ae.new_item|Yangi mahsulot|New item|Новый товар|새 상품
+ae.new_payment|Yangi to'lov|New payment|Новый платёж|새 결제
+ae.new_registrations|Yangi ro'yxatdan o'tganlar|New sign-ups|Новые регистрации|신규 가입
+ae.noshow_count|Kelmaganlar soni|No-shows|Количество неявок|불참 횟수
+ae.noshow_users|Ko'p kelmaydiganlar|Frequent no-shows|Часто не являются|자주 불참하는 사용자
+ae.note|Izoh|Note|Заметка|메모
+ae.number|Raqam|Number|Номер|번호
+ae.on_time|O'z vaqtida|On time|Вовремя|제때
+ae.option|Variant|Option|Вариант|선택지
+ae.orders|Buyurtmalar|Orders|Заказы|주문
+ae.overdue|Muddati o'tgan|Overdue|Просрочено|연체
+ae.passage|Matn (o'qish uchun)|Passage (for reading)|Текст (для чтения)|지문
+ae.players|O'yinchilar|Players|Игроки|참가자
+ae.price_coins|Narxi (coin)|Price (coins)|Цена (коины)|가격(코인)
+ae.profit|Foyda|Profit|Прибыль|이익
+ae.qtype|Savol turi|Question type|Тип вопроса|문제 유형
+ae.qtype_vocabulary|Lug'at|Vocabulary|Словарь|어휘
+ae.qtype_grammar|Grammatika|Grammar|Грамматика|문법
+ae.qtype_translation|Tarjima|Translation|Перевод|번역
+ae.qtype_listening|Tinglab tushunish|Listening|Аудирование|듣기
+ae.qtype_reading|O'qib tushunish|Reading|Чтение|읽기
+ae.question_text|Savol matni|Question text|Текст вопроса|문제 내용
+ae.questions|Savollar|Questions|Вопросы|문제
+ae.ref|Havola|Reference|Ссылка|참조
+ae.reject|Rad etish|Reject|Отклонить|거절
+ae.stock|Ombor|Stock|Склад|재고
+ae.students|O'quvchilar|Students|Ученики|학생
+ae.students_by_subject|Fanlar bo'yicha o'quvchilar|Students by subject|Ученики по предметам|과목별 학생
+ae.submitted|Topshirilgan|Submitted|Сдано|제출
+ae.tab_pending|Kutilmoqda|Pending|Ожидают|대기 중
+ae.tab_debtors|Qarzdorlar|Debtors|Должники|미납자
+ae.tab_paid|To'langan|Paid|Оплачены|결제 완료
+ae.tab_cancelled|Bekor qilingan|Cancelled|Отменены|취소됨
+ae.title|Nomi|Title|Название|제목
+ae.to|Gacha|To|По|종료
+ae.top_students|Eng yaxshi o'quvchilar|Top students|Лучшие ученики|우수 학생
+ae.unlimited|Cheklanmagan|Unlimited|Без ограничений|무제한
+ae.username|Login|Username|Логин|아이디
+ae.vs|Qarshi|vs|против|vs
+ae.winner|G'olib|Winner|Победитель|승자

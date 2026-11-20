@@ -1,0 +1,158 @@
+# key|uz|en|ru|ko
+nav.absence|Sababli kelmaslik|Absence requests|Заявки на отсутствие|결석 신청
+nav.account|Profil|Account|Профиль|계정
+nav.ai|AI yordamchi|AI assistant|ИИ-помощник|AI 도우미
+nav.attendance|Davomat|Attendance|Посещаемость|출석
+nav.audit|Audit jurnali|Audit log|Журнал аудита|감사 로그
+nav.award|Ball berish|Award points|Начислить баллы|포인트 부여
+nav.battle|Battle|Battle|Баттл|배틀
+nav.certificates|Sertifikatlar|Certificates|Сертификаты|수료증
+nav.challenges|Musobaqalar|Challenges|Задания-вызовы|챌린지
+nav.clubs|Klublar|Clubs|Клубы|클럽
+nav.exams|Imtihonlar|Exams|Экзамены|시험
+nav.goals|Maqsadlar|Goals|Цели|목표
+nav.home|Bosh sahifa|Home|Главная|홈
+nav.homework|Uy vazifasi|Homework|Домашние задания|숙제
+nav.invites|Taklif kodlari|Invite codes|Коды приглашений|초대 코드
+nav.leaderboard|Reyting|Leaderboard|Рейтинг|순위표
+nav.login|Kirish|Log in|Войти|로그인
+nav.logout|Chiqish|Log out|Выйти|로그아웃
+nav.messages|Xabarlar|Messages|Сообщения|메시지
+nav.notifications|Bildirishnomalar|Notifications|Уведомления|알림
+nav.payments|To'lovlar|Payments|Платежи|결제
+nav.points|Ballar|Points|Баллы|포인트
+nav.register|Ro'yxatdan o'tish|Sign up|Регистрация|회원가입
+nav.reports|Hisobotlar|Reports|Отчёты|보고서
+nav.results|Natijalar|Results|Результаты|결과
+nav.schedule|Dars jadvali|Schedule|Расписание|시간표
+nav.settings|Sozlamalar|Settings|Настройки|설정
+nav.shop|Do'kon|Shop|Магазин|상점
+nav.structure|Tuzilma|Structure|Структура|구조
+nav.users|Foydalanuvchilar|Users|Пользователи|사용자
+nav.vocabulary|Lug'at|Vocabulary|Словарь|단어장
+btn.add|Qo'shish|Add|Добавить|추가
+btn.back|Orqaga|Back|Назад|뒤로
+btn.cancel|Bekor qilish|Cancel|Отменить|취소
+btn.delete|O'chirish|Delete|Удалить|삭제
+btn.download|Yuklab olish|Download|Скачать|다운로드
+btn.edit|Tahrirlash|Edit|Изменить|수정
+btn.filter|Saralash|Filter|Фильтр|필터
+btn.home|Bosh sahifaga|Go home|На главную|홈으로
+btn.mark_all_read|Hammasini o'qilgan qilish|Mark all as read|Отметить все прочитанными|모두 읽음으로 표시
+btn.next|Keyingi|Next|Далее|다음
+btn.open|Ochish|Open|Открыть|열기
+btn.prev|Oldingi|Previous|Назад|이전
+btn.print|Chop etish|Print|Печать|인쇄
+btn.save|Saqlash|Save|Сохранить|저장
+btn.search|Qidirish|Search|Поиск|검색
+btn.send|Yuborish|Send|Отправить|보내기
+lbl.actions|Amallar|Actions|Действия|작업
+lbl.all|Hammasi|All|Все|전체
+lbl.amount|Miqdor|Amount|Сумма|금액
+lbl.avatar|Rasm|Avatar|Аватар|프로필 사진
+lbl.birth_date|Tug'ilgan sana|Date of birth|Дата рождения|생년월일
+lbl.comment|Izoh|Comment|Комментарий|코멘트
+lbl.course|Kurs|Course|Курс|강좌
+lbl.date|Sana|Date|Дата|날짜
+lbl.email|Email|Email|Email|이메일
+lbl.first_name|Ism|First name|Имя|이름
+lbl.group|Guruh|Group|Группа|그룹
+lbl.invite_code|Taklif kodi|Invite code|Код приглашения|초대 코드
+lbl.language|Til|Language|Язык|언어
+lbl.last_name|Familiya|Last name|Фамилия|성
+lbl.level|Daraja|Level|Уровень|레벨
+lbl.menu|Menyu|Menu|Меню|메뉴
+lbl.name|Nomi|Name|Название|이름
+lbl.optional|ixtiyoriy|optional|необязательно|선택 사항
+lbl.password|Parol|Password|Пароль|비밀번호
+lbl.password2|Parolni takrorlang|Repeat password|Повторите пароль|비밀번호 확인
+lbl.phone|Telefon|Phone|Телефон|전화번호
+lbl.price|Narxi|Price|Цена|가격
+lbl.room|Xona|Room|Кабинет|강의실
+lbl.score|Ball|Score|Баллы|점수
+lbl.status|Holati|Status|Статус|상태
+lbl.student|O'quvchi|Student|Ученик|학생
+lbl.subject|Fan|Subject|Предмет|과목
+lbl.teacher|O'qituvchi|Teacher|Учитель|교사
+lbl.theme|Mavzu|Theme|Тема|테마
+lbl.today|Bugun|Today|Сегодня|오늘
+lbl.total|Jami|Total|Итого|합계
+lbl.type|Turi|Type|Тип|유형
+lbl.unread|O'qilmagan|Unread|Непрочитано|읽지 않음
+lbl.username|Login|Username|Логин|아이디
+status.absent|Kelmadi|Absent|Отсутствовал|결석
+status.cancelled|Bekor qilindi|Cancelled|Отменено|취소됨
+status.excused|Sababli|Excused|По уважительной причине|사유 결석
+status.expired|Muddati o'tdi|Expired|Истекло|만료됨
+status.late|Kechikdi|Late|Опоздал|지각
+status.present|Keldi|Present|Присутствовал|출석
+status.approved|Tasdiqlandi|Approved|Одобрено|승인됨
+status.rejected|Rad etildi|Rejected|Отклонено|거절됨
+status.pending|Kutilmoqda|Pending|Ожидает|대기 중
+status.info_needed|Ma'lumot kerak|More info needed|Нужна информация|추가 정보 필요
+status.checked|Tekshirildi|Checked|Проверено|채점 완료
+status.submitted|Topshirildi|Submitted|Сдано|제출됨
+status.finished|Yakunlandi|Finished|Завершено|종료
+status.declined|Rad etildi|Declined|Отклонено|거절됨
+status.scheduled|Rejalashtirilgan|Scheduled|Запланировано|예약됨
+status.ready|Tayyor|Ready|Готов|준비됨
+status.active|Faol|Active|Активно|진행 중
+status.counter|Qarshi taklif|Counter-offer|Встречное предложение|역제안
+status.no_show|Kelmadi|No-show|Неявка|불참
+status.void|Bekor (texnik)|Void|Аннулировано|무효
+status.paid|To'langan|Paid|Оплачено|결제 완료
+status.fulfilled|Bajarildi|Fulfilled|Выполнено|처리 완료
+status.open|Ochiq|Open|Открыто|열림
+status.accepted|Qabul qilindi|Accepted|Принято|수락됨
+status.warning|Ogohlantirish|Warning|Предупреждение|경고
+status.penalty|Jarima|Penalty|Штраф|벌점
+status.win|G'alaba|Win|Победа|승리
+status.loss|Mag'lubiyat|Loss|Поражение|패배
+status.draw|Durang|Draw|Ничья|무승부
+status.planned|Rejada|Planned|В плане|계획됨
+role.admin|Administrator|Administrator|Администратор|관리자
+role.teacher|O'qituvchi|Teacher|Учитель|교사
+role.student|O'quvchi|Student|Ученик|학생
+role.parent|Ota-ona|Parent|Родитель|학부모
+theme.system|Tizim|System|Системная|시스템
+theme.light|Yorug'|Light|Светлая|라이트
+theme.dark|Qorong'i|Dark|Тёмная|다크
+weekday.0|Dushanba|Monday|Понедельник|월요일
+weekday.1|Seshanba|Tuesday|Вторник|화요일
+weekday.2|Chorshanba|Wednesday|Среда|수요일
+weekday.3|Payshanba|Thursday|Четверг|목요일
+weekday.4|Juma|Friday|Пятница|금요일
+weekday.5|Shanba|Saturday|Суббота|토요일
+weekday.6|Yakshanba|Sunday|Воскресенье|일요일
+auth.forgot|Parolni unutdingizmi?|Forgot your password?|Забыли пароль?|비밀번호를 잊으셨나요?
+auth.forgot_hint|Email manzilingizni kiriting, tiklash havolasini yuboramiz.|Enter your email and we will send a reset link.|Введите email — мы отправим ссылку для сброса.|이메일을 입력하시면 재설정 링크를 보내드립니다.
+auth.have_account|Akkauntingiz bormi?|Already have an account?|Уже есть аккаунт?|이미 계정이 있으신가요?
+auth.invite_hint|Taklif kodi o'qituvchi yoki administratordan olinadi.|Get the invite code from your teacher or administrator.|Код приглашения выдаёт учитель или администратор.|초대 코드는 교사나 관리자에게서 받으세요.
+auth.login|Tizimga kirish|Sign in|Вход в систему|로그인
+auth.reset|Parolni tiklash|Reset password|Сбросить пароль|비밀번호 재설정
+auth.reset_title|Yangi parol o'rnating|Set a new password|Задайте новый пароль|새 비밀번호 설정
+auth.verify_email|Emailni tasdiqlash|Verify email|Подтверждение email|이메일 인증
+landing.f1_text|Davomat, uy vazifasi va ballar bir joyda — shaffof va adolatli.|Attendance, homework and points in one place — transparent and fair.|Посещаемость, домашние задания и баллы в одном месте — прозрачно и честно.|출석, 숙제, 포인트를 한곳에서 투명하고 공정하게 관리합니다.
+landing.f1_title|Aniq nazorat|Clear tracking|Чёткий контроль|명확한 관리
+landing.f2_text|Do'stlaringiz bilan 1v1 bilim bellashuvi, Elo reyting va ligalar.|1v1 knowledge duels with friends, Elo rating and leagues.|Дуэли знаний 1 на 1 с друзьями, рейтинг Эло и лиги.|친구와 1대1 지식 대결, Elo 레이팅과 리그.
+landing.f2_title|Battle rejimi|Battle mode|Режим баттла|배틀 모드
+landing.f3_text|Coin yig'ing va do'kondan sovg'alar oling.|Collect coins and get rewards from the shop.|Копите коины и получайте награды в магазине.|코인을 모아 상점에서 선물을 받으세요.
+landing.f3_title|Mukofotlar|Rewards|Награды|보상
+landing.tagline|Tillar markazi uchun zamonaviy, bepul boshqaruv tizimi.|A modern, free management system for language centers.|Современная бесплатная система управления языковым центром.|어학원을 위한 현대적인 무료 관리 시스템입니다.
+mail.link_body|Havolani oching (amal qilish muddati: {hours} soat):\n{link}|Open the link (valid for {hours} hours):\n{link}|Откройте ссылку (действует {hours} ч.):\n{link}|링크를 열어주세요 (유효 시간: {hours}시간):\n{link}
+mail.reset_subject|Parolni tiklash|Password reset|Сброс пароля|비밀번호 재설정
+mail.verify_subject|Emailni tasdiqlang|Verify your email|Подтвердите email|이메일을 인증해 주세요
+cert.awarded_to|Ushbu sertifikat quyidagi shaxsga beriladi|This certificate is awarded to|Настоящий сертификат выдан|이 수료증은 다음 분에게 수여됩니다
+cert.holder|Egasi|Holder|Владелец|소지자
+cert.invalid|Sertifikat topilmadi yoki yaroqsiz.|Certificate not found or invalid.|Сертификат не найден или недействителен.|수료증을 찾을 수 없거나 유효하지 않습니다.
+cert.number|Raqami|Number|Номер|번호
+cert.text|«{course}» kursini muvaffaqiyatli yakunlagani uchun|for successfully completing the course "{course}"|за успешное завершение курса «{course}»|"{course}" 강좌를 성공적으로 수료하였음을 증명합니다
+cert.title|SERTIFIKAT|CERTIFICATE|СЕРТИФИКАТ|수료증
+cert.valid|Sertifikat haqiqiy ✔|Certificate is valid ✔|Сертификат подлинный ✔|유효한 수료증입니다 ✔
+cert.verify_at|Tekshirish:|Verify at:|Проверка:|확인:
+cert.verify_title|Sertifikatni tekshirish|Verify certificate|Проверка сертификата|수료증 확인
+http.server_error|Serverda xatolik yuz berdi. Keyinroq urinib ko'ring.|A server error occurred. Please try again later.|Ошибка сервера. Попробуйте позже.|서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.
+http.bad_request|Noto'g'ri so'rov.|Bad request.|Некорректный запрос.|잘못된 요청입니다.
+http.forbidden|Ruxsat yo'q.|Access denied.|Доступ запрещён.|접근 권한이 없습니다.
+http.not_found|Sahifa topilmadi.|Page not found.|Страница не найдена.|페이지를 찾을 수 없습니다.
+http.too_large|Fayl juda katta.|The file is too large.|Файл слишком большой.|파일이 너무 큽니다.
